@@ -1,17 +1,33 @@
-# e_commerce_app
+# 📱 E-Commerce App (Customer Side)
 
-A new Flutter project.
+A Flutter-based mobile application designed for users to browse and shop products. This app connects with the `e_commerce_admin_app` backend to display dynamic data, such as products, categories, brands, and more. Built with **GetX** for state management, routing, and dependency injection, the app delivers a fast and reactive shopping experience.
 
-## Getting Started
+## 🚀 Features
 
-This project is a starting point for a Flutter application.
+- 🔐 User Authentication (Login/Register)
+- 🛍️ Browse Products by Category & Brand
+- 🧺 Add to Cart Functionality
+- 📦 View Product Details
+- 🔄 Realtime State Management with GetX
+- 🔗 Connected with `e_commerce_admin_app` for:
+  - Dynamic Product Listing
+  - Brand & Category Management
+  - Image & Data Sync via API
 
-A few resources to get you started if this is your first Flutter project:
+## 🛠️ Tech Stack
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Flutter** (Frontend UI Framework)
+- **GetX** (Routing, State Management, Dependency Injection)
+- **Dart** (Programming Language)
+- **HTTP** (API communication)
+- **e_commerce_admin_app** (Admin Dashboard - Backend & API provider)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# E_commerce_app
+
+## 🔌 How It Works
+
+- The admin creates and manages product data from the `e_commerce_admin_app`.
+- This app fetches that data through REST APIs.
+- GetX is used to:
+  - Manage state reactively (e.g., cart updates, login status)
+  - Navigate between screens without boilerplate
+  - Inject dependencies across the app
