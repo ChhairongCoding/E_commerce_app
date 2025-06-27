@@ -6,10 +6,7 @@ import 'package:get/get.dart';
 class MainController extends GetxController {
   RxInt currentIndex = 0.obs;
 
-  final List<Widget> listScreens = [
-    HomeScreen(),
-    FavoriteScreen(),
-  ];
+  final List<Widget> listScreens = [HomeScreen(), FavoriteScreen()];
 
   void toggleSwitch(int value) {
     currentIndex.value = value;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class GettingStartScreen extends StatelessWidget {
   const GettingStartScreen({super.key});
@@ -11,7 +10,8 @@ class GettingStartScreen extends StatelessWidget {
       backgroundColor: Color(0xFF0D5EA6),
       body: Stack(
         children: [
-          Center(child: Image.asset('assets/images/slowkey_logo_getting.png')),
+          Text("image"),
+          // Center(child: Image.asset('assets/images/slowkey_logo_getting.png')),
           Container(
             width: double.infinity,
             height: double.infinity,
@@ -51,7 +51,7 @@ class GettingStartScreen extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    "Get Started",
+                    "Create an acount",
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Sora',
@@ -59,7 +59,32 @@ class GettingStartScreen extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  onPressed: () => Get.toNamed('/login'),
+                  onPressed: () => Get.toNamed('/signup'),
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account?",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                        fontFamily: 'Sora',
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => Get.toNamed('/login'),
+                      child: Text(
+                        "Log In",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                          fontFamily: 'Sora',
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
