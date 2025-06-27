@@ -32,7 +32,7 @@ class TextFormWidget extends StatelessWidget {
             fillColor: Colors.transparent,
             hintText: hintText,
             hintStyle: TextStyle(fontSize: 16),
-            prefixIcon: iconField,
+            suffixIcon: iconField,
           ),
           obscureText: obscureText ?? false,
           maxLines: 1,

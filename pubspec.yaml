@@ -64,6 +64,7 @@ flutter:
   assets:
     # - assets/images/slowkey_logo.png  # Removed because the file does not exist
     - assets/images/slowkey_logo_getting.png
+    - assets/images/slowkey_logo.png
   
 
   fonts:

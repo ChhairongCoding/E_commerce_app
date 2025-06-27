@@ -7,11 +7,15 @@ class GettingStartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0D5EA6),
+      // backgroundColor: Color(0xFF0D5EA6),
       body: Stack(
         children: [
-          Text("image"),
-          // Center(child: Image.asset('assets/images/slowkey_logo_getting.png')),
+          // Text("image"),
+          
+          Padding(
+            padding: const EdgeInsets.only(top: 100),
+            child: Image.asset('assets/images/slowkey_logo_getting.png',),
+          ),
           Container(
             width: double.infinity,
             height: double.infinity,
@@ -29,7 +33,6 @@ class GettingStartScreen extends StatelessWidget {
                     fontFamily: "Sora",
                     fontWeight: FontWeight.w600,
                     fontSize: 32,
-                    color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -69,7 +72,6 @@ class GettingStartScreen extends StatelessWidget {
                       "Already have an account?",
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.white,
                         fontFamily: 'Sora',
                       ),
                     ),
@@ -79,7 +81,6 @@ class GettingStartScreen extends StatelessWidget {
                         "Log In",
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.white,
                           fontFamily: 'Sora',
                         ),
                       ),

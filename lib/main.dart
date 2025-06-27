@@ -27,8 +27,8 @@ class _MyAppState extends State<MyApp> {
           titleMedium: TextStyle(fontSize: 20,fontFamily: 'Sora',fontWeight: FontWeight.w600),
           titleSmall: TextStyle(fontSize: 16,fontFamily: 'Sora',fontWeight: FontWeight.w600),
           bodyLarge: TextStyle(fontSize: 20,fontFamily: 'Sora',),
-          bodyMedium: TextStyle(fontSize: 16,fontFamily: 'Sora',fontWeight: FontWeight.w600),
-          bodySmall: TextStyle(fontSize: 14,fontFamily: 'Sora',fontWeight: FontWeight.w500)
+          bodyMedium: TextStyle(fontSize: 16,fontFamily: 'Sora',fontWeight: FontWeight.w400),
+          bodySmall: TextStyle(fontSize: 14,fontFamily: 'Sora',fontWeight: FontWeight.w400)
           )
       ),
       initialBinding: InitBinding(),
