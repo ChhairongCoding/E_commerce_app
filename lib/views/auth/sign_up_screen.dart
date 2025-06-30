@@ -1,13 +1,21 @@
+import 'package:e_commerce_app/controllers/signup_controller.dart';
+import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:e_commerce_app/widgets/text_form_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
-import 'package:hugeicons/hugeicons.dart';
+import 'package:get/get.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+  SignUpScreen({super.key});
+  final userNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final cfPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+    RxBool isCheck = false.obs;
+    final SignupController signupController = Get.find<SignupController>();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
@@ -21,41 +29,72 @@ class SignUpScreen extends StatelessWidget {
           children: [
             Column(
               spacing: 16,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Create an account",
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                SizedBox(
-                  height:16,
-                ),
+                SizedBox(height: 16),
                 Form(
+                  key: formKey,
                   child: Column(
                     spacing: 16,
                     children: [
                       TextFormWidget(
+                        controller: userNameController,
                         label: "Username",
                         hintText: "Your Username",
                       ),
                       TextFormWidget(
-                        label: "Passowrd",
-                        hintText: "Your Password",
+                        controller: emailController,
+                        label: "Email", hintText: "Your Email"),
+                      Obx(
+                        () => TextFormWidget(
+                          controller: passwordController,
+                          label: "Password",
+                          hintText: "Password",
+                          obscureText: signupController.isObsecurePw.value,
+                          suffixIcon: signupController.isObsecurePw.value
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                          onSuffixTap: () {
+                            signupController.isObsecurePw.value =
+                                !signupController.isObsecurePw.value;
+                          },
+                        ),
                       ),
-                      TextFormWidget(
-                        label: "Confirm Passowrd",
-                        hintText: "Confirm Your Username",
-                        obscureText: true,
-                        iconField: Icon(HugeIcons.strokeRoundedEye),
+
+                      Obx(
+                        () => TextFormWidget(
+                          controller: cfPasswordController,
+                          label: "Confirm Password",
+                          hintText: "Confirm Password",
+                          obscureText: signupController.isObsecure.value,
+                          suffixIcon: signupController.isObsecure.value
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                          onSuffixTap: () {
+                            signupController.isObsecure.value =
+                                !signupController.isObsecure.value;
+                          },
+                        ),
                       ),
+
                       Row(
                         children: [
-                          Checkbox(
-                            value: false,
-                            onChanged: (bool? value) {
-                              value!;
-                            },
+                          Obx(
+                            () => Checkbox(
+                              value: isCheck.value,
+                              onChanged: (bool? value) {
+                                isCheck.value = value ?? false;
+                              },
+                            ),
                           ),
-                          Text("I accept the terms and privacy policy",style: Theme.of(context).textTheme.bodySmall,)
+                          Text(
+                            "I accept the terms and privacy policy",
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
                         ],
                       ),
                       ElevatedButton(
@@ -63,10 +102,17 @@ class SignUpScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          fixedSize: Size(MediaQuery.of(context).size.width, 56),
+                          fixedSize: Size(
+                            MediaQuery.of(context).size.width,
+                            56,
+                          ),
                           backgroundColor: Colors.lightBlue,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          if(formKey.currentState!.validate()){
+                            Get.toNamed(AppRoutes.otpRoute);
+                          }
+                        },
                         child: Text(
                           'Create account',
                           style: TextStyle(
@@ -86,9 +132,12 @@ class SignUpScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Already have an account?  "),
-                TextButton(onPressed: ()=>Get.toNamed('/login'), child: Text("Log in"))
+                TextButton(
+                  onPressed: () => Get.toNamed(AppRoutes.loginRoute),
+                  child: Text("Log in"),
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),

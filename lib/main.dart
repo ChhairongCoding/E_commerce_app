@@ -1,8 +1,5 @@
 import 'package:e_commerce_app/binding/init_binding.dart';
-import 'package:e_commerce_app/views/auth/login_screen.dart';
-import 'package:e_commerce_app/views/auth/sign_up_screen.dart';
-import 'package:e_commerce_app/views/getting_start_screen.dart';
-// import 'package:e_commerce_app/views/main_screen.dart';
+import 'package:e_commerce_app/core/utils/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,24 +20,21 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       theme: ThemeData(
         textTheme: TextTheme(
-          titleLarge: TextStyle(fontSize: 30,fontFamily: 'Sora',fontWeight: FontWeight.w700),
-          titleMedium: TextStyle(fontSize: 20,fontFamily: 'Sora',fontWeight: FontWeight.w600),
-          titleSmall: TextStyle(fontSize: 16,fontFamily: 'Sora',fontWeight: FontWeight.w600),
-          bodyLarge: TextStyle(fontSize: 20,fontFamily: 'Sora',),
-          bodyMedium: TextStyle(fontSize: 16,fontFamily: 'Sora',fontWeight: FontWeight.w400),
-          bodySmall: TextStyle(fontSize: 14,fontFamily: 'Sora',fontWeight: FontWeight.w400)
+          titleLarge: TextStyle(fontSize: 30,fontFamily: 'Sora',fontWeight: FontWeight.w700,color: Colors.black),
+          titleMedium: TextStyle(fontSize: 20,fontFamily: 'Sora',fontWeight: FontWeight.w600,color: Colors.black),
+          titleSmall: TextStyle(fontSize: 16,fontFamily: 'Sora',fontWeight: FontWeight.w600,color: Colors.black),
+          bodyLarge: TextStyle(fontSize: 20,fontFamily: 'Sora',color: Colors.black),
+          bodyMedium: TextStyle(fontSize: 16,fontFamily: 'Sora',fontWeight: FontWeight.w400,color: Colors.black),
+          bodySmall: TextStyle(fontSize: 14,fontFamily: 'Sora',fontWeight: FontWeight.w400,color: Colors.black)
           )
       ),
       initialBinding: InitBinding(),
       title: 'E-Commerce App',
       initialRoute: '/',
-      getPages: [
-        GetPage(name: "/", page: () => GettingStartScreen()),
-        GetPage(name: '/login', page: () => LoginScreen()),
-        GetPage(name: '/signup', page: () => SignUpScreen()),
-      
-      ],
+      getPages: appPages,
     );
   }
+
+
 }
 

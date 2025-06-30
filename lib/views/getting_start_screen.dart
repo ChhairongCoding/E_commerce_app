@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +15,7 @@ class GettingStartScreen extends StatelessWidget {
           
           Padding(
             padding: const EdgeInsets.only(top: 100),
-            child: Image.asset('assets/images/slowkey_logo_getting.png',),
+            child: Image.asset('assets/images/logos/slowkey_logo_getting.png',),
           ),
           Container(
             width: double.infinity,
@@ -62,7 +63,7 @@ class GettingStartScreen extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  onPressed: () => Get.toNamed('/signup'),
+                  onPressed: () => Get.toNamed(AppRoutes.signUpRoute),
                 ),
 
                 Row(
@@ -76,7 +77,7 @@ class GettingStartScreen extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () => Get.toNamed('/login'),
+                      onPressed: () => Get.toNamed(AppRoutes.loginRoute),
                       child: Text(
                         "Log In",
                         style: TextStyle(

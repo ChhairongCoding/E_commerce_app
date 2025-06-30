@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TextFormWidget extends StatelessWidget {
-  final String? label;
+ final String? label;
   final String? hintText;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final bool? obscureText;
-  final Icon? iconField;
+  final IconData? suffixIcon;
+  final VoidCallback? onSuffixTap;
 
   const TextFormWidget({
     super.key,
@@ -15,11 +16,12 @@ class TextFormWidget extends StatelessWidget {
     this.controller,
     this.validator,
     this.obscureText,
-    this.iconField
+    this.suffixIcon,
+    this.onSuffixTap,
   });
-
   @override
   Widget build(BuildContext context) {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -32,7 +34,12 @@ class TextFormWidget extends StatelessWidget {
             fillColor: Colors.transparent,
             hintText: hintText,
             hintStyle: TextStyle(fontSize: 16),
-            suffixIcon: iconField,
+            suffixIcon: suffixIcon != null
+            ? IconButton(
+                icon: Icon(suffixIcon),
+                onPressed: onSuffixTap,
+              )
+            : null,
           ),
           obscureText: obscureText ?? false,
           maxLines: 1,

@@ -1,13 +1,22 @@
+import 'package:e_commerce_app/controllers/login_controller.dart';
+import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:e_commerce_app/widgets/text_form_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hugeicons/hugeicons.dart';
 
+// ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  RxBool isCheck = false.obs;
 
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+    final LoginController loginController = Get.find<LoginController>();
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
@@ -35,27 +44,43 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 Form(
+                  key: formKey,
                   child: Column(
                     spacing: 16,
                     children: [
                       TextFormWidget(
+                        controller: emailController,
                         label: "Email address",
                         hintText: "Your email",
                       ),
-                      TextFormWidget(
-                        label: "Password",
-                        hintText: "Password",
-                        iconField: Icon(Icons.visibility_off_outlined),
-                        obscureText: true,
+                      Obx(
+                        () => TextFormWidget(
+                          controller: passwordController,
+                          label: "Password",
+                          hintText: "Password",
+                          obscureText: loginController.isObsecure.value,
+                          suffixIcon: loginController.isObsecure.value
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                          onSuffixTap: () {
+                            loginController.isObsecure.value =
+                                !loginController.isObsecure.value;
+                          },
+                        ),
                       ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
-                              Checkbox(
-                                value: false,
-                                onChanged: (bool? value) {},
+                              Obx(
+                                () => Checkbox(
+                                  value: isCheck.value,
+                                  onChanged: (bool? value) {
+                                    isCheck.value = value ?? false;
+                                  },
+                                ),
                               ),
                               Text(
                                 "Remember me",
@@ -83,7 +108,11 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadiusGeometry.circular(16),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                           if(formKey.currentState!.validate()){
+                            
+                          }
+                        },
                         child: Text(
                           "Log In",
                           style: TextStyle(
@@ -99,7 +128,7 @@ class LoginScreen extends StatelessWidget {
                         spacing: 16,
                         children: [
                           Expanded(
-                            child: ElevatedButton.icon(
+                            child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 fixedSize: Size(
                                   MediaQuery.of(context).size.width,
@@ -118,24 +147,15 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () {},
-                              icon: Icon(
-                                Icons.facebook,
-                                color: Colors.blue,
-                                size: 30,
-                              ),
-                              label: Text(
-                                "Facebook",
-                                style: TextStyle(
-                                  color: Colors.lightBlue,
-                                  fontSize: 16,
-                                  fontFamily: 'Sora',
-                                  fontWeight: FontWeight.w500,
-                                ),
+                              child: Image.asset(
+                                "assets/images/icons/facebook.png",
+                                width: MediaQuery.of(context).size.width * 0.1,
                               ),
                             ),
                           ),
+
                           Expanded(
-                            child: ElevatedButton.icon(
+                            child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 fixedSize: Size(
                                   MediaQuery.of(context).size.width,
@@ -154,19 +174,9 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () {},
-                              icon: Icon(
-                                HugeIcons.strokeRoundedGoogle,
-                                color: Colors.blue,
-                                size: 30,
-                              ),
-                              label: Text(
-                                "Facebook",
-                                style: TextStyle(
-                                  color: Colors.lightBlue,
-                                  fontSize: 16,
-                                  fontFamily: 'Sora',
-                                  fontWeight: FontWeight.w500,
-                                ),
+                              child: Image.asset(
+                                "assets/images/icons/google.png",
+                                width: MediaQuery.of(context).size.width * 0.1,
                               ),
                             ),
                           ),
@@ -188,7 +198,7 @@ class LoginScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     TextButton(
-                      onPressed: () => Get.toNamed("/signup"),
+                      onPressed: () => Get.toNamed(AppRoutes.signUpRoute),
                       child: Text(
                         "Sign Up",
                         style: TextStyle(
