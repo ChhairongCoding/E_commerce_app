@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/binding/init_binding.dart';
 import 'package:e_commerce_app/core/utils/app_pages.dart';
+import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,21 +21,49 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       theme: ThemeData(
         textTheme: TextTheme(
-          titleLarge: TextStyle(fontSize: 30,fontFamily: 'Sora',fontWeight: FontWeight.w700,color: Colors.black),
-          titleMedium: TextStyle(fontSize: 20,fontFamily: 'Sora',fontWeight: FontWeight.w600,color: Colors.black),
-          titleSmall: TextStyle(fontSize: 16,fontFamily: 'Sora',fontWeight: FontWeight.w600,color: Colors.black),
-          bodyLarge: TextStyle(fontSize: 20,fontFamily: 'Sora',color: Colors.black),
-          bodyMedium: TextStyle(fontSize: 16,fontFamily: 'Sora',fontWeight: FontWeight.w400,color: Colors.black),
-          bodySmall: TextStyle(fontSize: 14,fontFamily: 'Sora',fontWeight: FontWeight.w400,color: Colors.black)
-          )
+          titleLarge: TextStyle(
+            fontSize: 26,
+            fontFamily: 'ProductSans',
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+          ),
+          titleMedium: TextStyle(
+            fontSize: 16,
+            fontFamily: 'Nunito',
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+          titleSmall: TextStyle(
+            fontSize: 14,
+            fontFamily: 'ProductSans',
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
+
+          bodyLarge: TextStyle(
+            fontSize: 16,
+            fontFamily: 'ProductSans',
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 14,
+            fontFamily: 'ProductSans',
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
+          bodySmall: TextStyle(
+            fontSize: 13,
+            fontFamily: 'ProductSans',
+            fontWeight: FontWeight.w400,
+            color: Colors.black,
+          ),
+        ),
       ),
       initialBinding: InitBinding(),
-      title: 'E-Commerce App',
-      initialRoute: '/',
+      title: 'SlowKey Kits',
+      initialRoute: AppRoutes.mainScreenRoute,
       getPages: appPages,
     );
   }
-
-
 }
-

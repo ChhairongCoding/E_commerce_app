@@ -33,7 +33,7 @@ class TextFormWidget extends StatelessWidget {
             filled: true,
             fillColor: Colors.transparent,
             hintText: hintText,
-            hintStyle: TextStyle(fontSize: 16),
+            hintStyle: TextStyle(fontSize: 14),
             suffixIcon: suffixIcon != null
             ? IconButton(
                 icon: Icon(suffixIcon),

@@ -3,4 +3,5 @@ class AppRoutes {
   static String loginRoute = '/login';
   static String signUpRoute = '/signup';
   static String otpRoute = '/otp';
+  static String mainScreenRoute = '/main' ;
 }
