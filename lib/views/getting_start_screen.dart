@@ -11,11 +11,11 @@ class GettingStartScreen extends StatelessWidget {
       // backgroundColor: Color(0xFF0D5EA6),
       body: Stack(
         children: [
-          // Text("image"),
-          
-          Padding(
-            padding: const EdgeInsets.only(top: 100),
-            child: Image.asset('assets/images/logos/slowkey_logo_getting.png',),
+          Center(
+            child: Image.asset(
+              'assets/images/logo/SlowKey_kits_512.png',
+              width: MediaQuery.of(context).size.width * 0.6,
+            ),
           ),
           Container(
             width: double.infinity,
@@ -31,17 +31,19 @@ class GettingStartScreen extends StatelessWidget {
                 Text(
                   "Fall in Love with \n our best Services in Slowkey!",
                   style: TextStyle(
-                    fontFamily: "Sora",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 32,
+                    fontFamily: "ProductSans",
+                    fontWeight: FontWeight.w700,
+                    fontSize: 25,
+                    height: 1,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 Text(
                   "Welcome to our SlowKey buil pc and selling accessories, where every accessories is a good quality for you.",
                   style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'Sora',
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'ProductSans',
                     color: Colors.grey,
                   ),
                   textAlign: TextAlign.center,
@@ -58,9 +60,9 @@ class GettingStartScreen extends StatelessWidget {
                     "Create an acount",
                     style: TextStyle(
                       color: Colors.white,
-                      fontFamily: 'Sora',
+                      fontFamily: 'ProductSans',
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   onPressed: () => Get.toNamed(AppRoutes.signUpRoute),
@@ -71,10 +73,7 @@ class GettingStartScreen extends StatelessWidget {
                   children: [
                     Text(
                       "Already have an account?",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontFamily: 'Sora',
-                      ),
+                      style:Theme.of(context).textTheme.bodyMedium,
                     ),
                     TextButton(
                       onPressed: () => Get.toNamed(AppRoutes.loginRoute),
@@ -82,7 +81,8 @@ class GettingStartScreen extends StatelessWidget {
                         "Log In",
                         style: TextStyle(
                           fontSize: 14,
-                          fontFamily: 'Sora',
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'ProductSans',
                         ),
                       ),
                     ),
