@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CustomCardWidget extends StatelessWidget {
@@ -9,30 +10,52 @@ class CustomCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Image.network(
-          data['image'],
-          width: size.width * 0.43,
-          height: size.height * 0.25,
-          fit: BoxFit.cover,
-        ),
-        SizedBox(
-          width: size.width * 0.43,
-          child: Text(
-            data['name'],
+    final String imageUrl = data['image'] ?? '';
+    final String name = data['name'] ?? 'No Name';
+    final String price = data['price'] ?? data['Price'] ?? '€0.00';
+
+    return SizedBox(
+      width: size.width * 0.43,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Product Image
+          ClipRRect(
+            // borderRadius: BorderRadius.circular(8),
+            child: CachedNetworkImage(
+              imageUrl: imageUrl,
+              width: size.width * 0.43,
+              height: size.height * 0.25,
+              fit: BoxFit.cover,
+              errorWidget: (context, error, stackTrace) => Container(
+                height: size.height * 0.25,
+                color: Colors.grey[300],
+                alignment: Alignment.center,
+                child: const Icon(Icons.broken_image, size: 40),
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+
+          // Product Name
+          Text(
+            name,
             style: Theme.of(context).textTheme.titleSmall,
             softWrap: true,
-            overflow: TextOverflow.visible,
-            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
-        ),
-        Text(
-          data['Price'],
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-      ],
+          const SizedBox(height: 4),
+
+          // Product Price
+          Text(
+            price,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: Colors.orange),
+          ),
+        ],
+      ),
     );
   }
 }

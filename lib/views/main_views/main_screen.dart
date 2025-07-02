@@ -42,23 +42,37 @@ class MainScreen extends StatelessWidget {
         () => mainController.listScreens[mainController.currentIndex.value],
       ),
       bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          currentIndex: mainController.currentIndex.value,
-          onTap: mainController.toggleSwitch,
-          selectedItemColor: Colors.blue,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          elevation: 10,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(HugeIcons.strokeRoundedHome01),
-              label: "",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(HugeIcons.strokeRoundedFavourite),
-              label: "",
-            ),
-          ],
+        () => Container(
+          margin: EdgeInsets.only(top: 10),
+          child: BottomNavigationBar(
+            currentIndex: mainController.currentIndex.value,
+            onTap: mainController.toggleSwitch,
+            selectedItemColor: Colors.blue,
+            unselectedItemColor: Colors.black,
+            type: BottomNavigationBarType.fixed,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(HugeIcons.strokeRoundedHome01),
+                label: "",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(HugeIcons.strokeRoundedSearch02),
+                label: "",
+              ),
+               BottomNavigationBarItem(
+                icon: Icon(HugeIcons.strokeRoundedFavourite),
+                label: "",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(HugeIcons.strokeRoundedShoppingCart01),
+                label: "",
+              ),
+               BottomNavigationBarItem(
+                icon: Icon(HugeIcons.strokeRoundedUser),
+                label: "",
+              ),
+            ],
+          ),
         ),
       ),
     );

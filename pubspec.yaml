@@ -40,6 +40,7 @@ dependencies:
   pinput: ^5.0.1
   get_storage: ^2.1.1
   jwt_decoder: ^2.0.1
+  cached_network_image: ^3.4.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
