@@ -88,18 +88,66 @@ class ShopScreen extends StatelessWidget {
 
               // category
               // Updated Shoe Display Card
-              ...List.generate(
-                shopController.listCate.length,
-                (index) => CustomCategoryCardWidget(
-                  title: shopController.listCate[index]['name'],
-                  imageUrl: shopController.listCate[index]['imageUrl'],
+              Obx(
+                () => Column(
+                  spacing: 16,
+                  children: List.generate(shopController.listCate.length, (
+                    index,
+                  ) {
+                    final title = shopController.listCate[index]['name'];
+                    final image = shopController.listCate[index]['imageUrl'];
+                    final items = shopController.listCateItem[0][title] ?? [];
+
+                    final isExpanded =
+                        shopController.selectedIndex.value == index;
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomCategoryCardWidget(
+                          title: title,
+                          imageUrl: image,
+                          onTap: () {
+                            if (isExpanded) {
+                              shopController.selectedIndex.value = -1;
+                            } else {
+                              shopController.selectedIndex.value = index;
+                            }
+                          },
+                        ),
+                        if (isExpanded)
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              height: items.length * 80,
+                              child: ListView.separated(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: items.length,
+                                itemBuilder: (_, i) => Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        items[i],
+                                        style: Theme.of(
+                                          context,
+                                        ).textTheme.titleMedium,
+                                      ),
+                                      Icon(HugeIcons.strokeRoundedArrowRight01)
+                                    ],
+                                  ),
+                                ),
+                                separatorBuilder: (_, __) =>
+                                    const Divider(thickness: 1),
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  }),
                 ),
               ),
-              // CustomCategoryCardWidget(
-              //   title: "Shoes",
-              //   imageUrl:
-              //       "https://www.rebelsport.com.au/on/demandware.static/-/Sites-srg-internal-master-catalog/default/dwf19506fd/hof/250430-HPLP-Football-3D-Nike-SuperflyMbappe.png",
-              // ),
             ],
           ),
         ),

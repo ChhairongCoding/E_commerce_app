@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
 class ShopController extends GetxController {
+  RxInt selectedIndex = (-1).obs; // -1 means no item is expanded
+
   List<Map<String, dynamic>> listCate = [
     {
       'name': 'Shoes',
@@ -21,7 +23,7 @@ class ShopController extends GetxController {
   List<Map<String, List<String>>> listCateItem = [
     {
       'Shoes': ['Running', 'Soccer', 'Sneaker', 'Basketball'],
-      'Collection': ['Copa', 'F50', 'Superstar', 'Sportswear'],
+      'Collection': ['Copa', 'F50', 'Superstar', 'Sportswear','Copa', 'F50', 'Superstar', 'Sportswear'],
     },
   ];
 }
