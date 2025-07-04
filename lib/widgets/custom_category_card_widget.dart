@@ -3,45 +3,55 @@ import 'package:flutter/material.dart';
 
 class CustomCategoryCardWidget extends StatelessWidget {
   final String imageUrl;
-  final String title ;
-  const CustomCategoryCardWidget({super.key, required this.imageUrl,required this.title});
+  final String title;
+  final VoidCallback onTap;
+
+  const CustomCategoryCardWidget({
+    super.key,
+    required this.imageUrl,
+    required this.title,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 180,
-      width: double.infinity,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(color: Color(0xFF424D57)),
-            Positioned.fill(child: CustomPaint(painter: CirclePainter())),
-
-            Positioned(
-              top: 20,
-              left: 20,
-              child: Text(
-               title,
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(color: Colors.grey.shade200),
+    return GestureDetector(
+      onTap: onTap, // <-- handle tap
+      child: SizedBox(
+        height: 180,
+        width: double.infinity,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(color: Color(0xFF424D57)),
+              Positioned.fill(child: CustomPaint(painter: CirclePainter())),
+              Positioned(
+                top: 20,
+                left: 20,
+                child: Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(color: Colors.grey.shade200),
+                ),
               ),
-            ),
-
-            Positioned(
-              child: CachedNetworkImage(
-                imageUrl: imageUrl, 
-                height: MediaQuery.of(context).size.height,
+              Positioned(
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  height: MediaQuery.of(context).size.height,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
 
 class CirclePainter extends CustomPainter {
   @override
