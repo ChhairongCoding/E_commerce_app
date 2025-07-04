@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/controllers/shop_controller.dart';
+import 'package:e_commerce_app/views/search_screen.dart';
 import 'package:e_commerce_app/widgets/custom_category_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,27 +34,30 @@ class ShopScreen extends StatelessWidget {
                         ],
                         borderRadius: BorderRadius.circular(16),
                       ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
+                      child: GestureDetector(
+                        onDoubleTap: () => Get.to(SearchScreen()),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            prefixIcon: Icon(HugeIcons.strokeRoundedSearch01),
+                            hintText: "Search",
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide.none,
+                            ),
+                            fillColor: Color(0xFFFEF7FF),
+                            filled: true,
                           ),
-                          prefixIcon: Icon(HugeIcons.strokeRoundedSearch01),
-                          hintText: "Search",
-                          hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide.none,
-                          ),
-                          fillColor: Color(0xFFFEF7FF),
-                          filled: true,
                         ),
                       ),
                     ),
