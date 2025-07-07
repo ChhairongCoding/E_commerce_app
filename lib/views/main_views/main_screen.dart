@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class MainScreen extends StatelessWidget {
-  MainScreen({super.key});
+  const MainScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +15,11 @@ class MainScreen extends StatelessWidget {
       drawer: drawerWidget(context),
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          "SlowKey Kits",
-          style: Theme.of(context).textTheme.titleLarge,
+        title: Obx(
+          () => Text(
+            mainController.title.value,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
         ),
         actions: [
           IconButton(
@@ -179,19 +181,18 @@ class MainScreen extends StatelessWidget {
             ),
           ),
           Divider(),
-            Padding(
+          Padding(
             padding: const EdgeInsets.all(12),
             child: Obx(
               () => SwitchListTile(
-              title: const Text("Dark Mode"),
-              value: drawerController.isDarkMode.value,
-              onChanged: (val) {
-                drawerController.isDarkMode.value = val;
-                Get.changeThemeMode(val ? ThemeMode.dark : ThemeMode.light);
-              },
-              secondary: const Icon(Icons.dark_mode),
+                title: const Text("Dark Mode"),
+                value: drawerController.isDarkMode.value,
+                onChanged: (val) {
+                  drawerController.isDarkMode.value = val;
+                  Get.changeThemeMode(val ? ThemeMode.dark : ThemeMode.light);
+                },
+                secondary: const Icon(Icons.dark_mode),
               ),
-            
             ),
           ),
         ],

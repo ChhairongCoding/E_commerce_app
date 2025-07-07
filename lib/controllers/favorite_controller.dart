@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 class FavoriteController extends GetxController {
   RxInt counter = 0.obs;
+  RxList<RxMap<String, dynamic>> addToCartList = <RxMap<String, dynamic>>[].obs;
   List<Map<String, dynamic>> listFav = [
     {
       'image':
@@ -75,5 +76,17 @@ class FavoriteController extends GetxController {
 
   void decrement() {
     counter--;
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    
+  }
+
+  void addToCart(Map<String, dynamic> data) {
+    addToCartList.add(data.obs);
+    print(addToCartList);
+
   }
 }
