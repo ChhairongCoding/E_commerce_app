@@ -3,7 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/controllers/favorite_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 import 'package:hugeicons/hugeicons.dart';
 
@@ -40,8 +40,7 @@ class FavoriteScreen extends StatelessWidget {
     );
   }
 
-  SizedBox favoriteCard(final Map<String, dynamic> data) {
-    final FavoriteController favoriteController = Get.find<FavoriteController>();
+  Widget favoriteCard(final Map<String, dynamic> data) {
     return SizedBox(
       width: double.infinity,
       height: 100,
@@ -66,37 +65,17 @@ class FavoriteScreen extends StatelessWidget {
                       child: Text(
                         data['name'],
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
                     ),
-                    Obx(
-                      () => Row(
-                        children: [
-                          ElevatedButton(
-                            onPressed: () => favoriteController.decrement(),
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size(32, 32),
-                              padding: EdgeInsets.zero,
-                            ),
-                            child: Text("-", style: TextStyle(fontSize: 26)),
-                          ),
-                          SizedBox(width: 8),
-                          Text(favoriteController.counter.toString(), style: TextStyle(fontSize: 20)),
-                          SizedBox(width: 8),
-                          ElevatedButton(
-                            onPressed: () => favoriteController.increment(),
-                            style: ElevatedButton.styleFrom(
-                              minimumSize: Size(32, 32),
-                              padding: EdgeInsets.zero,
-                            ),
-                            child: Text("+", style: TextStyle(fontSize: 26)),
-                          ),
-                        ],
-                      ),
+                    ElevatedButton.icon(
+                      onPressed: () => FavoriteController().addToCart(data),
+
+                      label: Icon(Icons.add),
                     ),
                   ],
                 ),
