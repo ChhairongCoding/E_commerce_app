@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/controllers/drawer_controller_x.dart';
+import 'package:e_commerce_app/controllers/favorite_controller.dart';
 import 'package:e_commerce_app/controllers/home_controller.dart';
 import 'package:e_commerce_app/controllers/login_controller.dart';
 import 'package:e_commerce_app/controllers/otp_controller.dart';
@@ -18,9 +19,10 @@ class InitBinding extends Bindings {
     Get.put(OtpController());
     Get.put(HomeController());
     Get.put(ShopController());
+    Get.put(FavoriteController());
     Get.put(DrawerControllerX());
+
     //service
     Get.put(AuthService());
-
   }
 }

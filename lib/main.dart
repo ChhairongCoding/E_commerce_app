@@ -60,6 +60,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
+      darkTheme: ThemeData.dark(),
       initialBinding: InitBinding(),
       title: 'SlowKey Kits',
       initialRoute: AppRoutes.mainScreenRoute,
