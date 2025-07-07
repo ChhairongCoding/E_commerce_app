@@ -12,7 +12,7 @@ class MainScreen extends StatelessWidget {
     final MainController mainController = Get.find<MainController>();
 
     return Scaffold(
-      drawer: DrawerWidget(context),
+      drawer: drawerWidget(context),
       appBar: AppBar(
         centerTitle: true,
         title: Text(
@@ -43,7 +43,6 @@ class MainScreen extends StatelessWidget {
             currentIndex: mainController.currentIndex.value,
             onTap: mainController.toggleSwitch,
             selectedItemColor: Colors.blue,
-            unselectedItemColor: Colors.black,
             type: BottomNavigationBarType.fixed,
             items: const [
               BottomNavigationBarItem(
@@ -73,9 +72,9 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  Drawer DrawerWidget(BuildContext context) {
+  Drawer drawerWidget(BuildContext context) {
     final DrawerControllerX drawerController = Get.find<DrawerControllerX>();
-    return  Drawer(
+    return Drawer(
       child: ListView(
         children: [
           DrawerHeader(
@@ -119,7 +118,9 @@ class MainScreen extends StatelessWidget {
               selectedColor: Colors.blue,
               leading: Icon(HugeIcons.strokeRoundedHome01),
               title: const Text("Home"),
-              onTap: () { drawerController.changeIndex(0);},
+              onTap: () {
+                drawerController.changeIndex(0);
+              },
             ),
           ),
           Obx(
@@ -178,15 +179,21 @@ class MainScreen extends StatelessWidget {
             ),
           ),
           Divider(),
-          Padding(
-          padding: const EdgeInsets.all(12),
-          child: Obx(() => SwitchListTile(
-                title: const Text("Dark Mode"),
-                value: drawerController.isDarkMode.value,
-                onChanged: (val) => drawerController.toggleDarkMode(),
-                secondary: const Icon(Icons.dark_mode),
-              )),
-        ),
+            Padding(
+            padding: const EdgeInsets.all(12),
+            child: Obx(
+              () => SwitchListTile(
+              title: const Text("Dark Mode"),
+              value: drawerController.isDarkMode.value,
+              onChanged: (val) {
+                drawerController.isDarkMode.value = val;
+                Get.changeThemeMode(val ? ThemeMode.dark : ThemeMode.light);
+              },
+              secondary: const Icon(Icons.dark_mode),
+              ),
+            
+            ),
+          ),
         ],
       ),
     );

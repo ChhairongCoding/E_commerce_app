@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/controllers/shop_controller.dart';
-import 'package:e_commerce_app/views/search_screen.dart';
 import 'package:e_commerce_app/widgets/custom_category_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,74 +18,11 @@ class ShopScreen extends StatelessWidget {
             spacing: 16,
             children: [
               // search
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.1),
-                            blurRadius: 0.3,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: GestureDetector(
-                        onDoubleTap: () => Get.to(SearchScreen()),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            prefixIcon: Icon(HugeIcons.strokeRoundedSearch01),
-                            hintText: "Search",
-                            hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              borderSide: BorderSide.none,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              borderSide: BorderSide.none,
-                            ),
-                            fillColor: Color(0xFFFEF7FF),
-                            filled: true,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFEF7FF),
-                      boxShadow: [
-                        BoxShadow(
-                          // ignore: deprecated_member_use
-                          color: Colors.grey.withOpacity(0.1),
-                          blurRadius: 0.3,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        HugeIcons.strokeRoundedFilterMailCircle,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-                  ),
-                ],
+
+              SearchBar(
+                leading: Icon(HugeIcons.strokeRoundedSearch02),
+                hintText: "Search",
+                
               ),
               SizedBox(height: 4),
 

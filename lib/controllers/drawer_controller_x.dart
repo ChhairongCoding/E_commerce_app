@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/views/main_views/main_controller.dart';
 import 'package:get/get.dart';
 
 class DrawerControllerX extends GetxController {
@@ -6,6 +7,8 @@ class DrawerControllerX extends GetxController {
 
   void changeIndex(int index) {
     selectedIndex.value = index;
+    Get.find<MainController>().currentIndex.value = selectedIndex.value ; 
+    
 
   }
   
