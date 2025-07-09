@@ -5,4 +5,5 @@ class AppRoutes {
   static String otpRoute = '/otp';
   static String mainScreenRoute = '/main' ;
   static String discover = '/discover';
+  static String detail = '/detail';
 }

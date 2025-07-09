@@ -5,6 +5,7 @@ import 'package:e_commerce_app/views/getting_start_screen.dart';
 import 'package:e_commerce_app/views/auth_view/otp_screen.dart';
 import 'package:e_commerce_app/views/main_views/main_screen.dart';
 import 'package:e_commerce_app/views/shop_screen.dart';
+import 'package:e_commerce_app/widgets/custom_detail_product.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
 List<GetPage<dynamic>> get appPages {
@@ -17,6 +18,7 @@ List<GetPage<dynamic>> get appPages {
     GetPage(name: AppRoutes.signUpRoute, page: () => SignUpScreen()),
     GetPage(name: AppRoutes.otpRoute, page: () => OtpScreen()),
     GetPage(name: AppRoutes.mainScreenRoute, page: () => MainScreen()),
-    GetPage(name: AppRoutes.discover, page:()=> ShopScreen())
+    GetPage(name: AppRoutes.discover, page:()=> ShopScreen()),
+    GetPage(name: AppRoutes.detail, page:()=> CustomDetailProduct())
   ];
 }

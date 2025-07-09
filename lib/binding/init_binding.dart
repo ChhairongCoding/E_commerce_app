@@ -19,8 +19,9 @@ class InitBinding extends Bindings {
     Get.put(OtpController());
     Get.put(HomeController());
     Get.put(ShopController());
-    Get.put(FavoriteController());
     Get.put(DrawerControllerX());
+    Get.put(FavoriteController());
+
 
     //service
     Get.put(AuthService());

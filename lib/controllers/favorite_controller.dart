@@ -78,11 +78,6 @@ class FavoriteController extends GetxController {
     counter--;
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    
-  }
 
   void addToCart(Map<String, dynamic> data) {
     addToCartList.add(data.obs);
