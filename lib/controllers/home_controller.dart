@@ -1,13 +1,16 @@
+import 'package:e_commerce_app/widgets/custom_detail_product.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   RxString selectedCategory = 'All'.obs;
+  RxMap<dynamic , dynamic> listDetail= {}.obs;
   List<Map<String, dynamic>> listProduct = [
     {
       'name': "Tee retro Spotify Camp Nou ",
       'price': '€29,99 EUR',
       'image':
           'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048&width=1200',
+      
     },
     {
       'name': "Blaugrana charity bracelet",
@@ -141,5 +144,11 @@ class HomeController extends GetxController {
 
   void setCategory(String category) {
     selectedCategory.value = category;
+  }
+
+  void tempProduct(Map<String , dynamic>  product){
+    listDetail.addAll(product);
+    Get.to(CustomDetailProduct());
+    print(listDetail);
   }
 }
