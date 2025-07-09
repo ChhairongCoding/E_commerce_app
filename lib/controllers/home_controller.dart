@@ -149,6 +149,5 @@ class HomeController extends GetxController {
   void tempProduct(Map<String , dynamic>  product){
     listDetail.addAll(product);
     Get.to(CustomDetailProduct());
-    print(listDetail);
   }
 }

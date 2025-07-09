@@ -81,7 +81,6 @@ class FavoriteController extends GetxController {
 
   void addToCart(Map<String, dynamic> data) {
     addToCartList.add(data.obs);
-    print(addToCartList);
 
   }
 }
