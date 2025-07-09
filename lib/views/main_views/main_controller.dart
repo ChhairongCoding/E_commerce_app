@@ -28,7 +28,7 @@ class MainController extends GetxController {
       title("Favorite");
     }else if (currentIndex.value == 3){
       title("Your Cart");
-    }else if (currentIndex.value == 5){
+    }else{
       title("Profile");
     }
   }
