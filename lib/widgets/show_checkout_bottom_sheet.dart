@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,24 +22,78 @@ void showCheckoutBottomSheet(BuildContext context) {
             spacing: 16,
             children: [
               Center(
-                child: Text("Detail Products",style: Theme.of(context).textTheme.titleLarge, textAlign: TextAlign.center),
+                child: Text(
+                  "Detail Products",
+                  style: Theme.of(context).textTheme.titleLarge,
+                  textAlign: TextAlign.center,
+                ),
               ),
               Icon(Icons.image),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text("Products Total",style: Theme.of(context).textTheme.bodyLarge,), Text("\$231",style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 18),)],
+                children: [
+                  Text(
+                    "Products Total",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(color: Color(0xff8A8A8F)),
+                  ),
+                  Text(
+                    "\$231",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(fontSize: 18),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text("Shipping ",style: Theme.of(context).textTheme.bodyLarge,) ,Text("\$21",style: Theme.of(context).textTheme.bodyLarge,)],
+                children: [
+                  Text(
+                    "Shipping ",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(color: Color(0xff8A8A8F)),
+                  ),
+                  Text(
+                    "\$21",
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text("Discount ",style: Theme.of(context).textTheme.bodyLarge,), Text("15%",style: Theme.of(context).textTheme.bodyLarge,)],
+                children: [
+                  Text(
+                    "Discount ",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(color: Color(0xff8A8A8F)),
+                  ),
+                  Text(
+                    "%15",
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text("Subtotal ",style: Theme.of(context).textTheme.bodyLarge,), Text("\$221",style: Theme.of(context).textTheme.bodyLarge,)],
+                children: [
+                  Text(
+                    "Subtotal ",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  Text(
+                    "\$221",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(fontSize: 18),
+                  ),
+                ],
               ),
             ],
           ),
@@ -47,10 +102,10 @@ void showCheckoutBottomSheet(BuildContext context) {
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 50),
               ),
-              onPressed: () {},
+              onPressed: () => Get.toNamed(AppRoutes.checkout),
               child: Text("Check-Out"),
             ),
-          ), 
+          ),
         ],
       ),
     ),

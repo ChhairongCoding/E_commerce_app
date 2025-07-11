@@ -6,4 +6,6 @@ class AppRoutes {
   static String mainScreenRoute = '/main' ;
   static String discover = '/discover';
   static String detail = '/detail';
+  static String notification = '/notification';
+  static String checkout = '/checkout';
 }
