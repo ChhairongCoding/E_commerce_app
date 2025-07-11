@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/controllers/drawer_controller_x.dart';
+import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:e_commerce_app/views/main_views/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,7 @@ class MainScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(HugeIcons.strokeRoundedNotification02, size: 26),
-            onPressed: () {},
+            onPressed: () => Get.toNamed(AppRoutes.notification),
           ),
         ],
         leading: Builder(
@@ -55,10 +56,10 @@ class MainScreen extends StatelessWidget {
                 icon: Icon(HugeIcons.strokeRoundedSearch02),
                 label: "",
               ),
-              BottomNavigationBarItem(
-                icon: Icon(HugeIcons.strokeRoundedFavourite),
-                label: "",
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(HugeIcons.strokeRoundedFavourite),
+              //   label: "",
+              // ),
               BottomNavigationBarItem(
                 icon: Icon(HugeIcons.strokeRoundedShoppingCart01),
                 label: "",

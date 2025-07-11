@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/views/cart_screen.dart';
-import 'package:e_commerce_app/views/favorite_screen.dart';
 import 'package:e_commerce_app/views/home_screen.dart';
 import 'package:e_commerce_app/views/profile_screen.dart';
 import 'package:e_commerce_app/views/shop_screen.dart';
@@ -13,7 +12,6 @@ class MainController extends GetxController {
   final List<Widget> listScreens = [
     HomeScreen(),
     ShopScreen(),
-    FavoriteScreen(),
     CartScreen(),
     ProfileScreen(),
   ];
@@ -24,8 +22,6 @@ class MainController extends GetxController {
       title("SlowKey Kits");
     }else if (currentIndex.value == 1){
       title("Discover");
-    }else if (currentIndex.value == 2){
-      title("Favorite");
     }else if (currentIndex.value == 3){
       title("Your Cart");
     }else{

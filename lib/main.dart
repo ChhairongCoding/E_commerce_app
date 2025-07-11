@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
             color: Colors.black,
           ),
 
-          bodyLarge: TextStyle(
+          bodyLarge: TextStyle( 
             fontSize: 16,
             fontFamily: 'ProductSans',
             fontWeight: FontWeight.w700,
