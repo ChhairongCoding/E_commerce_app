@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:e_commerce_app/widgets/show_checkout_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -51,11 +53,14 @@ class CartScreen extends StatelessWidget {
                           ],
                         ),
                         ElevatedButton(
-                          style: ElevatedButton.styleFrom(),
+                          style: ElevatedButton.styleFrom(
+                          ),
                           onPressed: () {
-                            //check out
+                            Get.toNamed(AppRoutes.checkout);
                           },
-                          child: Text("Check-Out"),
+                          child: Text("Check out", style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            
+                          ),),
                         ),
                       ],
                     ),

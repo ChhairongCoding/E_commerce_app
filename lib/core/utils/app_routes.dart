@@ -8,4 +8,5 @@ class AppRoutes {
   static String detail = '/detail';
   static String notification = '/notification';
   static String checkout = '/checkout';
+  static String shipping =  '/shipping' ;
 }
