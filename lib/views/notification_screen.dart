@@ -35,7 +35,7 @@ class NotificationScreen extends StatelessWidget {
                         Text(
                           "Summer sale up to 20% off. Limited voucher. Get now!! 😜",
                           style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(color: Colors.blueGrey),
+                              ?.copyWith(color: Colors.grey[700]),
                         ),
                       ],
                     ),
@@ -59,7 +59,7 @@ class NotificationScreen extends StatelessWidget {
                         Text(
                           "New Autumn Collection 30% off",
                           style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(color: Colors.blueGrey),
+                              ?.copyWith(color: Colors.grey[700]),
                         ),
                       ],
                     ),

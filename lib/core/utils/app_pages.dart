@@ -6,6 +6,7 @@ import 'package:e_commerce_app/views/auth_view/otp_screen.dart';
 import 'package:e_commerce_app/views/main_views/main_screen.dart';
 import 'package:e_commerce_app/views/notification_screen.dart';
 import 'package:e_commerce_app/views/payment_view/checkout_screen.dart';
+import 'package:e_commerce_app/views/payment_view/shipping_screen.dart';
 import 'package:e_commerce_app/views/shop_screen.dart';
 import 'package:e_commerce_app/widgets/custom_detail_product.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -24,5 +25,6 @@ List<GetPage<dynamic>> get appPages {
     GetPage(name: AppRoutes.detail, page: () => CustomDetailProduct()),
     GetPage(name: AppRoutes.notification, page: () => NotificationScreen()),
     GetPage(name: AppRoutes.checkout, page: () => CheckoutScreen()),
+    GetPage(name: AppRoutes.shipping, page: () => ShippingScreen()),
   ];
 }
