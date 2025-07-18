@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -180,7 +182,7 @@ class ProfileScreen extends StatelessWidget {
                         child: SizedBox(
                           width: double.infinity,
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () => Get.toNamed(AppRoutes.loginRoute),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

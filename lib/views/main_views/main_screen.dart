@@ -13,26 +13,35 @@ class MainScreen extends StatelessWidget {
     final MainController mainController = Get.find<MainController>();
 
     return Scaffold(
-      drawer: drawerWidget(context),
+      // drawer: drawerWidget(context),
       appBar: AppBar(
         centerTitle: true,
-        title: Obx(
-          () => Text(
-            mainController.title.value,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-        ),
         actions: [
           IconButton(
             icon: Icon(HugeIcons.strokeRoundedNotification02, size: 26),
             onPressed: () => Get.toNamed(AppRoutes.notification),
           ),
-        ],
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Icon(HugeIcons.strokeRoundedMenu05, size: 26),
-            onPressed: () => Scaffold.of(context).openDrawer(),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(HugeIcons.strokeRoundedShoppingBag02),
           ),
+        ],
+
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              spacing: 8,
+              children: [
+                Icon(HugeIcons.strokeRoundedPinLocation03, size: 14),
+                Text("Your location", style: TextStyle(fontSize: 12)),
+              ],
+            ),
+            Text(
+              "Phnom Penh",
+              style: TextStyle(fontSize: 14, fontFamily: "ProductSans"),
+            ),
+          ],
         ),
       ),
 

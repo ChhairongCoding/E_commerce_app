@@ -134,63 +134,63 @@ class LoginScreen extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                               SizedBox(height: 16),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      shape: CircleBorder(),
-                                      padding: EdgeInsets.all(16),
-                                      side: BorderSide(
-                                        color: const Color(0xFFE2E0DF),
-                                        width: 2,
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                    child: Image.asset(
-                                      "assets/images/icons/facebook.png",
-                                      width:
-                                          MediaQuery.of(context).size.width *
-                                          0.1,
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      shape: CircleBorder(),
-                                      padding: EdgeInsets.all(16),
-                                      side: BorderSide(
-                                        color: const Color(0xFFE2E0DF),
-                                        width: 2,
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                    child: Image.asset(
-                                      "assets/images/icons/google.png",
-                                      width:
-                                          MediaQuery.of(context).size.width *
-                                          0.1,
-                                    ),
-                                  ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      shape: CircleBorder(),
-                                      padding: EdgeInsets.all(16),
-                                      side: BorderSide(
-                                        color: const Color(0xFFE2E0DF),
-                                        width: 2,
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                    child: Image.asset(
-                                      "assets/images/icons/phone-call.png",
-                                      width:
-                                          MediaQuery.of(context).size.width *
-                                          0.1,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceEvenly,
+                              //   children: [
+                              //     ElevatedButton(
+                              //       style: ElevatedButton.styleFrom(
+                              //         shape: CircleBorder(),
+                              //         padding: EdgeInsets.all(16),
+                              //         side: BorderSide(
+                              //           color: const Color(0xFFE2E0DF),
+                              //           width: 2,
+                              //         ),
+                              //       ),
+                              //       onPressed: () {},
+                              //       child: Image.asset(
+                              //         "assets/images/icons/facebook.png",
+                              //         width:
+                              //             MediaQuery.of(context).size.width *
+                              //             0.1,
+                              //       ),
+                              //     ),
+                              //     ElevatedButton(
+                              //       style: ElevatedButton.styleFrom(
+                              //         shape: CircleBorder(),
+                              //         padding: EdgeInsets.all(16),
+                              //         side: BorderSide(
+                              //           color: const Color(0xFFE2E0DF),
+                              //           width: 2,
+                              //         ),
+                              //       ),
+                              //       onPressed: () {},
+                              //       child: Image.asset(
+                              //         "assets/images/icons/google.png",
+                              //         width:
+                              //             MediaQuery.of(context).size.width *
+                              //             0.1,
+                              //       ),
+                              //     ),
+                              //     ElevatedButton(
+                              //       style: ElevatedButton.styleFrom(
+                              //         shape: CircleBorder(),
+                              //         padding: EdgeInsets.all(16),
+                              //         side: BorderSide(
+                              //           color: const Color(0xFFE2E0DF),
+                              //           width: 2,
+                              //         ),
+                              //       ),
+                              //       onPressed: () {},
+                              //       child: Image.asset(
+                              //         "assets/images/icons/phone-call.png",
+                              //         width:
+                              //             MediaQuery.of(context).size.width *
+                              //             0.1,
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                             ],
                           ),
                         ),

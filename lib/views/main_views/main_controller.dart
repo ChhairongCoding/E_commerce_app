@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class MainController extends GetxController {
   RxInt currentIndex = 0.obs;
-  RxString title = ''.obs;
+  RxString title = 'Home'.obs;
 
   final List<Widget> listScreens = [
     HomeScreen(),
@@ -18,13 +18,13 @@ class MainController extends GetxController {
 
   void toggleSwitch(int value) {
     currentIndex.value = value;
-    if(currentIndex.value == 0){
-      title("SlowKey Kits");
-    }else if (currentIndex.value == 1){
+    if (value == 0) {
+      title("Home");
+    } else if (value == 1) {
       title("Discover");
-    }else if (currentIndex.value == 3){
+    } else if (value == 2) {
       title("Your Cart");
-    }else{
+    } else {
       title("Profile");
     }
   }

@@ -22,13 +22,13 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         textTheme: TextTheme(
           titleLarge: TextStyle(
-            fontSize: 26,
+            fontSize: 25,
             fontFamily: 'ProductSans',
             fontWeight: FontWeight.w700,
             color: Colors.black,
           ),
           titleMedium: TextStyle(
-            fontSize: 18,
+            fontSize: 16,
             fontFamily: 'Nunito',
             fontWeight: FontWeight.w600,
             color: Colors.black,
@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
             color: Colors.black,
           ),
           bodySmall: TextStyle(
-            fontSize: 13,
+            fontSize: 11,
             fontFamily: 'ProductSans',
             fontWeight: FontWeight.w400,
             color: Colors.black,
