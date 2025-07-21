@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/controllers/home_controller.dart';
 import 'package:e_commerce_app/widgets/custom_card_widget.dart';
 import 'package:e_commerce_app/widgets/custom_product_card_with_rating.dart';
@@ -11,12 +10,11 @@ import 'package:hugeicons/hugeicons.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  RxInt setectedCateIndex = 1.obs;
+  final RxInt setectedCateIndex = 1.obs;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final HomeController homeController = Get.find<HomeController>();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -186,8 +184,7 @@ class SearchCustom extends StatelessWidget {
         Flexible(
           flex: 9,
           child: SearchWidget(
-            text: "Search in Store...",
-            icon: HugeIcons.strokeRoundedSearch01,
+            text: "Search in Store..."
           ),
         ),
         Flexible(

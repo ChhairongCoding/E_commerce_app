@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class SearchWidget extends StatelessWidget {
-  const SearchWidget({super.key, required this.text, required this.icon});
+  const SearchWidget({super.key, required this.text,});
 
   final String text;
-  final IconData icon;
+
   // final  bool showBackground , showBorder;
 
   @override
@@ -24,7 +25,7 @@ class SearchWidget extends StatelessWidget {
         child: Row(
           spacing: 16,
           children: [
-            Icon(icon),
+            Icon(HugeIcons.strokeRoundedSearch01),
             Text(
               text,
               style: Theme.of(

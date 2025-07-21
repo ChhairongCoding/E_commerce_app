@@ -4,44 +4,80 @@ import 'package:flutter/material.dart';
 class CustomCategoryCardWidget extends StatelessWidget {
   final String imageUrl;
   final String title;
+  final String subtitle;
   final VoidCallback onTap;
 
   const CustomCategoryCardWidget({
     super.key,
     required this.imageUrl,
     required this.title,
+    required this.subtitle,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap, // <-- handle tap
-      child: SizedBox(
-        height: 180,
-        width: double.infinity,
+      onTap: onTap,
+      child: Container(
+        width: 200,
+        height: 220,
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
           child: Stack(
-            alignment: Alignment.center,
             children: [
-              Container(color: Color(0xFF424D57)),
-              Positioned.fill(child: CustomPaint(painter: CirclePainter())),
-              Positioned(
-                top: 20,
-                left: 20,
-                child: Text(
-                  title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge
-                      ?.copyWith(color: Colors.grey.shade200),
+              Positioned.fill(
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  fit: BoxFit.cover,
                 ),
               ),
               Positioned(
-                child: CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  height: MediaQuery.of(context).size.height,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.black.withOpacity(0.7), Colors.transparent],
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        subtitle,
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 12,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -50,25 +86,4 @@ class CustomCategoryCardWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-
-class CirclePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-
-    final paint = Paint()
-      ..color = Colors.black.withOpacity(0.08)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 80;
-
-    canvas.drawCircle(center, 150, paint);
-
-    paint.strokeWidth = 40;
-    canvas.drawCircle(center, 80, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
