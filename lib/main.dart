@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
           ),
           titleMedium: TextStyle(
             fontSize: 16,
-            fontFamily: 'Nunito',
+            fontFamily: 'ProductSans',
             fontWeight: FontWeight.w600,
             color: Colors.black,
           ),

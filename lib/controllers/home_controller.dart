@@ -20,7 +20,7 @@ class HomeController extends GetxController {
     },
     {
       'name': "Hoodie Grey Panot Barça ",
-      'Price': '€69,99 EUR',
+      'price': '€69,99 EUR',
       'image':
           'https://store.fcbarcelona.com/cdn/shop/files/FE70420023_3.jpg?v=1750945670&width=1200',
     },
@@ -55,7 +55,8 @@ class HomeController extends GetxController {
       'name': "Tshirt retro style",
       'price': "€12,99 EUR",
       'category': 'Tshirt',
-      
+      'descrition': "This is a local brand, created for barcelona fan.",
+      'rate': "4.5",
       'image':
           'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048',
     },

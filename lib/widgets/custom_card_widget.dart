@@ -8,7 +8,6 @@ class CustomCardWidget extends StatelessWidget {
   final Map<String, dynamic> data;
 
   const CustomCardWidget({super.key, required this.data});
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -21,17 +20,17 @@ class CustomCardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: ()=> homeController.tempProduct(data),
       child: SizedBox(
-        width: size.width * 0.43,
+        width: size.width * 0.44,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Product Image
             ClipRRect(
-              // borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(16),
               child: CachedNetworkImage(
                 imageUrl: imageUrl,
                 width: size.width * 0.43,
-                height: size.height * 0.25,
+                height: size.height * 0.20,
                 fit: BoxFit.cover,
                 errorWidget: (context, error, stackTrace) => Container(
                   height: size.height * 0.25,
