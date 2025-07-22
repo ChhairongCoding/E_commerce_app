@@ -20,8 +20,8 @@ class CustomCategoryCardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 200,
-        height: 220,
+        width: 180,
+        height: 200,
         decoration: BoxDecoration(
           color: Colors.grey[300],
           borderRadius: BorderRadius.circular(20),
@@ -33,6 +33,7 @@ class CustomCategoryCardWidget extends StatelessWidget {
             ),
           ],
         ),
+        
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Stack(

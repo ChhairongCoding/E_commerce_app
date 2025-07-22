@@ -8,6 +8,7 @@ import 'package:e_commerce_app/views/notification_screen.dart';
 import 'package:e_commerce_app/views/payment_view/checkout_screen.dart';
 import 'package:e_commerce_app/views/payment_view/shipping_screen.dart';
 import 'package:e_commerce_app/views/categories_screen.dart';
+import 'package:e_commerce_app/views/theme_screen.dart';
 import 'package:e_commerce_app/widgets/custom_detail_product.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
@@ -26,5 +27,6 @@ List<GetPage<dynamic>> get appPages {
     GetPage(name: AppRoutes.notification, page: () => NotificationScreen()),
     GetPage(name: AppRoutes.checkout, page: () => CheckoutScreen()),
     GetPage(name: AppRoutes.shipping, page: () => ShippingScreen()),
+    GetPage(name: AppRoutes.theme, page: () => ThemeScreen()),
   ];
 }

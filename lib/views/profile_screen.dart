@@ -62,142 +62,45 @@ class ProfileScreen extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  spacing: 10, // ⬅️ your original spacing
-                                  children: [
-                                    Icon(Icons.location_pin, color: Colors.grey),
-                                    Text("Address", style: Theme.of(context).textTheme.bodyMedium),
-                                  ],
-                                ),
-                                Icon(Icons.arrow_forward_ios),
-                              ],
-                            ),
-                          ),
-                        ),
+                      CustomTextButton(
+                        title: "Address",
+                        icon: Icons.location_pin,
+                        appRoute: AppRoutes.shipping,
                       ),
                       Divider(),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  spacing: 10, // ⬅️ your original spacing
-                                  children: [
-                                    Icon(Icons.wallet, color: Colors.grey),
-                                    Text("Payment method", style: Theme.of(context).textTheme.bodyMedium),
-                                  ],
-                                ),
-                                Icon(Icons.arrow_forward_ios),
-                              ],
-                            ),
-                          ),
-                        ),
+                      CustomTextButton(
+                        title: "Payment method",
+                        icon: Icons.wallet,
+                        appRoute: AppRoutes.shipping,
                       ),
+
                       Divider(),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  spacing: 10,
-                                  children: [
-                                    Icon(Icons.discount_rounded, color: Colors.grey),
-                                    Text("Voucher", style: Theme.of(context).textTheme.bodyMedium),
-                                  ],
-                                ),
-                                Icon(Icons.arrow_forward_ios),
-                              ],
-                            ),
-                          ),
-                        ),
+                      CustomTextButton(
+                        title: "Voucher",
+                        icon: Icons.discount_rounded,
+                        appRoute: AppRoutes.shipping,
                       ),
+
                       Divider(),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  spacing: 10,
-                                  children: [
-                                    Icon(Icons.favorite, color: Colors.grey),
-                                    Text("My Wishlist", style: Theme.of(context).textTheme.bodyMedium),
-                                  ],
-                                ),
-                                Icon(Icons.arrow_forward_ios),
-                              ],
-                            ),
-                          ),
-                        ),
+                      CustomTextButton(
+                        title: "My Wishlist",
+                        icon: Icons.favorite,
+                        appRoute: AppRoutes.shipping,
                       ),
+
                       Divider(),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  spacing: 10,
-                                  children: [
-                                    Icon(Icons.star, color: Colors.grey),
-                                    Text("Rate this app", style: Theme.of(context).textTheme.bodyMedium),
-                                  ],
-                                ),
-                                Icon(Icons.arrow_forward_ios),
-                              ],
-                            ),
-                          ),
-                        ),
+
+                      CustomTextButton(
+                        title: "Change Theme",
+                        icon: Icons.sunny,
+                        appRoute: AppRoutes.theme,
                       ),
+
                       Divider(),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: GestureDetector(
-                            onTap: () => Get.toNamed(AppRoutes.loginRoute),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  spacing: 10,
-                                  children: [
-                                    Icon(Icons.logout, color: Colors.grey),
-                                    Text("Log out", style: Theme.of(context).textTheme.bodyMedium),
-                                  ],
-                                ),
-                                Icon(Icons.arrow_forward_ios),
-                              ],
-                            ),
-                          ),
-                        ),
+                      CustomTextButton(
+                        title: "Log out",
+                        icon: Icons.logout,
+                        appRoute: AppRoutes.shipping,
                       ),
                     ],
                   ),
@@ -205,6 +108,59 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomTextButton extends StatelessWidget {
+  const CustomTextButton({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.appRoute,
+  });
+
+  final String title;
+  final IconData icon;
+  final String appRoute;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 56, // ✅ Set fixed height for full clickable area
+      child: TextButton(
+        onPressed: () => Get.toNamed(appRoute),
+        style: ButtonStyle(
+          padding: WidgetStateProperty.all(EdgeInsets.zero),
+          alignment: Alignment.centerLeft,
+          foregroundColor: WidgetStateProperty.all(Colors.black),
+          shape: WidgetStateProperty.all(
+            const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+          ),
+          overlayColor: WidgetStateProperty.all(
+            Colors.grey.shade200,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Icon(icon, color: Colors.grey),
+                  const SizedBox(width: 10),
+                  Text(title, style: Theme.of(context).textTheme.bodyMedium),
+                ],
+              ),
+              const Icon(Icons.arrow_forward_ios),
+            ],
+          ),
         ),
       ),
     );
