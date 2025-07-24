@@ -28,5 +28,6 @@ List<GetPage<dynamic>> get appPages {
     GetPage(name: AppRoutes.checkout, page: () => CheckoutScreen()),
     GetPage(name: AppRoutes.shipping, page: () => ShippingScreen()),
     GetPage(name: AppRoutes.theme, page: () => ThemeScreen()),
+     GetPage(name: AppRoutes.category, page: () => CategoriesScreen()),
   ];
 }

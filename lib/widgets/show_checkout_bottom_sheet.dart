@@ -101,9 +101,18 @@ void showCheckoutBottomSheet(BuildContext context) {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 50),
+                backgroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
               ),
               onPressed: () => Get.toNamed(AppRoutes.checkout),
-              child: Text("Check-Out"),
+              child: Text(
+                "Proceed to Checkout",
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(color: Colors.white),
+              ),
             ),
           ),
         ],

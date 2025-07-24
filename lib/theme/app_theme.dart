@@ -1,7 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class AppTheme {
+class AppTheme extends GetxController {
+  final isDarkMode = false.obs;
+
+  void toggleDarkMode() {
+    isDarkMode.value = !isDarkMode.value;
+  }
+
   static ThemeData lightTheme = ThemeData(
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 25,
+        fontFamily: 'ProductSans',
+        fontWeight: FontWeight.w700,
+        color: Colors.black,
+      ),
+      titleMedium: TextStyle(
+        fontSize: 16,
+        fontFamily: 'ProductSans',
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+      ),
+      titleSmall: TextStyle(
+        fontSize: 14,
+        fontFamily: 'ProductSans',
+        fontWeight: FontWeight.w500,
+        color: Colors.black,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16,
+        fontFamily: 'ProductSans',
+        fontWeight: FontWeight.w700,
+        color: Colors.black,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontFamily: 'ProductSans',
+        fontWeight: FontWeight.w500,
+        color: Colors.black,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 11,
+        fontFamily: 'ProductSans',
+        fontWeight: FontWeight.w400,
+        color: Colors.black,
+      ),
+    ),
+  );
+
+  static ThemeData darkTheme = ThemeData(
     textTheme: const TextTheme(
       titleLarge: TextStyle(
         fontSize: 25,

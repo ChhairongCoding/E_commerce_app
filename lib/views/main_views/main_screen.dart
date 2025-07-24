@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/controllers/drawer_controller_x.dart';
-import 'package:e_commerce_app/core/utils/app_routes.dart';
+import 'package:e_commerce_app/theme/app_theme.dart';
 import 'package:e_commerce_app/views/main_views/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,72 +12,65 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final MainController mainController = Get.find<MainController>();
 
-    return Scaffold(
-      // drawer: drawerWidget(context),
-      appBar: AppBar(
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(HugeIcons.strokeRoundedNotification02, size: 26),
-            onPressed: () => Get.toNamed(AppRoutes.notification),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(HugeIcons.strokeRoundedShoppingBag02),
-          ),
-        ],
+    return Obx(
+      () => Scaffold(
+        appBar: mainController.currentIndex.value == 0
+            ? AppBar(
+                centerTitle: true,
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(HugeIcons.strokeRoundedShoppingBag02),
+                  ),
+                ],
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(HugeIcons.strokeRoundedPinLocation03, size: 14),
+                        SizedBox(width: 8),
+                        Text("Your location", style: TextStyle(fontSize: 12)),
+                      ],
+                    ),
+                    Text(
+                      "Phnom Penh",
+                      style: TextStyle(fontSize: 14, fontFamily: "ProductSans"),
+                    ),
+                  ],
+                ),
+              )
+            : null,
 
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              spacing: 8,
-              children: [
-                Icon(HugeIcons.strokeRoundedPinLocation03, size: 14),
-                Text("Your location", style: TextStyle(fontSize: 12)),
+        body: mainController.listScreens[mainController.currentIndex.value],
+
+        bottomNavigationBar: Obx(
+          () => Container(
+            margin: EdgeInsets.only(top: 10),
+            child: BottomNavigationBar(
+              currentIndex: mainController.currentIndex.value,
+              onTap: mainController.toggleSwitch,
+              selectedItemColor: Colors.blue,
+              type: BottomNavigationBarType.fixed,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(HugeIcons.strokeRoundedHome01),
+                  label: "",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(HugeIcons.strokeRoundedShoppingCart01),
+                  label: "",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(HugeIcons.strokeRoundedNotification01),
+                  label: "",
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(HugeIcons.strokeRoundedUser),
+                  label: "",
+                ),
               ],
             ),
-            Text(
-              "Phnom Penh",
-              style: TextStyle(fontSize: 14, fontFamily: "ProductSans"),
-            ),
-          ],
-        ),
-      ),
-
-      body: Obx(
-        () => mainController.listScreens[mainController.currentIndex.value],
-      ),
-      bottomNavigationBar: Obx(
-        () => Container(
-          margin: EdgeInsets.only(top: 10),
-          child: BottomNavigationBar(
-            currentIndex: mainController.currentIndex.value,
-            onTap: mainController.toggleSwitch,
-            selectedItemColor: Colors.blue,
-            type: BottomNavigationBarType.fixed,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(HugeIcons.strokeRoundedHome01),
-                label: "",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(HugeIcons.strokeRoundedSearch02),
-                label: "",
-              ),
-              // BottomNavigationBarItem(
-              //   icon: Icon(HugeIcons.strokeRoundedFavourite),
-              //   label: "",
-              // ),
-              BottomNavigationBarItem(
-                icon: Icon(HugeIcons.strokeRoundedShoppingCart01),
-                label: "",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(HugeIcons.strokeRoundedUser),
-                label: "",
-              ),
-            ],
           ),
         ),
       ),
@@ -85,6 +78,8 @@ class MainScreen extends StatelessWidget {
   }
 
   Drawer drawerWidget(BuildContext context) {
+    final AppTheme appTheme = Get.put(AppTheme());
+
     final DrawerControllerX drawerController = Get.find<DrawerControllerX>();
     return Drawer(
       child: ListView(
@@ -196,9 +191,9 @@ class MainScreen extends StatelessWidget {
             child: Obx(
               () => SwitchListTile(
                 title: const Text("Dark Mode"),
-                value: drawerController.isDarkMode.value,
+                value: appTheme.isDarkMode.value,
                 onChanged: (val) {
-                  drawerController.isDarkMode.value = val;
+                  appTheme.isDarkMode.value = val;
                   Get.changeThemeMode(val ? ThemeMode.dark : ThemeMode.light);
                 },
                 secondary: const Icon(Icons.dark_mode),

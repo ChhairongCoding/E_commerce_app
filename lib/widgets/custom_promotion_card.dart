@@ -59,10 +59,9 @@ class CustomPromotionCard extends StatelessWidget {
                   ).textTheme.bodySmall?.copyWith(color: Colors.grey[700]),
                 ),
                 SizedBox(height: 10),
-                Expanded(
-                  child: ElevatedButton(
+                ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      fixedSize: Size(110, 25),
+                      fixedSize: Size(110, 15),
                       backgroundColor: Colors.black,
                     ),
                     onPressed: () {},
@@ -76,7 +75,6 @@ class CustomPromotionCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
