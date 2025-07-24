@@ -10,7 +10,10 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ShopController shopController = Get.find<ShopController>();
-    return Scaffold(
+    return  Scaffold(
+      appBar: AppBar(
+     
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -19,10 +22,9 @@ class CategoriesScreen extends StatelessWidget {
             children: [
               // search
               SearchWidget(text: "Search Categories"),
-              // category
-              // Updated Shoe Display Card
+
               Wrap(
-                spacing: 16, 
+                spacing: 16,
                 runSpacing: 16,
                 children: List.generate(shopController.listCate.length, (
                   index,

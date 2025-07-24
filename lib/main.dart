@@ -10,22 +10,27 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
 
-class _MyAppState extends State<MyApp> {
+
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      theme: AppTheme.lightTheme,
-      darkTheme: ThemeData.dark(),
-      initialBinding: InitBinding(),
-      title: 'SlowKey Kits',
-      initialRoute: AppRoutes.mainScreenRoute,
-      getPages: appPages,
+    final AppTheme themeController = Get.put(AppTheme());
+
+    return Obx(
+      () => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: themeController.isDarkMode.value
+            ? ThemeMode.dark
+            : ThemeMode.light,
+        initialBinding: InitBinding(),
+        title: 'SlowKey Kits',
+        initialRoute: AppRoutes.mainScreenRoute,
+        getPages: appPages,
+      ),
     );
   }
 }

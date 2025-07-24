@@ -5,6 +5,7 @@ import 'package:e_commerce_app/controllers/login_controller.dart';
 import 'package:e_commerce_app/controllers/otp_controller.dart';
 import 'package:e_commerce_app/controllers/shop_controller.dart';
 import 'package:e_commerce_app/controllers/signup_controller.dart';
+import 'package:e_commerce_app/theme/app_theme.dart';
 import 'package:e_commerce_app/views/main_views/main_controller.dart';
 import 'package:e_commerce_app/services/auth_service.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class InitBinding extends Bindings {
     Get.put(ShopController());
     Get.put(DrawerControllerX());
     Get.put(FavoriteController());
-
+     Get.put(AppTheme());
 
     //service
     Get.put(AuthService());

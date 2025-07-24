@@ -10,4 +10,5 @@ class AppRoutes {
   static String checkout = '/checkout';
   static String shipping =  '/shipping' ;
   static String theme =  '/themescreen' ;
+  static String category =  '/category' ;
 }

@@ -1,4 +1,6 @@
 import 'package:e_commerce_app/controllers/home_controller.dart';
+import 'package:e_commerce_app/core/utils/app_routes.dart';
+import 'package:e_commerce_app/views/main_views/main_controller.dart';
 import 'package:e_commerce_app/widgets/custom_card_widget.dart';
 import 'package:e_commerce_app/widgets/custom_product_card_with_rating.dart';
 import 'package:e_commerce_app/widgets/custom_promotion_card.dart';
@@ -130,48 +132,66 @@ class NewArriveSection extends StatelessWidget {
 }
 
 class PromotionSection extends StatelessWidget {
-  const PromotionSection({super.key});
+  PromotionSection({super.key});
+  final HomeController controller = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+    return SizedBox(
+      height: 255,
       child: Column(
-        spacing: 16,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Promotion", style: Theme.of(context).textTheme.titleLarge),
-          Row(
-            spacing: 16,
-            children: [
-              CustomPromotionCard(
-                title: "50% Off",
-                title2: "On everything today",
-                code: "FSCREATION",
-                imageUrl:
-                    "https://soccerpost.com/cdn/shop/files/AURORA_DX2614-101_PHSFM001-2000_clipped_rev_1.png?v=1695216765&width=1440",
-              ),
-              CustomPromotionCard(
-                title: "70% Off",
-                title2: "On everything today",
-                code: "FSCREATION",
-                imageUrl:
-                    "https://static.nike.com/a/images/t_default/9b178226-99d4-4f77-8f00-ba2f5caa2325/zoom-mercurial-superfly-9-elite-km-fg-high-top-football-boot-RbvQKW.png",
-              ),
-              CustomPromotionCard(
-                title: "50% Off",
-                title2: "On everything today",
-                code: "FSCREATION",
-                imageUrl:
-                    "https://soccerpost.com/cdn/shop/files/AURORA_DX2614-101_PHSFM001-2000_clipped_rev_1.png?v=1695216765&width=1440",
-              ),
-            ],
+          Text(
+            "Promotion",
+            style: Theme.of(context).textTheme.titleLarge,
           ),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 180,
+            width: double.infinity,
+            child: PageView.builder(
+              controller: controller.promoPageController,
+              itemCount: controller.promotions.length,
+              onPageChanged: controller.onPromoPageChanged,
+              itemBuilder: (context, index) {
+                final promo = controller.promotions[index];
+                return CustomPromotionCard(
+                  title: promo['title']!,
+                  title2: promo['title2']!,
+                  code: promo['code']!,
+                  imageUrl: promo['imageUrl']!,
+                );
+              },
+            ),
+          ),
+      
+          const SizedBox(height: 12),
+          Obx(() {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(controller.promotions.length, (index) {
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: controller.currentPromoPage.value == index ? 12 : 8,
+                  height: controller.currentPromoPage.value == index ? 12 : 8,
+                  decoration: BoxDecoration(
+                    color: controller.currentPromoPage.value == index
+                        ? Colors.black
+                        : Colors.grey,
+                    shape: BoxShape.circle,
+                  ),
+                );
+              }),
+            );
+          }),
         ],
       ),
     );
   }
 }
+
 
 class SearchCustom extends StatelessWidget {
   const SearchCustom({super.key});
@@ -212,6 +232,7 @@ class CategoriesSection extends StatelessWidget {
 
   final RxInt setectedCateIndex;
   final HomeController homeController = Get.find<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -223,6 +244,9 @@ class CategoriesSection extends StatelessWidget {
           children: [
             Text("Categories", style: Theme.of(context).textTheme.titleLarge),
             GestureDetector(
+              onTap: () {
+                Get.toNamed(AppRoutes.category);
+              },
               child: Text(
                 "View All",
                 style: Theme.of(

@@ -8,70 +8,73 @@ class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  spacing: 16,
-                  children: List.generate(10, (index) => cartCard(context)),
+    return  Scaffold(
+      appBar: AppBar(
+        title: Text("Total Products(12)"),
+      ),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    spacing: 16,
+                    children: List.generate(2, (index) => cartCard(context)),
+                  ),
                 ),
               ),
-            ),
-
-            SizedBox(
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Checkbox(value: false, onChanged: (value) {}),
-                      Text("All"),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () => showCheckoutBottomSheet(context),
-                    child: Row(
-                      spacing: 10,
+      
+              SizedBox(
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Row(children: [Text("Total:"), Text("\$183")]),
-                            Row(
-                              children: [
-                                Text("Discount: 15%"),
-                                Text("Subtotal: \$170"),
-                              ],
-                            ),
-                          ],
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                          ),
-                          onPressed: () {
-                            Get.toNamed(AppRoutes.checkout);
-                          },
-                          child: Text("Check out", style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            
-                          ),),
-                        ),
+                        Checkbox(value: false, onChanged: (value) {}),
+                        Text("All"),
                       ],
                     ),
-                  ),
-                ],
+                    GestureDetector(
+                      onTap: () => showCheckoutBottomSheet(context),
+                      child: Row(
+                        spacing: 10,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(children: [Text("Total:"), Text("\$183")]),
+                              Row(
+                                children: [
+                                  Text("Discount: 15%"),
+                                  Text("Subtotal: \$170"),
+                                ],
+                              ),
+                            ],
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                            ),
+                            onPressed: () {
+                              Get.toNamed(AppRoutes.checkout);
+                            },
+                            child: Text("Check out", style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              
+                            ),),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
   }
 
   
@@ -100,7 +103,7 @@ class CartScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        "Title",
+                        "Inter Miliaono Collectin  jersey",
                         style: Theme.of(context).textTheme.bodyMedium,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
