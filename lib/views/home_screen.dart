@@ -1,6 +1,5 @@
 import 'package:e_commerce_app/controllers/home_controller.dart';
 import 'package:e_commerce_app/core/utils/app_routes.dart';
-import 'package:e_commerce_app/views/main_views/main_controller.dart';
 import 'package:e_commerce_app/widgets/custom_card_widget.dart';
 import 'package:e_commerce_app/widgets/custom_product_card_with_rating.dart';
 import 'package:e_commerce_app/widgets/custom_promotion_card.dart';

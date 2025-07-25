@@ -25,7 +25,7 @@ class AuthService extends GetxController {
     String token = _tokenService.getToken();
 
     if (token.isNotEmpty) {
-      DateTime expiry = JwtDecoder.getExpirationDate(token);
+    
 
       if (!JwtDecoder.isExpired(token)) {
         isLoggedIn.value = true;

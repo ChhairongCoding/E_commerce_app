@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/controllers/drawer_controller_x.dart';
+import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:e_commerce_app/theme/app_theme.dart';
 import 'package:e_commerce_app/views/main_views/main_controller.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class MainScreen extends StatelessWidget {
                 centerTitle: true,
                 actions: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () =>Get.toNamed(AppRoutes.myOrder),
                     icon: Icon(HugeIcons.strokeRoundedShoppingBag02),
                   ),
                 ],
