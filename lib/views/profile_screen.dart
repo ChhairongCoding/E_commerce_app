@@ -20,13 +20,7 @@ class ProfileScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Color(0xffFEF7FF),
                     borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        offset: Offset(1, 5),
-                        blurRadius: 6,
-                      ),
-                    ],
+                    border: Border.all(color: Colors.grey, width: 0.4),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,14 +68,7 @@ class ProfileScreen extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(2, 3),
-                        color: Colors.grey,
-                        spreadRadius: 1,
-                        blurRadius: 6,
-                      ),
-                    ],
+                    border: Border.all(color: Colors.grey, width: 0.4),
                     borderRadius: BorderRadius.circular(16),
                     color: Color(0xffFEF7FF),
                   ),
@@ -97,90 +84,25 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                       Row(
-                        spacing: 20,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment
+                            .start, // ensures vertical alignment
                         children: [
-                          SizedBox(
-                            width: 80,
-                            height: 80,
-                            child: GestureDetector(
-                              child: Column(
-                                spacing: 8,
-          
-                                children: [
-                                  Icon(
-                                    HugeIcons.strokeRoundedPayment01,
-                                    size: 25,
-                                  ),
-                                  Text(
-                                    "Padding Payment",
-                                    style: Theme.of(context).textTheme.bodySmall,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
+                          buildOrderItem(
+                            HugeIcons.strokeRoundedPayment01,
+                            "Pending Payment",
                           ),
-                          SizedBox(
-                            height: 80,
-                            width: 80,
-                            child: GestureDetector(
-                              child: Column(
-                                spacing: 8,
-                                children: [
-                                  Icon(
-                                    HugeIcons.strokeRoundedDeliveryBox01,
-                                    size: 25,
-                                  ),
-                                  Text(
-                                    "Awaiting Shipment",
-                                    style: Theme.of(context).textTheme.bodySmall,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
+                          buildOrderItem(
+                            HugeIcons.strokeRoundedDeliveryBox01,
+                            "Awaiting Shipment",
                           ),
-                          SizedBox(
-                            width: 80,
-                            height: 80,
-                            child: GestureDetector(
-                              child: Column(
-                                spacing: 8,
-          
-                                children: [
-                                  Icon(
-                                    HugeIcons.strokeRoundedDeliveredSent,
-                                    size: 25,
-                                  ),
-                                  Text(
-                                    "Awaiting Recipt",
-                                    style: Theme.of(context).textTheme.bodySmall,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
+                          buildOrderItem(
+                            HugeIcons.strokeRoundedDeliveredSent,
+                            "Awaiting Receipt",
                           ),
-                          SizedBox(
-                            width: 80,
-                            height: 80,
-                            child: GestureDetector(
-                              child: Column(
-                                spacing: 8,
-          
-                                children: [
-                                  Icon(
-                                    HugeIcons.strokeRoundedPayByCheck,
-                                    size: 25,
-                                  ),
-                                  Text(
-                                    "Refund",
-                                    style: Theme.of(context).textTheme.bodySmall,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
+                          buildOrderItem(
+                            HugeIcons.strokeRoundedPayByCheck,
+                            "Refund",
                           ),
                         ],
                       ),
@@ -188,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
-          
+
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: 20),
@@ -214,24 +136,24 @@ class ProfileScreen extends StatelessWidget {
                         icon: HugeIcons.strokeRoundedFavourite,
                         appRoute: AppRoutes.shipping,
                       ),
-          
+
                       CustomTextButton(
                         title: "Shipping Address",
                         icon: HugeIcons.strokeRoundedPinLocation01,
                         appRoute: AppRoutes.shipping,
                       ),
-          
+
                       CustomTextButton(
                         title: "My Card",
                         icon: HugeIcons.strokeRoundedCreditCard,
-                        appRoute: AppRoutes.shipping,
+                        appRoute: AppRoutes.paymentCard,
                       ),
                     ],
                   ),
                 ),
-          
+
                 SizedBox(height: 20),
-          
+
                 Container(
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: 20),
@@ -242,12 +164,12 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                       CustomTextButton(
+                      CustomTextButton(
                         title: "FAQs",
                         icon: HugeIcons.strokeRoundedAlertCircle,
                         appRoute: AppRoutes.theme,
                       ),
-                        CustomTextButton(
+                      CustomTextButton(
                         title: "Privacy Policy",
                         icon: HugeIcons.strokeRoundedPolicy,
                         appRoute: AppRoutes.theme,
@@ -339,4 +261,25 @@ class CustomTextButton extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget buildOrderItem(IconData icon, String label) {
+  return Expanded(
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Align(alignment: Alignment.center, child: Icon(icon, size: 25)),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 12),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+        ),
+      ],
+    ),
+  );
 }

@@ -1,11 +1,14 @@
 import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:e_commerce_app/views/auth_view/login_screen.dart';
 import 'package:e_commerce_app/views/auth_view/sign_up_screen.dart';
+import 'package:e_commerce_app/views/cart_screen.dart';
 import 'package:e_commerce_app/views/getting_start_screen.dart';
 import 'package:e_commerce_app/views/auth_view/otp_screen.dart';
 import 'package:e_commerce_app/views/main_views/main_screen.dart';
+import 'package:e_commerce_app/views/my_order_screen.dart';
 import 'package:e_commerce_app/views/notification_screen.dart';
 import 'package:e_commerce_app/views/payment_view/checkout_screen.dart';
+import 'package:e_commerce_app/views/payment_view/payment_card_screen.dart';
 import 'package:e_commerce_app/views/payment_view/shipping_screen.dart';
 import 'package:e_commerce_app/views/categories_screen.dart';
 import 'package:e_commerce_app/views/theme_screen.dart';
@@ -22,12 +25,14 @@ List<GetPage<dynamic>> get appPages {
     GetPage(name: AppRoutes.signUpRoute, page: () => SignUpScreen()),
     GetPage(name: AppRoutes.otpRoute, page: () => OtpScreen()),
     GetPage(name: AppRoutes.mainScreenRoute, page: () => MainScreen()),
-    GetPage(name: AppRoutes.discover, page: () => CategoriesScreen()),
     GetPage(name: AppRoutes.detail, page: () => CustomDetailProduct()),
     GetPage(name: AppRoutes.notification, page: () => NotificationScreen()),
     GetPage(name: AppRoutes.checkout, page: () => CheckoutScreen()),
     GetPage(name: AppRoutes.shipping, page: () => ShippingScreen()),
     GetPage(name: AppRoutes.theme, page: () => ThemeScreen()),
      GetPage(name: AppRoutes.category, page: () => CategoriesScreen()),
+     GetPage(name: AppRoutes.cart, page: () => CartScreen()),
+     GetPage(name: AppRoutes.myOrder, page: () => MyOrderScreen()),
+     GetPage(name: AppRoutes.paymentCard, page: () => PaymentCardScreen()),
   ];
 }
