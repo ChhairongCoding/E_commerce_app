@@ -134,7 +134,7 @@ class ProfileScreen extends StatelessWidget {
                       CustomTextButton(
                         title: "My Favourite",
                         icon: HugeIcons.strokeRoundedFavourite,
-                        appRoute: AppRoutes.shipping,
+                        appRoute: AppRoutes.favorite,
                       ),
 
                       CustomTextButton(

@@ -14,4 +14,5 @@ class AppRoutes {
   static String cart =  '/cart' ;
   static String myOrder =  '/myorder' ;
   static String paymentCard =  '/paymentCard' ;
+  static String favorite=  '/favorite' ;
 }
