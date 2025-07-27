@@ -2,6 +2,7 @@ import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:e_commerce_app/views/auth_view/login_screen.dart';
 import 'package:e_commerce_app/views/auth_view/sign_up_screen.dart';
 import 'package:e_commerce_app/views/cart_screen.dart';
+import 'package:e_commerce_app/views/favorite_screen.dart';
 import 'package:e_commerce_app/views/getting_start_screen.dart';
 import 'package:e_commerce_app/views/auth_view/otp_screen.dart';
 import 'package:e_commerce_app/views/main_views/main_screen.dart';
@@ -34,5 +35,6 @@ List<GetPage<dynamic>> get appPages {
      GetPage(name: AppRoutes.cart, page: () => CartScreen()),
      GetPage(name: AppRoutes.myOrder, page: () => MyOrderScreen()),
      GetPage(name: AppRoutes.paymentCard, page: () => PaymentCardScreen()),
+     GetPage(name: AppRoutes.favorite, page: () => FavoriteScreen()),
   ];
 }
