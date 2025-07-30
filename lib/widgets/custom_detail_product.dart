@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_app/controllers/cart_controller.dart';
+import 'package:e_commerce_app/controllers/favorite_controller.dart';
 import 'package:e_commerce_app/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,18 +15,27 @@ class CustomDetailProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.find<HomeController>();
+    final FavoriteController favoriteController =
+        Get.find<FavoriteController>();
+
+    final CartController cartController = Get.find<CartController>();
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: const Icon(Icons.arrow_back_ios),
-        ),
-        actionsPadding: EdgeInsets.all(16),
-        actions: const [
-          Icon(HugeIcons.strokeRoundedFavourite),
-          SizedBox(width: 16,),
-          Icon(HugeIcons.strokeRoundedUpload01),
+        actionsPadding: EdgeInsets.only(right: 16),
+        actions: [
+          Obx(
+            () => IconButton(
+              onPressed: () => favoriteController.addFav(),
+              icon: favoriteController.addFavorite.value
+                  ? Icon(HugeIcons.strokeRoundedFavourite)
+                  : Icon(Icons.favorite, color: Colors.red),
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(HugeIcons.strokeRoundedShare01),
+          ),
         ],
       ),
       body: Stack(
@@ -197,7 +208,7 @@ class CustomDetailProduct extends StatelessWidget {
           Positioned(
             left: 0,
             right: 0,
-            bottom: 0,
+            bottom: -10,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
               color: Colors.white,
@@ -206,28 +217,35 @@ class CustomDetailProduct extends StatelessWidget {
                 height: 80,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey,
+                    backgroundColor: Colors.black,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    cartController.addToCart(
+                      Map<String, dynamic>.from(
+                        homeController.listDetail,
+                      ),
+                    );
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(
                         Icons.shopping_bag_outlined,
                         color: Colors.white,
-                      size: 26,
+                        size: 26,
                       ),
                       const SizedBox(width: 8),
                       Text(
                         "Add To Cart",
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
                       ),
                     ],
                   ),

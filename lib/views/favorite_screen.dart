@@ -89,29 +89,25 @@ class FavoriteScreen extends StatelessWidget {
     },
   ];
 
-  
   final List<Map<String, dynamic>> boardItems = [
-      {
-        'name': 'Board Item 1',
-        'price': '\$30.00',
-        'rating': "4.0",
-        'reviews': "10",
-        'image': 'https://via.placeholder.com/200x200.png?text=Board+1',
-      },
-      {
-        'name': 'Board Item 2',
-        'price': '\$40.00',
-        'rating': "4.2",
-        'reviews': "12",
-        'image': 'https://via.placeholder.com/200x200.png?text=Board+2',
-      },
-    ];
+    {
+      'name': 'Board Item 1',
+      'price': '\$30.00',
+      'rating': "4.0",
+      'reviews': "10",
+      'image': 'https://via.placeholder.com/200x200.png?text=Board+1',
+    },
+    {
+      'name': 'Board Item 2',
+      'price': '\$40.00',
+      'rating': "4.2",
+      'reviews': "12",
+      'image': 'https://via.placeholder.com/200x200.png?text=Board+2',
+    },
+  ];
 
-    
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       appBar: AppBar(title: const Text("Favorite")),
       body: Padding(
