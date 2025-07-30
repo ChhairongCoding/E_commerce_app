@@ -1,37 +1,40 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_app/controllers/cart_controller.dart';
 import 'package:e_commerce_app/widgets/show_checkout_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+  CartScreen({super.key});
+  final CartController cartController = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Total Products(12)")),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  spacing: 16,
-                  children: List.generate(2, (index) => cartCard(context)),
-                ),
-              ),
-            ),
-
-            SizedBox(
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Checkbox(value: false, onChanged: (value) {}),
+        child: Obx(() => Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child:SingleChildScrollView(
+                          child: Column(
+                            spacing: 16,
+                            children: List.generate(cartController.cartList.length, (index) => cartCard(context,index)),
+                          ),
+                        ),
+                    ),
+        
+                    SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Checkbox(value: false, onChanged: (value) {}),
                       Text("All"),
                     ],
                   ),
@@ -74,18 +77,18 @@ class CartScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
+       ) ),
     );
   }
 
-  SizedBox cartCard(BuildContext context) {
+  SizedBox cartCard(BuildContext context,int index) {
     return SizedBox(
       width: double.infinity,
       height: 100,
       child: Slidable(
         key: ValueKey(
           "cart_card_key_${UniqueKey()}",
-        ), // unique key for slidable
+        ), 
 
         endActionPane: ActionPane(
           motion: ScrollMotion(),
@@ -108,7 +111,7 @@ class CartScreen extends StatelessWidget {
           children: [
             CachedNetworkImage(
               imageUrl:
-                  "https://static.wixstatic.com/media/3f13d8_a9fbf853feb540bea02d8278f1dada61~mv2.png/v1/fill/w_480,h_480,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/3f13d8_a9fbf853feb540bea02d8278f1dada61~mv2.png",
+                 cartController.cartList[index]["image"],
               width: 100,
               height: 200,
               fit: BoxFit.cover,
@@ -124,8 +127,8 @@ class CartScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          "Inter Miliaono Collectin  jersey",
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          cartController.cartList[index]["name"],
+                          style: Theme.of(context).textTheme.titleMedium,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
@@ -134,7 +137,7 @@ class CartScreen extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    "\$80.00",
+                    cartController.cartList[index]["price"],
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Row(

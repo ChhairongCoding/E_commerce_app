@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_app/controllers/payment_controller.dart';
 import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -153,11 +154,18 @@ class CheckoutScreen extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(double.infinity, 20),
+                  minimumSize: Size(double.infinity, 50),
+                  backgroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                 ),
                 onPressed: () {},
                 child: Text(
                   "Confirm Order",
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge?.copyWith(color: Colors.white),
                 ),
               ),
             ),
@@ -168,6 +176,7 @@ class CheckoutScreen extends StatelessWidget {
   }
 
   Column paymentMethod(BuildContext context) {
+    final PaymentController paymentController = Get.put(PaymentController());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -182,48 +191,53 @@ class CheckoutScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-              width: 200,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Chhairong Chhin",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge?.copyWith(color: Colors.grey[700]),
-                  ),
-                  Text(
-                    "Visa Platinum",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge?.copyWith(color: Colors.grey[700]),
-                  ),
-                  Text(
-                    "**** **** **** 5342",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge?.copyWith(color: Colors.grey[700]),
-                  ),
-                  Text(
-                    "EXP 10/22",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyLarge?.copyWith(color: Colors.grey[700]),
-                  ),
-                ],
+            Obx(
+              () => SizedBox(
+                width: 200,
+                child: paymentController.selectedMethod.value != "card"
+                    ? Text("Cash on Delivery",style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Colors.grey[700]
+                    ),)
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Chhairong Chhin",
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(color: Colors.grey[700]),
+                          ),
+                          Text(
+                            "Visa Platinum",
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(color: Colors.grey[700]),
+                          ),
+                          Text(
+                            "**** **** **** 5342",
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(color: Colors.grey[700]),
+                          ),
+                          Text(
+                            "EXP 10/22",
+                            style: Theme.of(context).textTheme.bodyLarge
+                                ?.copyWith(color: Colors.grey[700]),
+                          ),
+                        ],
+                      ),
               ),
             ),
-            Row(
-              children: [
-                Text(
-                  "Edit",
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge?.copyWith(color: Colors.blue),
-                ),
-                Icon(Icons.arrow_forward_ios, size: 16, color: Colors.blue),
-              ],
+            GestureDetector(
+              onTap: () => Get.toNamed(AppRoutes.paymentCard),
+              child: Row(
+                children: [
+                  Text(
+                    "Edit",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(color: Colors.blue),
+                  ),
+                  Icon(Icons.arrow_forward_ios, size: 16, color: Colors.blue),
+                ],
+              ),
             ),
           ],
         ),
@@ -276,105 +290,6 @@ class CheckoutScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Column creditCard(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Choose your card",
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            Text(
-              "Add new+",
-              style: Theme.of(
-                context,
-              ).textTheme.titleSmall?.copyWith(color: Color(0xffF20000)),
-            ),
-          ],
-        ),
-        const SizedBox(height: 16),
-        SizedBox(
-          height: 200,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 2,
-            itemBuilder: (context, index) {
-              final isSelected = selectedCardIndex.value == index;
-              return GestureDetector(
-                onTap: () => selectedCardIndex.value = index,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.only(right: 12),
-                  padding: const EdgeInsets.all(20),
-                  width: isSelected ? 300 : 270,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    image: const DecorationImage(
-                      image: CachedNetworkImageProvider(
-                        "https://img.freepik.com/free-vector/gradient-grainy-texture_23-2148976750.jpg?semt=ais_hybrid&w=740",
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                    boxShadow: isSelected
-                        ? [
-                            BoxShadow(
-                              color: Colors.blue.withOpacity(0.3),
-                              blurRadius: 12,
-                              offset: Offset(0, 4),
-                            ),
-                          ]
-                        : [],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "VISA",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "**** **** **** 1234",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          letterSpacing: 2,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "CHHIN CHHAIRONG",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          Text(
-                            "12/27",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
     );
   }
 }

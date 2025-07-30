@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   RxString selectedCategory = 'All'.obs;
+
   RxMap<dynamic, dynamic> listDetail = {}.obs;
   List<Map<String, dynamic>> listProduct = [
     {
@@ -144,6 +145,7 @@ class HomeController extends GetxController {
         .where((item) => item['category'] == selectedCategory.value)
         .toList();
   }
+
 
   void setCategory(String category) {
     selectedCategory.value = category;
