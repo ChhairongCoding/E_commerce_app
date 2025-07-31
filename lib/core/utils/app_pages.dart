@@ -11,7 +11,7 @@ import 'package:e_commerce_app/views/notification_screen.dart';
 import 'package:e_commerce_app/views/payment_view/checkout_screen.dart';
 import 'package:e_commerce_app/views/payment_view/payment_card_screen.dart';
 import 'package:e_commerce_app/views/payment_view/payment_form_screen.dart';
-import 'package:e_commerce_app/views/payment_view/shipping_screen.dart';
+import 'package:e_commerce_app/views/shipping_view/shipping_screen.dart';
 import 'package:e_commerce_app/views/categories_screen.dart';
 import 'package:e_commerce_app/views/theme_screen.dart';
 import 'package:e_commerce_app/widgets/custom_detail_product.dart';
