@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 class CartController extends GetxController {
   RxList<Map<String, dynamic>> cartList = <Map<String, dynamic>>[].obs;
 
-
   void addToCart(Map<String, dynamic> product) {
     int index = cartList.indexWhere((item) => item['name'] == product['name']);
     if (index >= 0) {
@@ -21,4 +20,13 @@ class CartController extends GetxController {
     );
   }
 
+  void removeCart(int index) {
+    cartList.removeAt(index);
+    Get.snackbar(
+      'Item Removed',
+      'The item has been removed from your cart.',
+      snackPosition: SnackPosition.BOTTOM,
+      duration: Duration(seconds: 2),
+    );
+  }
 }

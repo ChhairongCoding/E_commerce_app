@@ -10,8 +10,7 @@ import 'package:hugeicons/hugeicons.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
-
-  final RxInt setectedCateIndex = 1.obs;
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +40,11 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
 
-              SearchCustom(),
+             SearchCustom(homeController: homeController),
 
-              CategoriesSection(setectedCateIndex: setectedCateIndex),
+              CategoriesSection(
+                setectedCateIndex: homeController.setectedCateIndex,
+              ),
 
               PromotionSection(),
 
@@ -75,10 +76,7 @@ class HomeScreen extends StatelessWidget {
                       return Column(
                         children: [
                           CustomProductCardWithRating(size: size),
-                          if (index < 2)
-                            SizedBox(
-                              height: 16,
-                            ), 
+                          if (index < 2) SizedBox(height: 16),
                         ],
                       );
                     }),
@@ -141,10 +139,7 @@ class PromotionSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Promotion",
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
+          Text("Promotion", style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 16),
           SizedBox(
             height: 180,
@@ -164,7 +159,7 @@ class PromotionSection extends StatelessWidget {
               },
             ),
           ),
-      
+
           const SizedBox(height: 12),
           Obx(() {
             return Row(
@@ -191,33 +186,32 @@ class PromotionSection extends StatelessWidget {
   }
 }
 
-
 class SearchCustom extends StatelessWidget {
-  const SearchCustom({super.key});
+  const SearchCustom({super.key, required this.homeController});
+  final HomeController homeController;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(
-          flex: 9,
-          child: SearchWidget(
-            text: "Search in Store..."
-          ),
-        ),
+        Flexible(flex: 9, child: SearchWidget(text: "Search in Store...")),
         Flexible(
           flex: 2,
-          child: Container(
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.black,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              HugeIcons.strokeRoundedFilterHorizontal,
-              size: 25,
-              color: Colors.white,
+          child: GestureDetector(
+            onTap:
+                homeController.onFilter, // ✅ Call the method to toggle filter
+            child: Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                HugeIcons.strokeRoundedFilterHorizontal,
+                size: 25,
+                color: Colors.white,
+              ),
             ),
           ),
         ),

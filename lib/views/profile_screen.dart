@@ -129,7 +129,7 @@ class ProfileScreen extends StatelessWidget {
                       CustomTextButton(
                         title: "My Order",
                         icon: HugeIcons.strokeRoundedShoppingBag02,
-                        appRoute: AppRoutes.shipping,
+                        appRoute: AppRoutes.myOrder,
                       ),
                       CustomTextButton(
                         title: "My Favourite",

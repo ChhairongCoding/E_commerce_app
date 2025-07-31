@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TextFormWidget extends StatelessWidget {
- final String? label;
+  final String? label;
   final String? hintText;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -21,11 +21,14 @@ class TextFormWidget extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("$label", style: Theme.of(context).textTheme.bodyMedium),
+        Text(
+          label != null ? "$label" : "",
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+
         SizedBox(height: 6),
         TextFormField(
           decoration: InputDecoration(
@@ -35,11 +38,8 @@ class TextFormWidget extends StatelessWidget {
             hintText: hintText,
             hintStyle: TextStyle(fontSize: 14),
             suffixIcon: suffixIcon != null
-            ? IconButton(
-                icon: Icon(suffixIcon),
-                onPressed: onSuffixTap,
-              )
-            : null,
+                ? IconButton(icon: Icon(suffixIcon), onPressed: onSuffixTap)
+                : null,
           ),
           obscureText: obscureText ?? false,
           maxLines: 1,

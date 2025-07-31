@@ -6,6 +6,11 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   RxString selectedCategory = 'All'.obs;
+  RxBool opendedFilter = false.obs;
+  final RxInt setectedCateIndex = 1.obs;
+
+
+
 
   RxMap<dynamic, dynamic> listDetail = {}.obs;
   List<Map<String, dynamic>> listProduct = [
@@ -223,5 +228,11 @@ class HomeController extends GetxController {
     _promoTimer?.cancel();
     promoPageController.dispose();
     super.onClose();
+  }
+
+
+  void onFilter (){
+    opendedFilter.value = !opendedFilter.value;
+    print(opendedFilter);
   }
 }

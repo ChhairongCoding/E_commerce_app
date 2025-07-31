@@ -1,4 +1,5 @@
-import 'package:e_commerce_app/widgets/shipping_bottom_sheet.dart';
+import 'package:e_commerce_app/views/shipping_view/new_shipping_bottom_sheet.dart';
+import 'package:e_commerce_app/views/shipping_view/shipping_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 
@@ -6,11 +7,16 @@ class ShippingScreen extends StatelessWidget {
   const ShippingScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Shipping"),
-        actions: [TextButton(onPressed: () {}, child: Text("+ New Shipping"))],
+        actions: [
+          TextButton(
+            onPressed: () => newShippingBottomSheet(context),
+            child: Text("+ New Shipping",style: Theme.of(context).textTheme.bodyMedium,),
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(16),
