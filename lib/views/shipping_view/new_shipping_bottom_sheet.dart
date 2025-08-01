@@ -79,7 +79,7 @@ void newShippingBottomSheet(BuildContext context) {
 
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                fixedSize: Size(MediaQuery.of(context).size.width, 40),
+                fixedSize: Size(MediaQuery.of(context).size.width, 50),
                 backgroundColor: Colors.black
               ),
               onPressed: () {

@@ -8,6 +8,16 @@ import 'package:get/get.dart';
 class CartScreen extends StatelessWidget {
   CartScreen({super.key});
   final CartController cartController = Get.put(CartController());
+  String getImageUrl(dynamic images) {
+  if (images is List && images.isNotEmpty) {
+    return images.first;
+  } else if (images is String) {
+    return images;
+  } else {
+    return 'https://via.placeholder.com/150';
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,47 +43,60 @@ class CartScreen extends StatelessWidget {
 
               SizedBox(
                 width: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Checkbox(value: false, onChanged: (value) {}),
-                        Text("All"),
-                      ],
-                    ),
-                    GestureDetector(
-                      onTap: () => showCheckoutBottomSheet(context),
-                      child: Row(
-                        spacing: 10,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                        Row(
+                          children: [
+                            Checkbox(value: false, onChanged: (value) {}),
+                            const Text("All"),
+                          ],
+                        ),
+
+                        // Right: Price summary + Button
+                        GestureDetector(
+                          onTap: () => showCheckoutBottomSheet(context),
+                          child: Wrap(
+                            spacing: 10,
+                            crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
-                              Row(children: [Text("Total:"), Text("\$183")]),
-                              Row(
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text("Discount: 15%"),
-                                  Text("Subtotal: \$170"),
+                                  Row(
+                                    children: const [
+                                      Text("Total: "),
+                                      Text("\$183"),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: const [
+                                      Text("Discount: 15%  "),
+                                      Text("Subtotal: \$170"),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ],
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                            ),
-                            onPressed: () {
-                              showCheckoutBottomSheet(context);
-                            },
-                            child: Text(
-                              "Check out",
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ),
-                        ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        fixedSize: Size(MediaQuery.of(context).size.width, 50),
+                        backgroundColor: Colors.black
+                      ),
+                      onPressed: () => showCheckoutBottomSheet(context),
+                      child: Text(
+                        "Check out",
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
                       ),
                     ),
                   ],
@@ -101,7 +124,6 @@ class CartScreen extends StatelessWidget {
               onPressed: (context) {
                 // Handle delete action here
                 cartController.removeCart(index);
-                
               },
               backgroundColor: Colors.black,
               foregroundColor: Colors.white,
@@ -112,7 +134,8 @@ class CartScreen extends StatelessWidget {
         child: Row(
           children: [
             CachedNetworkImage(
-              imageUrl: cartController.cartList[index]["image"],
+             imageUrl: getImageUrl(cartController.cartList[index]["images"]),
+
               width: 100,
               height: 200,
               fit: BoxFit.cover,

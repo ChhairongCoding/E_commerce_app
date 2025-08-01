@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
 
-             SearchCustom(homeController: homeController),
+              SearchCustom(homeController: homeController),
 
               CategoriesSection(
                 setectedCateIndex: homeController.setectedCateIndex,
@@ -50,43 +50,60 @@ class HomeScreen extends StatelessWidget {
 
               NewArriveSection(),
 
-              Column(
-                spacing: 16,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Categories",
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          "View All",
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(color: Colors.grey[700]),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Column(
-                    children: List.generate(3, (index) {
-                      return Column(
-                        children: [
-                          CustomProductCardWithRating(size: size),
-                          if (index < 2) SizedBox(height: 16),
-                        ],
-                      );
-                    }),
-                  ),
-                ],
-              ),
+              PopularProducts(size: size),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class PopularProducts extends StatelessWidget {
+  const PopularProducts({super.key, required this.size});
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Header row
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Popular Products",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            GestureDetector(
+              child: Text(
+                "View All",
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(color: Colors.grey[700]),
+              ),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 16),
+
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: 3,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                CustomProductCardWithRating(size: size),
+              
+              ],
+            );
+          },
+        ),
+      ],
     );
   }
 }
@@ -120,7 +137,12 @@ class NewArriveSection extends StatelessWidget {
           runSpacing: 16,
           children: homeController.listProduct
               .take(4)
-              .map((product) => CustomCardWidget(data: product))
+              .map(
+                (product) => SizedBox(
+                  width: (MediaQuery.of(context).size.width - 48) / 2,
+                  child: CustomCardWidget(data: product),
+                ),
+              )
               .toList(),
         ),
       ],
@@ -356,7 +378,14 @@ class CategoriesSection extends StatelessWidget {
           runSpacing: 16,
           children: homeController.listProduct
               .take(4)
-              .map((product) => CustomCardWidget(data: product))
+              .map(
+                (product) => SizedBox(
+                  width:
+                      (MediaQuery.of(context).size.width - 48) /
+                      2, // Adjust for 2 items + spacing
+                  child: CustomCardWidget(data: product),
+                ),
+              )
               .toList(),
         ),
       ],

@@ -10,40 +10,58 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ShopController shopController = Get.find<ShopController>();
-    return  Scaffold(
-      appBar: AppBar(
-     
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            spacing: 16,
-            children: [
-              // search
-              SearchWidget(text: "Search Categories"),
 
-              Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                children: List.generate(shopController.listCate.length, (
-                  index,
-                ) {
-                  final title = shopController.listCate[index]['name'];
-                  final image = shopController.listCate[index]['imageUrl'];
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            floating: false,
+            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+            title: Text('Categories'), 
 
-                  return CustomCategoryCardWidget(
-                    title: title,
-                    imageUrl: image,
-                    subtitle:
-                        "323 Product", // Replace with actual value if available
-                    onTap: () {},
-                  );
-                }),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(
+                70,
+              ), // set height to fit your search widget
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: SearchWidget(text: "Search Categories"),
               ),
-            ],
+            ),
           ),
-        ),
+
+          // Grid of categories with 2 items per row
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // 2 items per row
+                mainAxisSpacing: 16,
+                crossAxisSpacing: 16,
+                childAspectRatio: 3 / 4, // Adjust to your card's aspect ratio
+              ),
+              delegate: SliverChildBuilderDelegate((
+                BuildContext context,
+                int index,
+              ) {
+                final category = shopController.listCate[index];
+                final title = category['name'];
+                final image = category['imageUrl'];
+
+                return CustomCategoryCardWidget(
+                  title: title,
+                  imageUrl: image,
+                  subtitle: "323 Product", // Replace with actual value
+                  onTap: () {},
+                );
+              }, childCount: shopController.listCate.length),
+            ),
+          ),
+        ],
       ),
     );
   }

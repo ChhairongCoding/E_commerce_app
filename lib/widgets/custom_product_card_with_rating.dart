@@ -12,80 +12,66 @@ class CustomProductCardWithRating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-          width: size.width,
-          height: 100,
-          decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: CachedNetworkImage(
+              imageUrl:
+                  "https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048",
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
           ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    spacing: 16,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadiusGeometry.circular(
-                          16,
-                        ),
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              "https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048",
-                          fit: BoxFit.cover,
-                          width: 100,
-                          height: 100,
-                        ),
+          const SizedBox(width: 12),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Tshirt retro style",
+                  style: Theme.of(context).textTheme.titleMedium,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "This is a local brand, created for barcelona fan.",
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.grey[700],
                       ),
-                      Column(
-                        spacing: 2,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Tshirt retro style",
-                            style: Theme.of(
-                              context,
-                            ).textTheme.titleMedium,
-                          ),
-                          SizedBox(
-                            width: 180,
-                            child: Text(
-                              "This is a local brand, created for barcelona fan.",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall
-                                  ?.copyWith(
-                                    overflow: TextOverflow.ellipsis,
-                                    color: Colors.grey[700],
-                                  ),
-                              maxLines: 1,
-                            ),
-                          ),
-                          Row(
-                            spacing: 6,
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                              Text("(4.5)"),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: Text("\$72.00",style: Theme.of(context).textTheme.titleMedium,),
-                  ),
-                ],
-              ),
-            ],
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: const [
+                    Icon(Icons.star, color: Colors.amber, size: 16),
+                    SizedBox(width: 4),
+                    Text("(4.5)"),
+                  ],
+                ),
+              ],
+            ),
           ),
-        );
+
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text(
+              "\$72.00",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
-
-

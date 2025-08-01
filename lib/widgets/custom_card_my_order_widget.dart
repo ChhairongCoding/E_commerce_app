@@ -5,72 +5,69 @@ class CustomCardMyOrderWidget extends StatelessWidget {
   const CustomCardMyOrderWidget({super.key});
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Color(0xffFEF7FF),
+        color: const Color(0xffFEF7FF),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.grey, width: 0.4),
       ),
-      child: Column(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadiusGeometry.circular(16),
-                child: CachedNetworkImage(
-                  width: 120,
-                  fit: BoxFit.cover,
-                  imageUrl:
-                      "https://www.thesportstuff.in/cdn/shop/files/Optimized-GreyBlackFront.jpg?v=1696607763",
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Text label this",
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          Text(
-                            "Text label thi dks sdfdsa",
-                            style: Theme.of(context).textTheme.titleSmall
-                                ?.copyWith(color: Colors.grey[700]),
-                          ),
-                          Text(
-                            "Quantity: 1",
-                            style: Theme.of(context).textTheme.titleSmall
-                                ?.copyWith(color: Colors.grey[700]),
-                          ),
-                          Text(
-                            "Size: 42",
-                            style: Theme.of(context).textTheme.titleSmall
-                                ?.copyWith(color: Colors.grey[700]),
-                          ),
-                          Text(
-                            "Color: ",
-                            style: Theme.of(context).textTheme.titleSmall
-                                ?.copyWith(color: Colors.grey[700]),
-                          ),
-                        ],
-                      ),
-
-                      Text(
-                        "\$120",
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: CachedNetworkImage(
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+              imageUrl:
+                  "https://www.thesportstuff.in/cdn/shop/files/Optimized-GreyBlackFront.jpg?v=1696607763",
+            ),
           ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Text label this",
+                  style: Theme.of(context).textTheme.titleMedium,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  "Text label thi dks sdfdsa",
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleSmall?.copyWith(color: Colors.grey[700]),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "Quantity: 1",
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleSmall?.copyWith(color: Colors.grey[700]),
+                ),
+                Text(
+                  "Size: 42",
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleSmall?.copyWith(color: Colors.grey[700]),
+                ),
+                Text(
+                  "Color: Black",
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleSmall?.copyWith(color: Colors.grey[700]),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text("\$120", style: Theme.of(context).textTheme.titleLarge),
         ],
       ),
     );
