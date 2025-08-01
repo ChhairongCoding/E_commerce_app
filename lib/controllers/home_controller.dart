@@ -9,54 +9,66 @@ class HomeController extends GetxController {
   RxBool opendedFilter = false.obs;
   final RxInt setectedCateIndex = 1.obs;
 
-
-
-
   RxMap<dynamic, dynamic> listDetail = {}.obs;
   List<Map<String, dynamic>> listProduct = [
     {
       'name': "Tee retro Spotify Camp Nou ",
       'price': '€29,99 EUR',
-      'image':
-          'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048&width=1200',
+      'images': [
+        'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048&width=1200',
+        'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048&width=1200',
+        'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048&width=1200',
+      ],
     },
     {
       'name': "Blaugrana charity bracelet",
       'price': '€9,99 EUR',
-      'image':
-          'https://store.fcbarcelona.com/cdn/shop/files/pulsera.jpg?v=1742558048&width=1200',
+      'images': [
+        'https://store.fcbarcelona.com/cdn/shop/files/pulsera.jpg?v=1742558048&width=1200'
+            'https://store.fcbarcelona.com/cdn/shop/files/pulsera.jpg?v=1742558048&width=1200'
+            'https://store.fcbarcelona.com/cdn/shop/files/pulsera.jpg?v=1742558048&width=1200',
+      ],
     },
     {
       'name': "Hoodie Grey Panot Barça ",
       'price': '€69,99 EUR',
-      'image':
-          'https://store.fcbarcelona.com/cdn/shop/files/FE70420023_3.jpg?v=1750945670&width=1200',
+      'images': [
+        'https://store.fcbarcelona.com/cdn/shop/files/FE70420023_3.jpg?v=1750945670&width=1200',
+        'https://store.fcbarcelona.com/cdn/shop/files/FE70420023_3.jpg?v=1750945670&width=1200',
+        'https://store.fcbarcelona.com/cdn/shop/files/FE70420023_3.jpg?v=1750945670&width=1200',
+      ],
     },
     {
       'name': "T-shirt Red Cruyff Barça ",
       'price': '€39,99 EUR',
-      'image':
-          'https://store.fcbarcelona.com/cdn/shop/files/Shot_02_0027.jpg?v=1749648616&width=1200',
+      'images': [
+        'https://store.fcbarcelona.com/cdn/shop/files/Shot_02_0027.jpg?v=1749648616&width=1200',
+        'https://store.fcbarcelona.com/cdn/shop/files/Shot_02_0027.jpg?v=1749648616&width=1200',
+        'https://store.fcbarcelona.com/cdn/shop/files/Shot_02_0027.jpg?v=1749648616&width=1200',
+      ],
     },
     {
       'name': "1995-97 Home Kit",
       'price': "€129,99 EUR",
       'category': 'Kits',
-      'image':
-          'https://store.fcbarcelona.com/cdn/shop/files/IMG_6274.jpg?v=1737554507&width=1200',
+      'images': [
+        'https://store.fcbarcelona.com/cdn/shop/files/IMG_6274.jpg?v=1737554507&width=1200',
+        'https://store.fcbarcelona.com/cdn/shop/files/IMG_6274.jpg?v=1737554507&width=1200',
+        'https://store.fcbarcelona.com/cdn/shop/files/IMG_6274.jpg?v=1737554507&width=1200',
+      ],
     },
     {
       'name': "1995-97 Away Kit",
       'price': "€12,99 EUR",
       'category': 'Kits',
-      'image':
+      'images':
           'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048',
     },
     {
       'name': "Tshirt retro style",
       'price': "€12,99 EUR",
       'category': 'Tshirt',
-      'image':
+      'images':
           'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048',
     },
     {
@@ -65,14 +77,14 @@ class HomeController extends GetxController {
       'category': 'Tshirt',
       'descrition': "This is a local brand, created for barcelona fan.",
       'rate': "4.5",
-      'image':
+      'images':
           'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048',
     },
     {
       'name': "F50 Elite Firm Ground Boots",
       'price': "€220,99 EUR",
       'category': 'Shoes',
-      'image':
+      'images':
           'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/0efd53c278f04a348f29ac8fbb7b5cd0_9366/F50_Elite_Firm_Ground_Boots_White_JH7617_HM1.jpg',
     },
   ];
@@ -150,7 +162,6 @@ class HomeController extends GetxController {
         .where((item) => item['category'] == selectedCategory.value)
         .toList();
   }
-
 
   void setCategory(String category) {
     selectedCategory.value = category;
@@ -230,8 +241,7 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-
-  void onFilter (){
+  void onFilter() {
     opendedFilter.value = !opendedFilter.value;
     print(opendedFilter);
   }

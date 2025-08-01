@@ -1,24 +1,34 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_instance/get_instance.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 
 class CustomCardWidget extends StatelessWidget {
   final Map<String, dynamic> data;
 
   const CustomCardWidget({super.key, required this.data});
+
+  String getImageUrl(dynamic images) {
+    if (images is List && images.isNotEmpty) {
+      return images.first;
+    } else if (images is String) {
+      return images;
+    } else {
+      return 'https://via.placeholder.com/150'; // fallback
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final HomeController homeController = Get.find<HomeController>();
 
-    final String imageUrl = data['image'] ?? '';
+    final String imageUrl = getImageUrl(data['images']);
     final String name = data['name'] ?? 'No Name';
     final String price = data['price'] ?? data['Price'] ?? '€0.00';
 
     return GestureDetector(
-      onTap: ()=> homeController.tempProduct(data),
+      onTap: () => homeController.tempProduct(data),
       child: SizedBox(
         width: size.width * 0.44,
         child: Column(
@@ -41,7 +51,7 @@ class CustomCardWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-      
+
             // Product Name
             Text(
               name,
@@ -51,13 +61,14 @@ class CustomCardWidget extends StatelessWidget {
               maxLines: 1,
             ),
             const SizedBox(height: 4),
-      
+
             // Product Price
             Text(
               price,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: Colors.orange),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: Colors.orange),
             ),
           ],
         ),
