@@ -20,7 +20,7 @@ class MainScreen extends StatelessWidget {
                 centerTitle: true,
                 actions: [
                   IconButton(
-                    onPressed: () =>Get.toNamed(AppRoutes.myOrder),
+                    onPressed: () => Get.toNamed(AppRoutes.myOrder),
                     icon: Icon(HugeIcons.strokeRoundedShoppingBag02),
                   ),
                 ],
@@ -46,32 +46,32 @@ class MainScreen extends StatelessWidget {
         body: mainController.listScreens[mainController.currentIndex.value],
 
         bottomNavigationBar: Obx(
-          () => Container(
-            margin: EdgeInsets.only(top: 10),
-            child: BottomNavigationBar(
-              currentIndex: mainController.currentIndex.value,
-              onTap: mainController.toggleSwitch,
-              selectedItemColor: Colors.blue,
-              type: BottomNavigationBarType.fixed,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(HugeIcons.strokeRoundedHome01),
-                  label: "",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(HugeIcons.strokeRoundedShoppingCart01),
-                  label: "",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(HugeIcons.strokeRoundedNotification01),
-                  label: "",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(HugeIcons.strokeRoundedUser),
-                  label: "",
-                ),
-              ],
-            ),
+          () => BottomNavigationBar(
+           
+            currentIndex: mainController.currentIndex.value,
+            onTap: mainController.toggleSwitch,
+            selectedItemColor: Colors.blue,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            type: BottomNavigationBarType.fixed,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(HugeIcons.strokeRoundedHome01),
+                label: "",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(HugeIcons.strokeRoundedShoppingCart01),
+                label: "",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(HugeIcons.strokeRoundedNotification01),
+                label: "",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(HugeIcons.strokeRoundedUser),
+                label: "",
+              ),
+            ],
           ),
         ),
       ),

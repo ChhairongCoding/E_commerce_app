@@ -1,18 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/controllers/home_controller.dart';
+import 'package:e_commerce_app/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomCardWidget extends StatelessWidget {
-  final Map<String, dynamic> data;
+  final Product data;
 
   const CustomCardWidget({super.key, required this.data});
 
-  String getImageUrl(dynamic images) {
-    if (images is List && images.isNotEmpty) {
+  String getImageUrl(List<String> images) {
+    if (images.isNotEmpty) {
       return images.first;
-    } else if (images is String) {
-      return images;
     } else {
       return 'https://via.placeholder.com/150'; // fallback
     }
@@ -23,9 +22,9 @@ class CustomCardWidget extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final HomeController homeController = Get.find<HomeController>();
 
-    final String imageUrl = getImageUrl(data['images']);
-    final String name = data['name'] ?? 'No Name';
-    final String price = data['price'] ?? data['Price'] ?? '€0.00';
+    final String imageUrl = getImageUrl(data.images);
+    final String name = data.name;
+    final String price = data.price.toStringAsFixed(2);
 
     return GestureDetector(
       onTap: () => homeController.tempProduct(data),
@@ -64,7 +63,7 @@ class CustomCardWidget extends StatelessWidget {
 
             // Product Price
             Text(
-              price,
+              '\$$price',
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium
