@@ -43,7 +43,7 @@ class CustomDetailProduct extends StatelessWidget {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: ProductImageCarousel(
-                images: List<String>.from(homeController.listDetail['images']),
+                images: homeController.tempSelectedProduct.value?.images ?? [],
               ),
             ),
           ),
@@ -58,17 +58,19 @@ class CustomDetailProduct extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    homeController.listDetail["name"],
+                    homeController.tempSelectedProduct.value?.name ?? "No Name",
+
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        homeController.listDetail["price"],
+                        '\$${(homeController.tempSelectedProduct.value?.price ?? 0.0).toStringAsFixed(2)}',
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(color: Colors.deepOrange),
                       ),
+
                       Row(
                         children: const [
                           Icon(Icons.star_border_outlined),
@@ -150,7 +152,6 @@ class CustomDetailProduct extends StatelessWidget {
                     ],
                   ),
 
-
                   const SizedBox(height: 20),
                   const Divider(),
                   Row(
@@ -170,8 +171,6 @@ class CustomDetailProduct extends StatelessWidget {
                   ),
                   const SizedBox(height: 100),
 
-
-                  
                   Container(
                     color: Colors.white,
                     padding: const EdgeInsets.all(12),
@@ -184,9 +183,15 @@ class CustomDetailProduct extends StatelessWidget {
                         minimumSize: const Size(double.infinity, 60),
                       ),
                       onPressed: () {
-                        cartController.addToCart(
-                          Map<String, dynamic>.from(homeController.listDetail),
-                        );
+                        final product =
+                            homeController.tempSelectedProduct.value;
+                        if (product != null) {
+                          cartController.addToCart({
+                            'name': product.name,
+                            'price': product.price,
+                            'images': product.images,
+                          });
+                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -221,9 +226,8 @@ class CustomDetailProduct extends StatelessWidget {
 }
 
 class ProductImageCarousel extends StatefulWidget {
+  const ProductImageCarousel({super.key, required this.images});
   final List<String> images;
-  const ProductImageCarousel({Key? key, required this.images})
-    : super(key: key);
 
   @override
   State<ProductImageCarousel> createState() => _ProductImageCarouselState();

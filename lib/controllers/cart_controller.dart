@@ -3,6 +3,17 @@ import 'package:get/get.dart';
 
 class CartController extends GetxController {
   RxList<Map<String, dynamic>> cartList = <Map<String, dynamic>>[].obs;
+  RxDouble totalPrice = 0.0.obs;
+
+  void calculateTotal() {
+    double total = 0.0;
+    for (var item in cartList) {
+      double price = double.tryParse(item["price"].toString()) ?? 0.0;
+      int quantity = item["quantity"] ?? 1;
+      total += price * quantity;
+    }
+    totalPrice.value = total;
+  }
 
   void addToCart(Map<String, dynamic> product) {
     int index = cartList.indexWhere((item) => item['name'] == product['name']);
@@ -10,8 +21,9 @@ class CartController extends GetxController {
       cartList[index]['quantity'] = (cartList[index]['quantity'] ?? 1) + 1;
       cartList.refresh();
     } else {
-      cartList.add({...product, 'quantity': 1}); // ✅ Proper map
+      cartList.add({...product, 'quantity': 1});
     }
+    calculateTotal();
     Get.snackbar(
       "Cart",
       "${product['name']} added to cart!",
@@ -22,10 +34,11 @@ class CartController extends GetxController {
 
   void removeCart(int index) {
     cartList.removeAt(index);
+    calculateTotal(); // 👈 Add this
     Get.snackbar(
       'Item Removed',
       'The item has been removed from your cart.',
-      snackPosition: SnackPosition.BOTTOM,
+      snackPosition: SnackPosition.TOP,
       duration: Duration(seconds: 2),
     );
   }

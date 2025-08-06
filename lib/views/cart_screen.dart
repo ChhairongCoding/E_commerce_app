@@ -9,38 +9,48 @@ class CartScreen extends StatelessWidget {
   CartScreen({super.key});
   final CartController cartController = Get.put(CartController());
   String getImageUrl(dynamic images) {
-  if (images is List && images.isNotEmpty) {
-    return images.first;
-  } else if (images is String) {
-    return images;
-  } else {
-    return 'https://via.placeholder.com/150';
+    if (images is List && images.isNotEmpty) {
+      return images.first;
+    } else if (images is String) {
+      return images;
+    } else {
+      return 'https://via.placeholder.com/150';
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Total Products(12)")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Obx(
-          () => Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    spacing: 16,
-                    children: List.generate(
-                      cartController.cartList.length,
-                      (index) => cartCard(context, index),
-                    ),
+      appBar: AppBar(
+        title: Obx(
+          () => Text("Total Products(${cartController.cartList.length})"),
+        ),
+      ),
+      body: bodySection(context),
+    );
+  }
+
+  bodySection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Obx(
+        () => Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  spacing: 16,
+                  children: List.generate(
+                    cartController.cartList.length,
+                    (index) => cartCard(context, index),
                   ),
                 ),
               ),
+            ),
 
+            if (cartController.cartList.isNotEmpty)
               SizedBox(
                 width: double.infinity,
                 child: Column(
@@ -54,7 +64,6 @@ class CartScreen extends StatelessWidget {
                             const Text("All"),
                           ],
                         ),
-
                         // Right: Price summary + Button
                         GestureDetector(
                           onTap: () => showCheckoutBottomSheet(context),
@@ -66,9 +75,16 @@ class CartScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Row(
-                                    children: const [
-                                      Text("Total: "),
-                                      Text("\$183"),
+                                    children: [
+                                      const Text("Total: "),
+                                      Obx(
+                                        () => Text(
+                                          "\$${cartController.totalPrice.value.toStringAsFixed(2)}",
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.titleMedium,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   Row(
@@ -84,26 +100,27 @@ class CartScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
                         fixedSize: Size(MediaQuery.of(context).size.width, 50),
-                        backgroundColor: Colors.black
+                        backgroundColor: Colors.black,
                       ),
                       onPressed: () => showCheckoutBottomSheet(context),
                       child: Text(
                         "Check out",
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium?.copyWith(color: Colors.white),
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
+          ],
         ),
       ),
     );
@@ -134,7 +151,7 @@ class CartScreen extends StatelessWidget {
         child: Row(
           children: [
             CachedNetworkImage(
-             imageUrl: getImageUrl(cartController.cartList[index]["images"]),
+              imageUrl: getImageUrl(cartController.cartList[index]["images"]),
 
               width: 100,
               height: 200,
@@ -151,7 +168,7 @@ class CartScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          cartController.cartList[index]["name"],
+                          cartController.cartList[index]["name"] ?? "No Item",
                           style: Theme.of(context).textTheme.titleMedium,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
@@ -161,7 +178,8 @@ class CartScreen extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    cartController.cartList[index]["price"],
+                    "\$${(cartController.cartList[index]["price"] ?? 0.0).toStringAsFixed(2)}",
+
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Row(

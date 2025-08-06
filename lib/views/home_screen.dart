@@ -135,7 +135,7 @@ class NewArriveSection extends StatelessWidget {
         Wrap(
           spacing: 16,
           runSpacing: 16,
-          children: homeController.listProduct
+          children: homeController.productList
               .take(4)
               .map(
                 (product) => SizedBox(
@@ -222,7 +222,7 @@ class SearchCustom extends StatelessWidget {
           flex: 2,
           child: GestureDetector(
             onTap:
-                homeController.onFilter, // ✅ Call the method to toggle filter
+                homeController.opendedFilter, // ✅ Call the method to toggle filter
             child: Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -376,7 +376,7 @@ class CategoriesSection extends StatelessWidget {
         Wrap(
           spacing: 16,
           runSpacing: 16,
-          children: homeController.listProduct
+          children: homeController.productList
               .take(4)
               .map(
                 (product) => SizedBox(
