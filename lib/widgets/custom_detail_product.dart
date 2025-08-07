@@ -2,22 +2,22 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/controllers/cart_controller.dart';
 import 'package:e_commerce_app/controllers/favorite_controller.dart';
 import 'package:e_commerce_app/controllers/home_controller.dart';
+import 'package:e_commerce_app/controllers/product_detail_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:e_commerce_app/models/cart_model.dart';
 
 class CustomDetailProduct extends StatelessWidget {
   CustomDetailProduct({super.key});
-
-  final List<String> sizes = ['S', 'M', 'L', 'XL'];
-  final RxInt selectedSize = 0.obs;
-
+  final ProductDetailController productDetailController = Get.find<ProductDetailController>();
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.find<HomeController>();
     final FavoriteController favoriteController =
         Get.find<FavoriteController>();
     final CartController cartController = Get.find<CartController>();
+
 
     return Scaffold(
       body: CustomScrollView(
@@ -82,75 +82,94 @@ class CustomDetailProduct extends StatelessWidget {
                   const SizedBox(height: 16),
 
                   Text("Color"),
-
                   const SizedBox(height: 8),
+                  Obx(() {
+                    final product = homeController.tempSelectedProduct.value;
+                    final colors = product?.color ?? [];
 
-                  // Color Options and Sizes
-                  Row(
-                    children: List.generate(3, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.amber,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.grey),
+                    if (colors.isEmpty) {
+                      return const Text("No colors available");
+                    }
+
+                    return Row(
+                      children: List.generate(colors.length, (index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: GestureDetector(
+                            onTap: () {
+                              productDetailController.selectedColor.value = index;
+                            },
+                            child: Obx(
+                              () => Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: colors[index],
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color:
+                                        productDetailController.selectedColor.value ==
+                                            index
+                                        ? Colors.black
+                                        : Colors.grey,
+                                    width: 2,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      );
-                    }),
-                  ),
+                        );
+                      }),
+                    );
+                  }),
 
                   SizedBox(height: 16),
                   Text("Size"),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
+                  Obx(() {
+                    final sizes =
+                        homeController.tempSelectedProduct.value?.sizes ?? [];
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Obx(
-                        () => Wrap(
-                          spacing: 10,
-                          runSpacing: 10,
-                          children: List.generate(
-                            sizes.length,
-                            (index) => Material(
-                              child: InkWell(
+                    return Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: List.generate(
+                        sizes.length,
+                        (index) => Material(
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(3),
+                            onTap: () =>
+                                productDetailController.selectedSize.value = index,
+                            child: Ink(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color:
+                                    productDetailController.selectedSize.value == index
+                                    ? const Color(0xFF667EEA)
+                                    : const Color(0xFFF3F3F3),
                                 borderRadius: BorderRadius.circular(3),
-                                onTap: () => selectedSize.value = index,
-                                child: Ink(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    color: selectedSize.value == index
-                                        ? const Color(0xFF667EEA)
-                                        : const Color(0xFFF3F3F3),
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      sizes[index],
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium
-                                          ?.copyWith(
-                                            color: selectedSize.value == index
-                                                ? Colors.white
-                                                : Colors.black87,
-                                          ),
-                                    ),
-                                  ),
+                              ),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  sizes[index],
+                                  style: Theme.of(context).textTheme.titleMedium
+                                      ?.copyWith(
+                                        color:
+                                            productDetailController.selectedSize.value ==
+                                                index
+                                            ? Colors.white
+                                            : Colors.black87,
+                                      ),
                                 ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    );
+                  }),
 
                   const SizedBox(height: 20),
                   const Divider(),
@@ -183,16 +202,29 @@ class CustomDetailProduct extends StatelessWidget {
                         minimumSize: const Size(double.infinity, 60),
                       ),
                       onPressed: () {
-                        final product =
-                            homeController.tempSelectedProduct.value;
-                        if (product != null) {
-                          cartController.addToCart({
-                            'name': product.name,
-                            'price': product.price,
-                            'images': product.images,
-                          });
-                        }
-                      },
+  final product = homeController.tempSelectedProduct.value;
+  if (product != null) {
+    final selectedSize = product.sizes.isNotEmpty
+        ? product.sizes[productDetailController.selectedSize.value]
+        : null;
+
+    final selectedColor = product.color.isNotEmpty
+        ? product.color[productDetailController.selectedColor.value]
+        : null;
+
+    cartController.addToCart(
+      CartModel(
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+        images: product.images,
+        selectedSize: selectedSize,
+        selectedColor: selectedColor,
+      ),
+    );
+  }
+}
+,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

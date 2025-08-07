@@ -21,6 +21,8 @@ class HomeController extends GetxController {
         'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048&width=1200',
         'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048&width=1200',
       ],
+      sizes: ['S', 'M', 'L', 'XL'],
+      color: [Colors.blue, Colors.white],
     ),
     Product(
       name: "Blaugrana charity bracelet",
@@ -30,6 +32,8 @@ class HomeController extends GetxController {
         'https://store.fcbarcelona.com/cdn/shop/files/pulsera.jpg?v=1742558048&width=1200',
         'https://store.fcbarcelona.com/cdn/shop/files/pulsera.jpg?v=1742558048&width=1200',
       ],
+      sizes: ['S', 'M', 'L'],
+      color: [Colors.blue, Colors.white],
     ),
     Product(
       name: "Hoodie Grey Panot Barça",
@@ -39,6 +43,8 @@ class HomeController extends GetxController {
         'https://store.fcbarcelona.com/cdn/shop/files/FE70420023_3.jpg?v=1750945670&width=1200',
         'https://store.fcbarcelona.com/cdn/shop/files/FE70420023_3.jpg?v=1750945670&width=1200',
       ],
+      sizes: ['M', 'L', 'XL'],
+      color: [Colors.blue, Colors.white],
     ),
     Product(
       name: "T-shirt Red Cruyff Barça",
@@ -48,6 +54,8 @@ class HomeController extends GetxController {
         'https://store.fcbarcelona.com/cdn/shop/files/Shot_02_0027.jpg?v=1749648616&width=1200',
         'https://store.fcbarcelona.com/cdn/shop/files/Shot_02_0027.jpg?v=1749648616&width=1200',
       ],
+      sizes: ['S', 'M', 'L', 'XL'],
+      color: [Colors.blue, Colors.white],
     ),
     Product(
       name: "1995-97 Home Kit",
@@ -58,6 +66,8 @@ class HomeController extends GetxController {
         'https://store.fcbarcelona.com/cdn/shop/files/IMG_6274.jpg?v=1737554507&width=1200',
         'https://store.fcbarcelona.com/cdn/shop/files/IMG_6274.jpg?v=1737554507&width=1200',
       ],
+      sizes: ['S', 'M', 'L', 'XL'],
+      color: [Colors.blue, Colors.white],
     ),
     Product(
       name: "1995-97 Away Kit",
@@ -66,6 +76,8 @@ class HomeController extends GetxController {
       images: [
         'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048',
       ],
+      sizes: ['S', 'M', 'L', 'XL'],
+      color: [Colors.blue, Colors.white],
     ),
     Product(
       name: "Tshirt retro style",
@@ -74,6 +86,8 @@ class HomeController extends GetxController {
       images: [
         'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048',
       ],
+      sizes: ['S', 'M', 'L', 'XL'],
+      color: [Colors.blue, Colors.white],
     ),
     Product(
       name: "Tshirt retro style",
@@ -84,6 +98,8 @@ class HomeController extends GetxController {
       images: [
         'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048',
       ],
+      sizes: ['S', 'M', 'L', 'XL'],
+      color: [Colors.blue, Colors.white],
     ),
     Product(
       name: "F50 Elite Firm Ground Boots",
@@ -92,6 +108,8 @@ class HomeController extends GetxController {
       images: [
         'https://assets.adidas.com/images/h_2000,f_auto,q_auto,fl_lossy,c_fill,g_auto/0efd53c278f04a348f29ac8fbb7b5cd0_9366/F50_Elite_Firm_Ground_Boots_White_JH7617_HM1.jpg',
       ],
+      sizes: ['S', 'M', 'L', 'XL'],
+      color: [Colors.blue, Colors.white],
     ),
   ];
 

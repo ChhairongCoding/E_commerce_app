@@ -60,13 +60,22 @@ class CartScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Checkbox(value: false, onChanged: (value) {}),
+                            Checkbox(
+                              activeColor: Colors.black,
+                              shape: CircleBorder(),
+                              side: BorderSide(width: 1.5),
+                              value: cartController.isAllSelected,
+                              onChanged: (val) {
+                                cartController.toggleSelectAll(val);
+                              },
+                            ),
                             const Text("All"),
                           ],
                         ),
                         // Right: Price summary + Button
                         GestureDetector(
-                          onTap: () => showCheckoutBottomSheet(context),
+                          onTap: () =>
+                              showCheckoutBottomSheet(context, cartController),
                           child: Wrap(
                             spacing: 10,
                             crossAxisAlignment: WrapCrossAlignment.center,
@@ -88,9 +97,13 @@ class CartScreen extends StatelessWidget {
                                     ],
                                   ),
                                   Row(
-                                    children: const [
-                                      Text("Discount: 15%  "),
-                                      Text("Subtotal: \$170"),
+                                    children: [
+                                      Text("Discount: 0%  "),
+                                      Obx(
+                                        () => Text(
+                                          "Subtotal: \$${cartController.totalPrice.value.toStringAsFixed(2)}",
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ],
@@ -107,9 +120,15 @@ class CartScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16),
                         ),
                         fixedSize: Size(MediaQuery.of(context).size.width, 50),
-                        backgroundColor: Colors.black,
+                        backgroundColor:
+                            cartController.selectedItems.contains(true)
+                            ? Colors.black
+                            : Colors.grey,
                       ),
-                      onPressed: () => showCheckoutBottomSheet(context),
+                      onPressed: cartController.selectedItems.contains(true)
+                          ? () =>
+                                showCheckoutBottomSheet(context, cartController)
+                          : null,
                       child: Text(
                         "Check out",
                         style: Theme.of(
@@ -150,12 +169,14 @@ class CartScreen extends StatelessWidget {
         ),
         child: Row(
           children: [
-            CachedNetworkImage(
-              imageUrl: getImageUrl(cartController.cartList[index]["images"]),
-
-              width: 100,
-              height: 200,
-              fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: BorderRadiusGeometry.circular(16),
+              child: CachedNetworkImage(
+                imageUrl: getImageUrl(cartController.cartList[index].images),
+                width: 100,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -168,17 +189,25 @@ class CartScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          cartController.cartList[index]["name"] ?? "No Item",
+                          cartController.cartList[index].name,
                           style: Theme.of(context).textTheme.titleMedium,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
                       ),
-                      Checkbox(value: true, onChanged: (val) {}),
+                      Checkbox(
+                        activeColor: Colors.black,
+                        shape: CircleBorder(),
+                        side: BorderSide(width: 1.5),
+                        value: cartController.selectedItems[index],
+                        onChanged: (_) {
+                          cartController.toggleItemSelection(index);
+                        },
+                      ),
                     ],
                   ),
                   Text(
-                    "\$${(cartController.cartList[index]["price"] ?? 0.0).toStringAsFixed(2)}",
+                    "\$${(cartController.cartList[index].price).toStringAsFixed(2)}",
 
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
@@ -189,10 +218,28 @@ class CartScreen extends StatelessWidget {
                         children: [
                           Text("Size: ", style: TextStyle(color: Colors.grey)),
                           SizedBox(width: 4),
-                          Text("L", style: TextStyle(color: Colors.grey)),
+                          Text("${cartController.cartList[index].selectedSize}", style: TextStyle(color: Colors.grey)),
                           SizedBox(width: 4),
+
                           Text("Color: ", style: TextStyle(color: Colors.grey)),
-                          Text("Black", style: TextStyle(color: Colors.grey)),
+                          SizedBox(width: 8,),
+                          Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  blurStyle: BlurStyle.inner,
+                                  spreadRadius: 1,
+                                  blurRadius: 3,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                              color: cartController.cartList[index].selectedColor
+                            ),
+                          )
                         ],
                       ),
                       Container(
