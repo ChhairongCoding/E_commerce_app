@@ -1,40 +1,73 @@
+import 'package:e_commerce_app/models/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController {
-  RxList<Map<String, dynamic>> cartList = <Map<String, dynamic>>[].obs;
-  RxDouble totalPrice = 0.0.obs;
+  RxList<CartModel> cartList = <CartModel>[].obs;
+  RxList<bool> selectedItems = <bool>[].obs;
 
-  void calculateTotal() {
-    double total = 0.0;
-    for (var item in cartList) {
-      double price = double.tryParse(item["price"].toString()) ?? 0.0;
-      int quantity = item["quantity"] ?? 1;
-      total += price * quantity;
-    }
-    totalPrice.value = total;
+  RxDouble totalPrice = 0.0.obs;
+  RxDouble shippingPrice = 2.0.obs;
+  RxDouble subTotal = 0.0.obs;
+
+  /// Sync selected items list when cart changes
+  void syncSelectedItems() {
+    selectedItems.value = List.generate(cartList.length, (_) => true);
+    calculateTotal();
   }
 
-  void addToCart(Map<String, dynamic> product) {
-    int index = cartList.indexWhere((item) => item['name'] == product['name']);
-    if (index >= 0) {
-      cartList[index]['quantity'] = (cartList[index]['quantity'] ?? 1) + 1;
-      cartList.refresh();
+  /// Calculate total based only on selected items
+  void calculateTotal() {
+    subTotal.value = 0.0;
+    for (int i = 0; i < cartList.length; i++) {
+      if (selectedItems[i]) {
+        subTotal.value += cartList[i].price * cartList[i].quantity;
+      }
+    }
+    totalPrice.value = subTotal.value;
+    subTotal.value += shippingPrice.value;
+  }
+
+  void incrementQuantity(int index) {
+    final item = cartList[index];
+    cartList[index] = item.copyWith(quantity: item.quantity + 1);
+    calculateTotal();
+  }
+
+  void decrementQuantity(int index) {
+    final item = cartList[index];
+    if (item.quantity > 1) {
+      cartList[index] = item.copyWith(quantity: item.quantity - 1);
+      calculateTotal();
     } else {
-      cartList.add({...product, 'quantity': 1});
+      removeCart(index);
+    }
+  }
+
+  void addToCart(CartModel product) {
+    int index = cartList.indexWhere((item) => item.name == product.name);
+    if (index >= 0) {
+      var updated = cartList[index].copyWith(
+        quantity: cartList[index].quantity + 1,
+      );
+      cartList[index] = updated;
+    } else {
+      cartList.add(product.copyWith(quantity: 1));
+      selectedItems.add(true); // default to selected
     }
     calculateTotal();
     Get.snackbar(
       "Cart",
-      "${product['name']} added to cart!",
+      "${product.name} added to cart!",
       snackPosition: SnackPosition.TOP,
       backgroundColor: Colors.white,
-    );
+    ); 
   }
 
   void removeCart(int index) {
     cartList.removeAt(index);
-    calculateTotal(); // 👈 Add this
+    selectedItems.removeAt(index);
+    calculateTotal();
     Get.snackbar(
       'Item Removed',
       'The item has been removed from your cart.',
@@ -42,4 +75,20 @@ class CartController extends GetxController {
       duration: Duration(seconds: 2),
     );
   }
+
+  /// Toggle a single item's checkbox
+  void toggleItemSelection(int index) {
+    selectedItems[index] = !selectedItems[index];
+    selectedItems.refresh();
+    calculateTotal();
+  }
+
+  /// Toggle "select all"
+  void toggleSelectAll(bool? value) {
+    selectedItems.value = List.generate(cartList.length, (_) => value ?? false);
+    calculateTotal();
+  }
+
+  /// Check if all items are selected
+  bool get isAllSelected => selectedItems.every((item) => item == true);
 }

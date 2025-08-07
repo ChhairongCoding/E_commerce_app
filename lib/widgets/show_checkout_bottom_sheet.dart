@@ -1,8 +1,20 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_app/controllers/cart_controller.dart';
 import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void showCheckoutBottomSheet(BuildContext context) {
+void showCheckoutBottomSheet(BuildContext context, CartController controller) {
+  String getImageUrl(dynamic images) {
+    if (images is List && images.isNotEmpty) {
+      return images.first;
+    } else if (images is String) {
+      return images;
+    } else {
+      return 'https://via.placeholder.com/150';
+    }
+  }
+
   Get.bottomSheet(
     Container(
       padding: EdgeInsets.all(20),
@@ -28,7 +40,28 @@ void showCheckoutBottomSheet(BuildContext context) {
                   textAlign: TextAlign.center,
                 ),
               ),
-              Icon(Icons.image),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: controller.cartList
+                      .map(
+                        (item) => Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: CachedNetworkImage(
+                              imageUrl: getImageUrl(item.images),
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -39,10 +72,27 @@ void showCheckoutBottomSheet(BuildContext context) {
                     ).textTheme.bodyLarge?.copyWith(color: Color(0xff8A8A8F)),
                   ),
                   Text(
-                    "\$231",
+                    "\$${controller.totalPrice.toStringAsFixed(2)}",
                     style: Theme.of(
                       context,
                     ).textTheme.bodyLarge?.copyWith(fontSize: 18),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Items ",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(color: Color(0xff8A8A8F)),
+                  ),
+                  Text(
+                    "X${controller.cartList.length}",
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ],
               ),
@@ -56,7 +106,7 @@ void showCheckoutBottomSheet(BuildContext context) {
                     ).textTheme.bodyLarge?.copyWith(color: Color(0xff8A8A8F)),
                   ),
                   Text(
-                    "\$21",
+                    "\$${controller.shippingPrice}",
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w400,
                     ),
@@ -73,7 +123,7 @@ void showCheckoutBottomSheet(BuildContext context) {
                     ).textTheme.bodyLarge?.copyWith(color: Color(0xff8A8A8F)),
                   ),
                   Text(
-                    "%15",
+                    "0%",
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
@@ -88,7 +138,7 @@ void showCheckoutBottomSheet(BuildContext context) {
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
-                    "\$221",
+                    "\$${controller.subTotal.toStringAsFixed(2)}",
                     style: Theme.of(
                       context,
                     ).textTheme.bodyLarge?.copyWith(fontSize: 18),
