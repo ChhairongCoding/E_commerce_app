@@ -11,15 +11,13 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+      backgroundColor: Colors.grey[100],
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-
-
                 ProfileUser(),
-
 
                 SizedBox(height: 20),
                 Container(
@@ -27,7 +25,14 @@ class ProfileScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey, width: 0.4),
                     borderRadius: BorderRadius.circular(16),
-                    color: Color(0xffFEF7FF),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 6,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
                   ),
                   child: Column(
                     spacing: 16,
@@ -72,9 +77,16 @@ class ProfileScreen extends StatelessWidget {
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: 20),
                   decoration: BoxDecoration(
-                    color: Color(0xffFEF7FF),
                     border: Border.all(color: Colors.grey, width: 0.4),
                     borderRadius: BorderRadius.circular(16),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 6,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
                   ),
                   child: Column(
                     children: [
@@ -115,9 +127,16 @@ class ProfileScreen extends StatelessWidget {
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(vertical: 20),
                   decoration: BoxDecoration(
-                    color: Color(0xffFEF7FF),
                     border: Border.all(color: Colors.grey, width: 0.4),
                     borderRadius: BorderRadius.circular(16),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 6,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
                   ),
                   child: Column(
                     children: [
@@ -159,17 +178,18 @@ class ProfileScreen extends StatelessWidget {
 }
 
 class ProfileUser extends StatelessWidget {
-  const ProfileUser({
-    super.key,
-  });
+  const ProfileUser({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xffFEF7FF),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.grey, width: 0.4),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3)),
+        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -199,8 +219,9 @@ class ProfileUser extends StatelessWidget {
                   ),
                   Text(
                     "chhairongchhin@gmail.com",
-                    style: Theme.of(context).textTheme.bodyMedium
-                        ?.copyWith(color: Colors.grey[700]),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.copyWith(color: Colors.grey[700]),
                   ),
                 ],
               ),

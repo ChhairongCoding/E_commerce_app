@@ -15,8 +15,10 @@ class MainScreen extends StatelessWidget {
 
     return Obx(
       () => Scaffold(
+
         appBar: mainController.currentIndex.value == 0
             ? AppBar(
+                backgroundColor: Colors.grey[100],
                 centerTitle: true,
                 actions: [
                   IconButton(
@@ -47,7 +49,9 @@ class MainScreen extends StatelessWidget {
 
         bottomNavigationBar: Obx(
           () => BottomNavigationBar(
-           
+           backgroundColor: Colors.white,
+            elevation: 5.0,
+
             currentIndex: mainController.currentIndex.value,
             onTap: mainController.toggleSwitch,
             selectedItemColor: Colors.blue,

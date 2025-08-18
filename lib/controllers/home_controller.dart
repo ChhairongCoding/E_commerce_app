@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:e_commerce_app/models/product_model.dart';
+import 'package:e_commerce_app/models/review_model.dart';
 import 'package:e_commerce_app/widgets/custom_detail_product.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,27 @@ class HomeController extends GetxController {
       ],
       sizes: ['S', 'M', 'L', 'XL'],
       color: [Colors.blue, Colors.white],
+      description:
+          "Retro-styled tee featuring the iconic Spotify Camp Nou design, perfect for true FC Barcelona fans.",
+      reviews: [
+        Review(
+          userName: "Alex",
+          comment: "Great fit and quality!",
+          rating: 4.5,
+        ),
+        Review(
+          userName: "Alex",
+          comment: "Great fit and quality!",
+          rating: 4.5,
+        ),
+        
+        Review(userName: "Maria", comment: "Love the retro look!", rating: 5.0),
+        Review(
+          userName: "Alex",
+          comment: "Great fit and quality!",
+          rating: 4.5,
+        ),
+      ],
     ),
     Product(
       name: "Blaugrana charity bracelet",
@@ -34,6 +56,11 @@ class HomeController extends GetxController {
       ],
       sizes: ['S', 'M', 'L'],
       color: [Colors.blue, Colors.white],
+      description:
+          "Support a cause with this stylish Blaugrana bracelet made for Barcelona fans.",
+      reviews: [
+        Review(userName: "Leo", comment: "Nice gift for fans.", rating: 4.0),
+      ],
     ),
     Product(
       name: "Hoodie Grey Panot Barça",
@@ -45,6 +72,15 @@ class HomeController extends GetxController {
       ],
       sizes: ['M', 'L', 'XL'],
       color: [Colors.blue, Colors.white],
+      description:
+          "A warm and cozy hoodie in grey with subtle Panot Barça design accents.",
+      reviews: [
+        Review(
+          userName: "Nina",
+          comment: "Super warm and stylish!",
+          rating: 4.8,
+        ),
+      ],
     ),
     Product(
       name: "T-shirt Red Cruyff Barça",
@@ -56,6 +92,11 @@ class HomeController extends GetxController {
       ],
       sizes: ['S', 'M', 'L', 'XL'],
       color: [Colors.blue, Colors.white],
+      description:
+          "Classic red tee honoring Johan Cruyff and his impact on Barça legacy.",
+      reviews: [
+        Review(userName: "Dani", comment: "Perfect for matches!", rating: 4.6),
+      ],
     ),
     Product(
       name: "1995-97 Home Kit",
@@ -68,6 +109,11 @@ class HomeController extends GetxController {
       ],
       sizes: ['S', 'M', 'L', 'XL'],
       color: [Colors.blue, Colors.white],
+      description:
+          "Relive the golden era with the 1995-97 retro home kit, a must-have for collectors.",
+      reviews: [
+        Review(userName: "Sam", comment: "Feels like '90s again!", rating: 5.0),
+      ],
     ),
     Product(
       name: "1995-97 Away Kit",
@@ -78,6 +124,15 @@ class HomeController extends GetxController {
       ],
       sizes: ['S', 'M', 'L', 'XL'],
       color: [Colors.blue, Colors.white],
+      description:
+          "Classic away kit from the 1995-97 season. Iconic and nostalgic for long-time fans.",
+      reviews: [
+        Review(
+          userName: "Liam",
+          comment: "Good price and retro style.",
+          rating: 4.3,
+        ),
+      ],
     ),
     Product(
       name: "Tshirt retro style",
@@ -88,18 +143,30 @@ class HomeController extends GetxController {
       ],
       sizes: ['S', 'M', 'L', 'XL'],
       color: [Colors.blue, Colors.white],
+      description:
+          "Minimalist retro-style t-shirt representing Barça heritage with a modern twist.",
+      reviews: [
+        Review(userName: "Ella", comment: "Simple and cool.", rating: 4.0),
+      ],
     ),
     Product(
       name: "Tshirt retro style",
       price: 12.99,
       category: "Tshirt",
-      description: "This is a local brand, created for barcelona fan.",
       rate: "4.5",
       images: [
         'https://store.fcbarcelona.com/cdn/shop/files/CORE-II4082_391dac34-f71d-4453-acdc-51b48962fdaf.jpg?v=1740042048',
       ],
       sizes: ['S', 'M', 'L', 'XL'],
       color: [Colors.blue, Colors.white],
+      description: "This is a local brand, created for barcelona fan.",
+      reviews: [
+        Review(
+          userName: "Juan",
+          comment: "Support local. Love it!",
+          rating: 4.5,
+        ),
+      ],
     ),
     Product(
       name: "F50 Elite Firm Ground Boots",
@@ -110,6 +177,20 @@ class HomeController extends GetxController {
       ],
       sizes: ['S', 'M', 'L', 'XL'],
       color: [Colors.blue, Colors.white],
+      description:
+          "Top-tier firm ground boots built for speed, precision, and performance.",
+      reviews: [
+        Review(
+          userName: "Chris",
+          comment: "Best cleats I’ve owned.",
+          rating: 5.0,
+        ),
+        Review(
+          userName: "Zara",
+          comment: "Super light and responsive.",
+          rating: 4.9,
+        ),
+      ],
     ),
   ];
 
@@ -198,6 +279,8 @@ class HomeController extends GetxController {
       'name': product.name,
       'price': product.price,
       'images': product.images,
+      'descrition': product.description,
+      'reviews': product.reviews,
     };
 
     Get.to(() => CustomDetailProduct());

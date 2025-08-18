@@ -7,64 +7,71 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
+        backgroundColor: Colors.grey[100],
+        elevation: 0,
         leading: IconButton(
           onPressed: () => Get.back(),
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
         ),
-        title: Text("Notification"),
+        title: Text(
+          "Notification",
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                width: double.infinity,
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      spacing: 10,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Good morning! Get 20% Voucher",
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        Text(
-                          "Summer sale up to 20% off. Limited voucher. Get now!! 😜",
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(color: Colors.grey[700]),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              _buildNotificationCard(
+                context,
+                title: "Good morning! Get 20% Voucher",
+                subtitle:
+                    "Summer sale up to 20% off. Limited voucher. Get now!! 😜",
               ),
+              const SizedBox(height: 16),
+              _buildNotificationCard(
+                context,
+                title: "Special offer just for you",
+                subtitle: "New Autumn Collection 30% off",
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
-              SizedBox(
-                width: double.infinity,
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      spacing: 10,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Special offer just for you",
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        Text(
-                          "New Autumn Collection 30% off",
-                          style: Theme.of(context).textTheme.bodyLarge
-                              ?.copyWith(color: Colors.grey[700]),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+  Widget _buildNotificationCard(BuildContext context,
+      {required String title, required String subtitle}) {
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        color: Colors.white,
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                subtitle,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: Colors.grey[700]),
               ),
             ],
           ),

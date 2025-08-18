@@ -21,16 +21,34 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
+
       appBar: AppBar(
+        backgroundColor: Colors.grey[100],
         title: Obx(
           () => Text("Total Products(${cartController.cartList.length})"),
         ),
       ),
-      body: bodySection(context),
+      body: Obx(
+        () => cartController.cartList.isNotEmpty
+            ? _buildBody(context)
+            : _bodyNoItemSection(context),
+      ),
     );
   }
 
-  bodySection(BuildContext context) {
+  _bodyNoItemSection(BuildContext context) {
+    return Center(
+      child: Text(
+        "No Items",
+        style: Theme.of(
+          context,
+        ).textTheme.titleMedium?.copyWith(color: Colors.grey),
+      ),
+    );
+  }
+
+  _buildBody(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Obx(
@@ -211,51 +229,85 @@ class CartScreen extends StatelessWidget {
 
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Text("Size: ", style: TextStyle(color: Colors.grey)),
-                          SizedBox(width: 4),
-                          Text("${cartController.cartList[index].selectedSize}", style: TextStyle(color: Colors.grey)),
-                          SizedBox(width: 4),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Text(
+                                "Size: ",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              SizedBox(width: 4),
+                              Text(
+                                "${cartController.cartList[index].selectedSize}",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              SizedBox(width: 4),
 
-                          Text("Color: ", style: TextStyle(color: Colors.grey)),
-                          SizedBox(width: 8,),
-                          Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  blurStyle: BlurStyle.inner,
-                                  spreadRadius: 1,
-                                  blurRadius: 3,
-                                  offset: Offset(0, 2),
+                              Text(
+                                "Color: ",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              SizedBox(width: 8),
+                              Container(
+                                width: 20,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      blurStyle: BlurStyle.inner,
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                  color: cartController
+                                      .cartList[index]
+                                      .selectedColor,
                                 ),
-                              ],
-                              color: cartController.cartList[index].selectedColor
-                            ),
-                          )
-                        ],
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(right: 8),
-                        padding: EdgeInsets.only(left: 10, right: 10),
-                        width: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: Colors.grey),
+                              ),
+                            ],
+                          ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text("-"), Text("1"), Text("+")],
+                        Container(
+                          margin: EdgeInsets.only(right: 8),
+                          padding: EdgeInsets.only(left: 10, right: 10),
+                          width: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: Colors.grey),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                child: Text("-"),
+                                onTap: () {
+                                  cartController.decrementQuantity(index);
+                                },
+                              ),
+
+                              Flexible(
+                                child: Text(
+                                  "${cartController.cartList[index].quantity}",
+                                ),
+                              ),
+
+                              GestureDetector(
+                                child: Text("+"),
+                                onTap: () =>
+                                    cartController.incrementQuantity(index),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

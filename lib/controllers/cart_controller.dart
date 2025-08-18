@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class CartController extends GetxController {
   RxList<CartModel> cartList = <CartModel>[].obs;
   RxList<bool> selectedItems = <bool>[].obs;
-
+  RxInt totalQuantity = 0.obs;
   RxDouble totalPrice = 0.0.obs;
   RxDouble shippingPrice = 2.0.obs;
   RxDouble subTotal = 0.0.obs;
@@ -19,9 +19,11 @@ class CartController extends GetxController {
   /// Calculate total based only on selected items
   void calculateTotal() {
     subTotal.value = 0.0;
+    totalQuantity.value = 0; // ✅ Reset before summing
     for (int i = 0; i < cartList.length; i++) {
       if (selectedItems[i]) {
         subTotal.value += cartList[i].price * cartList[i].quantity;
+        totalQuantity.value += cartList[i].quantity;
       }
     }
     totalPrice.value = subTotal.value;
@@ -31,6 +33,7 @@ class CartController extends GetxController {
   void incrementQuantity(int index) {
     final item = cartList[index];
     cartList[index] = item.copyWith(quantity: item.quantity + 1);
+
     calculateTotal();
   }
 
@@ -61,7 +64,7 @@ class CartController extends GetxController {
       "${product.name} added to cart!",
       snackPosition: SnackPosition.TOP,
       backgroundColor: Colors.white,
-    ); 
+    );
   }
 
   void removeCart(int index) {
