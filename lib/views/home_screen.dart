@@ -14,45 +14,47 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[100],
+      body: _buildBody(context),
+    );
+  }
+
+  _buildBody(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 25,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Welcome,",
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  Text(
-                    "Our Fashions App,",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.titleLarge?.copyWith(color: Colors.grey[700]),
-                  ),
-                ],
-              ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 25,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Welcome,", style: Theme.of(context).textTheme.titleLarge),
+                Text(
+                  "Our Fashions App,",
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(color: Colors.grey[700]),
+                ),
+              ],
+            ),
 
-              SearchCustom(homeController: homeController),
+            SearchCustom(homeController: homeController),
 
-              CategoriesSection(
-                setectedCateIndex: homeController.setectedCateIndex,
-              ),
+            CategoriesSection(
+              setectedCateIndex: homeController.setectedCateIndex,
+            ),
 
-              PromotionSection(),
+            PromotionSection(),
 
-              NewArriveSection(),
+            NewArriveSection(),
 
-              PopularProducts(size: size),
-            ],
-          ),
+            PopularProducts(size: size),
+          ],
         ),
       ),
     );
@@ -95,12 +97,7 @@ class PopularProducts extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 3,
           itemBuilder: (context, index) {
-            return Column(
-              children: [
-                CustomProductCardWithRating(size: size),
-              
-              ],
-            );
+            return Column(children: [CustomProductCardWithRating(size: size)]);
           },
         ),
       ],
@@ -221,8 +218,8 @@ class SearchCustom extends StatelessWidget {
         Flexible(
           flex: 2,
           child: GestureDetector(
-            onTap:
-                homeController.opendedFilter, // ✅ Call the method to toggle filter
+            onTap: homeController
+                .opendedFilter, // ✅ Call the method to toggle filter
             child: Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(

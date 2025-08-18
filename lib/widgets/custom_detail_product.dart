@@ -10,246 +10,352 @@ import 'package:e_commerce_app/models/cart_model.dart';
 
 class CustomDetailProduct extends StatelessWidget {
   CustomDetailProduct({super.key});
-  final ProductDetailController productDetailController = Get.find<ProductDetailController>();
+  final ProductDetailController productDetailController =
+      Get.find<ProductDetailController>();
+
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.find<HomeController>();
-    final FavoriteController favoriteController =
-        Get.find<FavoriteController>();
     final CartController cartController = Get.find<CartController>();
 
-
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: Colors.amber,
-            actions: [
-              Obx(
-                () => IconButton(
-                  onPressed: () => favoriteController.addFav(),
-                  icon: favoriteController.addFavorite.value
-                      ? const Icon(HugeIcons.strokeRoundedFavourite)
-                      : const Icon(Icons.favorite, color: Colors.red),
-                ),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(HugeIcons.strokeRoundedShare01),
-              ),
-              const SizedBox(width: 16),
-            ],
-            expandedHeight: 300,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              background: ProductImageCarousel(
-                images: homeController.tempSelectedProduct.value?.images ?? [],
-              ),
-            ),
-          ),
-
-          SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.only(top: 50, left: 16, right: 16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    homeController.tempSelectedProduct.value?.name ?? "No Name",
-
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '\$${(homeController.tempSelectedProduct.value?.price ?? 0.0).toStringAsFixed(2)}',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(color: Colors.deepOrange),
-                      ),
-
-                      Row(
-                        children: const [
-                          Icon(Icons.star_border_outlined),
-                          Text("4.5"),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-
-                  Text("Color"),
-                  const SizedBox(height: 8),
-                  Obx(() {
-                    final product = homeController.tempSelectedProduct.value;
-                    final colors = product?.color ?? [];
-
-                    if (colors.isEmpty) {
-                      return const Text("No colors available");
-                    }
-
-                    return Row(
-                      children: List.generate(colors.length, (index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: GestureDetector(
-                            onTap: () {
-                              productDetailController.selectedColor.value = index;
-                            },
-                            child: Obx(
-                              () => Container(
-                                width: 40,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  color: colors[index],
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color:
-                                        productDetailController.selectedColor.value ==
-                                            index
-                                        ? Colors.black
-                                        : Colors.grey,
-                                    width: 2,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                    );
-                  }),
-
-                  SizedBox(height: 16),
-                  Text("Size"),
-                  const SizedBox(height: 8),
-                  Obx(() {
-                    final sizes =
-                        homeController.tempSelectedProduct.value?.sizes ?? [];
-
-                    return Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: List.generate(
-                        sizes.length,
-                        (index) => Material(
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(3),
-                            onTap: () =>
-                                productDetailController.selectedSize.value = index,
-                            child: Ink(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                color:
-                                    productDetailController.selectedSize.value == index
-                                    ? const Color(0xFF667EEA)
-                                    : const Color(0xFFF3F3F3),
-                                borderRadius: BorderRadius.circular(3),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  sizes[index],
-                                  style: Theme.of(context).textTheme.titleMedium
-                                      ?.copyWith(
-                                        color:
-                                            productDetailController.selectedSize.value ==
-                                                index
-                                            ? Colors.white
-                                            : Colors.black87,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-
-                  const SizedBox(height: 20),
-                  const Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text("Description"),
-                      Icon(Icons.arrow_forward_ios),
-                    ],
-                  ),
-                  const Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text("Review"),
-                      Icon(Icons.arrow_forward_ios),
-                    ],
-                  ),
-                  const SizedBox(height: 100),
-
-                  Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(12),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        minimumSize: const Size(double.infinity, 60),
-                      ),
-                      onPressed: () {
-  final product = homeController.tempSelectedProduct.value;
-  if (product != null) {
-    final selectedSize = product.sizes.isNotEmpty
-        ? product.sizes[productDetailController.selectedSize.value]
-        : null;
-
-    final selectedColor = product.color.isNotEmpty
-        ? product.color[productDetailController.selectedColor.value]
-        : null;
-
-    cartController.addToCart(
-      CartModel(
-        name: product.name,
-        price: product.price,
-        quantity: 1,
-        images: product.images,
-        selectedSize: selectedSize,
-        selectedColor: selectedColor,
+      body: Stack(
+        children: [
+          _buildBody(context),
+          _buildButtonAddToCart(homeController, cartController, context),
+        ],
       ),
     );
   }
-}
-,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.shopping_bag_outlined,
-                            color: Colors.white,
-                            size: 26,
+
+  _buildBody(BuildContext context) {
+    final HomeController homeController = Get.find<HomeController>();
+    final FavoriteController favoriteController =
+        Get.find<FavoriteController>();
+
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          backgroundColor: Colors.amber,
+          actions: [
+            Obx(
+              () => IconButton(
+                onPressed: () => favoriteController.addFav(),
+                icon: favoriteController.addFavorite.value
+                    ? const Icon(HugeIcons.strokeRoundedFavourite)
+                    : const Icon(Icons.favorite, color: Colors.red),
+              ),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(HugeIcons.strokeRoundedShare01),
+            ),
+            const SizedBox(width: 16),
+          ],
+          expandedHeight: 300,
+          pinned: true,
+          flexibleSpace: FlexibleSpaceBar(
+            background: ProductImageCarousel(
+              images: homeController.tempSelectedProduct.value?.images ?? [],
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Container(
+            padding: const EdgeInsets.only(top: 50, left: 16, right: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  homeController.tempSelectedProduct.value?.name ?? "No Name",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '\$${(homeController.tempSelectedProduct.value?.price ?? 0.0).toStringAsFixed(2)}',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Colors.deepOrange,
                           ),
-                          const SizedBox(width: 8),
-                          Text(
-                            "Add To Cart",
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                    ),
+                    Row(
+                      children: const [
+                        Icon(Icons.star_border_outlined),
+                        Text("4.5"),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // Color Selection
+                Text("Color"),
+                const SizedBox(height: 8),
+                Obx(() {
+                  final product = homeController.tempSelectedProduct.value;
+                  final colors = product?.color ?? [];
+                  if (colors.isEmpty) return const Text("No colors available");
+
+                  return Row(
+                    children: List.generate(colors.length, (index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            productDetailController.selectedColor.value = index;
+                          },
+                          child: Obx(
+                            () => Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: colors[index],
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: productDetailController.selectedColor.value == index
+                                      ? Colors.black
+                                      : Colors.grey,
+                                  width: 2,
                                 ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.4),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  );
+                }),
+                const SizedBox(height: 16),
+
+                // Size Selection
+                Text("Size"),
+                const SizedBox(height: 8),
+                Obx(() {
+                  final sizes =
+                      homeController.tempSelectedProduct.value?.sizes ?? [];
+                  return Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: List.generate(
+                      sizes.length,
+                      (index) => Material(
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(3),
+                          onTap: () =>
+                              productDetailController.selectedSize.value = index,
+                          child: Ink(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: productDetailController.selectedSize.value == index
+                                  ? const Color(0xFF667EEA)
+                                  : const Color(0xFFF3F3F3),
+                              borderRadius: BorderRadius.circular(3),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                sizes[index],
+                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                      color: productDetailController.selectedSize.value == index
+                                          ? Colors.white
+                                          : Colors.black87,
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+                const SizedBox(height: 20),
+                const Divider(),
+
+                // Description
+                Text(
+                  "Description",
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    (homeController.tempSelectedProduct.value?.description?.isNotEmpty ?? false)
+                        ? homeController.tempSelectedProduct.value!.description!
+                        : "No Description",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+                const Divider(),
+
+                // Reviews
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Review",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "All comments(200+)",
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: Colors.grey,
+                                ),
+                          ),
+                          const SizedBox(width: 4),
+                          const Icon(
+                            Icons.arrow_forward_ios,
+                            size: 16,
+                            color: Colors.grey,
                           ),
                         ],
                       ),
                     ),
+                  ],
+                ),
+                Column(
+                  children: List.generate(
+                    (homeController.tempSelectedProduct.value?.reviews?.length ?? 0).clamp(0, 2),
+                    (index) => reviewerCard(context, homeController, index),
                   ),
-                ],
-              ),
+                ),
+                const Divider(),
+                const SizedBox(height: 80),
+              ],
             ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Positioned _buildButtonAddToCart(
+      HomeController homeController, CartController cartController, BuildContext context) {
+    return Positioned(
+      left: 0,
+      right: 0,
+      bottom: 0,
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              offset: Offset(0, -2),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.all(12),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            minimumSize: const Size(double.infinity, 60),
+          ),
+          onPressed: () {
+            final product = homeController.tempSelectedProduct.value;
+            if (product != null) {
+              final selectedSize = product.sizes.isNotEmpty
+                  ? product.sizes[productDetailController.selectedSize.value]
+                  : null;
+              final selectedColor = product.color.isNotEmpty
+                  ? product.color[productDetailController.selectedColor.value]
+                  : null;
+
+              cartController.addToCart(
+                CartModel(
+                  name: product.name,
+                  price: product.price,
+                  quantity: 1,
+                  images: product.images,
+                  selectedSize: selectedSize,
+                  selectedColor: selectedColor,
+                ),
+              );
+            }
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.shopping_bag_outlined,
+                color: Colors.white,
+                size: 26,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                "Add To Cart",
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container reviewerCard(BuildContext context, HomeController homeController, int index) {
+    final review = homeController.tempSelectedProduct.value?.reviews?[index];
+    return Container(
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.person),
+              const SizedBox(width: 8),
+              Text(
+                review?.userName ?? "Reviewer Name",
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            review?.comment ?? "Review contents",
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
           ),
         ],
       ),

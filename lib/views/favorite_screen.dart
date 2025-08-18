@@ -109,88 +109,97 @@ class FavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Favorite")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Obx(() {
-            final itemsToShow = selectedTab.value == "all"
-                ? favoriteItems
-                : boardItems;
+      backgroundColor: Colors.grey[100],
+      appBar: _buildAppBar(),
+      body: _buildBody(),
+    );
+  }
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xffFEF7FF),
-                    border: Border.all(color: Colors.black, width: 1),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => selectedTab.value = "all",
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            color: selectedTab.value == "all"
-                                ? Colors.black
-                                : Colors.transparent,
-                            child: Center(
-                              child: Text(
-                                "All Items",
-                                style: TextStyle(
-                                  color: selectedTab.value == "all"
-                                      ? Colors.white
-                                      : Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () => selectedTab.value = "board",
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            color: selectedTab.value == "board"
-                                ? Colors.black
-                                : Colors.transparent,
-                            child: Center(
-                              child: Text(
-                                "Boards",
-                                style: TextStyle(
-                                  color: selectedTab.value == "board"
-                                      ? Colors.white
-                                      : Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+  AppBar _buildAppBar() => AppBar(
+    backgroundColor: Colors.grey[100]
+    ,title: const Text("Favorite"));
+
+  Padding _buildBody() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Obx(() {
+          final itemsToShow = selectedTab.value == "all"
+              ? favoriteItems
+              : boardItems;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xffFEF7FF),
+                  border: Border.all(color: Colors.black, width: 1),
                 ),
-                const SizedBox(height: 20),
-                Wrap(
-                  runSpacing: 16.0,
-                  children: List.generate(
-                    itemsToShow.length,
-                    (index) => CustomCardFavWidget(
-                      imageUrl: itemsToShow[index]["image"],
-                      name: itemsToShow[index]["name"],
-                      price: itemsToShow[index]["price"],
-                      reviews: itemsToShow[index]["reviews"],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => selectedTab.value = "all",
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          color: selectedTab.value == "all"
+                              ? Colors.black
+                              : Colors.transparent,
+                          child: Center(
+                            child: Text(
+                              "All Items",
+                              style: TextStyle(
+                                color: selectedTab.value == "all"
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => selectedTab.value = "board",
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          color: selectedTab.value == "board"
+                              ? Colors.black
+                              : Colors.transparent,
+                          child: Center(
+                            child: Text(
+                              "Boards",
+                              style: TextStyle(
+                                color: selectedTab.value == "board"
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Wrap(
+                runSpacing: 16.0,
+                children: List.generate(
+                  itemsToShow.length,
+                  (index) => CustomCardFavWidget(
+                    imageUrl: itemsToShow[index]["image"],
+                    name: itemsToShow[index]["name"],
+                    price: itemsToShow[index]["price"],
+                    reviews: itemsToShow[index]["reviews"],
                   ),
                 ),
-              ],
-            );
-          }),
-        ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

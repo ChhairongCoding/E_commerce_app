@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/models/review_model.dart';
 import 'package:flutter/material.dart';
 
 class Product {
@@ -7,8 +8,9 @@ class Product {
   final String? description;
   final String? rate;
   final List<String> images;
-  final List<String> sizes;    // ✅ Add this
-  final List<Color> color;     // ✅ Add this
+  final List<String> sizes;   
+  final List<Color> color;    
+  final List<Review>? reviews;
 
   Product({
     required this.name,
@@ -19,6 +21,7 @@ class Product {
     required this.images,
     required this.sizes,
     required this.color,
+    this.reviews
   });
 
   factory Product.fromMap(Map<String, dynamic> map) {
