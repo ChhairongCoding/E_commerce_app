@@ -218,8 +218,7 @@ class SearchCustom extends StatelessWidget {
         Flexible(
           flex: 2,
           child: GestureDetector(
-            onTap: homeController
-                .opendedFilter, // ✅ Call the method to toggle filter
+            onTap:(){},// ✅ Call the method to toggle filter
             child: Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
