@@ -9,80 +9,80 @@ import 'package:hugeicons/hugeicons.dart';
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
+  List<Widget> listIcons() => [
+    Icon(HugeIcons.strokeRoundedHome01),
+    Icon(HugeIcons.strokeRoundedShoppingCart01),
+    Icon(HugeIcons.strokeRoundedNotification01),
+    Icon(HugeIcons.strokeRoundedUser),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final MainController mainController = Get.find<MainController>();
-
     return Obx(
       () => Scaffold(
+        appBar: mainController.currentIndex.value == 0 ? _buildAppBar() : null,
 
-        appBar: mainController.currentIndex.value == 0
-            ? AppBar(
-                backgroundColor: Colors.grey[100],
-                centerTitle: true,
-                actions: [
-                  IconButton(
-                    onPressed: () => Get.toNamed(AppRoutes.myOrder),
-                    icon: Icon(HugeIcons.strokeRoundedShoppingBag02),
-                  ),
-                ],
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(HugeIcons.strokeRoundedPinLocation03, size: 14),
-                        SizedBox(width: 8),
-                        Text("Your location", style: TextStyle(fontSize: 12)),
-                      ],
-                    ),
-                    Text(
-                      "Phnom Penh",
-                      style: TextStyle(fontSize: 14, fontFamily: "ProductSans"),
-                    ),
-                  ],
-                ),
-              )
-            : null,
+        body: _buildBody(mainController),
 
-        body: mainController.listScreens[mainController.currentIndex.value],
+        bottomNavigationBar: _buildBottomNavigationBar(mainController),
+      ),
+    );
+  }
 
-        bottomNavigationBar: Obx(
-          () => BottomNavigationBar(
-           backgroundColor: Colors.white,
-            elevation: 5.0,
-
-            currentIndex: mainController.currentIndex.value,
-            onTap: mainController.toggleSwitch,
-            selectedItemColor: Colors.blue,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            type: BottomNavigationBarType.fixed,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(HugeIcons.strokeRoundedHome01),
-                label: "",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(HugeIcons.strokeRoundedShoppingCart01),
-                label: "",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(HugeIcons.strokeRoundedNotification01),
-                label: "",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(HugeIcons.strokeRoundedUser),
-                label: "",
-              ),
+  _buildAppBar() {
+    return AppBar(
+      backgroundColor: Colors.grey[100],
+      centerTitle: true,
+      actions: [
+        IconButton(
+          onPressed: () => Get.toNamed(AppRoutes.myOrder),
+          icon: Icon(HugeIcons.strokeRoundedShoppingBag02),
+        ),
+      ],
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(HugeIcons.strokeRoundedPinLocation03, size: 14),
+              SizedBox(width: 8),
+              Text("Your location", style: TextStyle(fontSize: 12)),
             ],
           ),
+          Text(
+            "Phnom Penh",
+            style: TextStyle(fontSize: 14, fontFamily: "ProductSans"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _buildBody(MainController mainController) =>
+      mainController.listScreens[mainController.currentIndex.value];
+
+  _buildBottomNavigationBar(MainController mainController) {
+    return Obx(
+      () => BottomNavigationBar(
+        backgroundColor: Colors.white,
+        elevation: 5.0,
+        currentIndex: mainController.currentIndex.value,
+        onTap: mainController.toggleSwitch,
+        selectedItemColor: Colors.blue,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: List.generate(
+          listIcons().length,
+          (index) =>
+              BottomNavigationBarItem(icon: listIcons()[index], label: ""),
         ),
       ),
     );
   }
 
-  Drawer drawerWidget(BuildContext context) {
+  drawerWidget(BuildContext context) {
     final AppTheme appTheme = Get.put(AppTheme());
 
     final DrawerControllerX drawerController = Get.find<DrawerControllerX>();

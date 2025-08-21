@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/controllers/cart_controller.dart';
+import 'package:e_commerce_app/controllers/checkout_controller.dart';
 import 'package:e_commerce_app/controllers/favorite_controller.dart';
 import 'package:e_commerce_app/controllers/home_controller.dart';
 import 'package:e_commerce_app/controllers/login_controller.dart';
@@ -27,6 +28,7 @@ class InitBinding extends Bindings {
     Get.put(AppTheme());
     Get.put(PaymentController());
     Get.put(ProductDetailController());
+    Get.put(CheckoutController());
 
     //service
     Get.put(AuthService());
