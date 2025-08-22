@@ -4,6 +4,7 @@ class AppRoutes {
   static String signUpRoute = '/signup';
   static String otpRoute = '/otp';
   static String mainScreenRoute = '/main' ;
+  static String home = '/home' ;
   static String discover = '/discover';
   static String detail = '/detail';
   static String notification = '/notification';

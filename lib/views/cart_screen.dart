@@ -22,17 +22,21 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-
-      appBar: AppBar(
-        backgroundColor: Colors.grey[100],
-        title: Obx(
-          () => Text("Total Products(${cartController.cartList.length})"),
-        ),
-      ),
+      appBar: _buildAppBar(),
       body: Obx(
         () => cartController.cartList.isNotEmpty
             ? _buildBody(context)
             : _bodyNoItemSection(context),
+      ),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      backgroundColor: Colors.grey[100],
+      automaticallyImplyLeading: false,
+      title: Obx(
+        () => Text("Total Products(${cartController.cartList.length})"),
       ),
     );
   }
