@@ -3,6 +3,7 @@ import 'package:e_commerce_app/controllers/checkout_controller.dart';
 import 'package:e_commerce_app/controllers/favorite_controller.dart';
 import 'package:e_commerce_app/controllers/home_controller.dart';
 import 'package:e_commerce_app/controllers/login_controller.dart';
+import 'package:e_commerce_app/controllers/notification_controller.dart';
 import 'package:e_commerce_app/controllers/otp_controller.dart';
 import 'package:e_commerce_app/controllers/payment_controller.dart';
 import 'package:e_commerce_app/controllers/product_detail_controller.dart';
@@ -11,6 +12,7 @@ import 'package:e_commerce_app/controllers/signup_controller.dart';
 import 'package:e_commerce_app/theme/app_theme.dart';
 import 'package:e_commerce_app/views/main_views/main_controller.dart';
 import 'package:e_commerce_app/services/auth_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InitBinding extends Bindings {
@@ -29,6 +31,7 @@ class InitBinding extends Bindings {
     Get.put(PaymentController());
     Get.put(ProductDetailController());
     Get.put(CheckoutController());
+    Get.put(NotificationController());
 
     //service
     Get.put(AuthService());

@@ -17,7 +17,7 @@ class AppTheme extends GetxController {
         color: Colors.black,
       ),
       titleMedium: TextStyle(
-        fontSize: 16,
+        fontSize: 18,
         fontFamily: 'ProductSans',
         fontWeight: FontWeight.bold,
         color: Colors.black,

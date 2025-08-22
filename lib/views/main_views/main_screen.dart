@@ -1,5 +1,5 @@
+import 'package:e_commerce_app/controllers/cart_controller.dart';
 import 'package:e_commerce_app/controllers/drawer_controllerx.dart';
-import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:e_commerce_app/theme/app_theme.dart';
 import 'package:e_commerce_app/views/main_views/main_controller.dart';
 import 'package:flutter/material.dart';
@@ -7,62 +7,43 @@ import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+  MainScreen({super.key});
+  final CartController cartController = Get.find<CartController>();
 
   List<Widget> listIcons() => [
     Icon(HugeIcons.strokeRoundedHome01),
-    Icon(HugeIcons.strokeRoundedShoppingCart01),
+    Obx(
+      () => cartController.cartList.isNotEmpty ?  Badge(
+        label: Text(
+          "${cartController.cartList.length}",
+          style: TextStyle(color: Colors.white),
+        ),
+        child: Icon(HugeIcons.strokeRoundedShoppingCart01),
+      ): Icon(HugeIcons.strokeRoundedShoppingCart01),
+    ),
     Icon(HugeIcons.strokeRoundedNotification01),
     Icon(HugeIcons.strokeRoundedUser),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final MainController mainController = Get.find<MainController>();
+    final MainController mainController = Get.put(MainController());
     return Obx(
       () => Scaffold(
-        appBar: mainController.currentIndex.value == 0 ? _buildAppBar() : null,
-
         body: _buildBody(mainController),
 
         bottomNavigationBar: _buildBottomNavigationBar(mainController),
+        drawer: drawerWidget(
+          context,
+        ), // Keep drawer but can be sliver style too
       ),
     );
   }
 
-  _buildAppBar() {
-    return AppBar(
-      backgroundColor: Colors.grey[100],
-      centerTitle: true,
-      actions: [
-        IconButton(
-          onPressed: () => Get.toNamed(AppRoutes.myOrder),
-          icon: Icon(HugeIcons.strokeRoundedShoppingBag02),
-        ),
-      ],
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(HugeIcons.strokeRoundedPinLocation03, size: 14),
-              SizedBox(width: 8),
-              Text("Your location", style: TextStyle(fontSize: 12)),
-            ],
-          ),
-          Text(
-            "Phnom Penh",
-            style: TextStyle(fontSize: 14, fontFamily: "ProductSans"),
-          ),
-        ],
-      ),
-    );
-  }
-
-  _buildBody(MainController mainController) =>
+  Widget _buildBody(MainController mainController) =>
       mainController.listScreens[mainController.currentIndex.value];
 
-  _buildBottomNavigationBar(MainController mainController) {
+  Widget _buildBottomNavigationBar(MainController mainController) {
     return Obx(
       () => BottomNavigationBar(
         backgroundColor: Colors.white,
@@ -82,17 +63,16 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  drawerWidget(BuildContext context) {
+  /// Drawer → still normal Drawer, but you can also turn it into SliverList inside CustomScrollView if needed
+  Widget drawerWidget(BuildContext context) {
     final AppTheme appTheme = Get.put(AppTheme());
+    final DrawerControllerX drawerController = Get.put(DrawerControllerX());
 
-    final DrawerControllerX drawerController = Get.find<DrawerControllerX>();
     return Drawer(
-      child: ListView(
-        children: [
-          DrawerHeader(
-            child: SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: DrawerHeader(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -124,88 +104,88 @@ class MainScreen extends StatelessWidget {
               ),
             ),
           ),
-          Obx(
-            () => ListTile(
-              selected: drawerController.selectedIndex.value == 0,
-              selectedColor: Colors.blue,
-              leading: Icon(HugeIcons.strokeRoundedHome01),
-              title: const Text("Home"),
-              onTap: () {
-                drawerController.changeIndex(0);
-              },
-            ),
-          ),
-          Obx(
-            () => ListTile(
-              selected: drawerController.selectedIndex.value == 1,
-              selectedColor: Colors.blue,
-              leading: Icon(HugeIcons.strokeRoundedSearch02),
-              title: const Text("Discover"),
-              onTap: () => drawerController.changeIndex(1),
-            ),
-          ),
-          Obx(
-            () => ListTile(
-              selected: drawerController.selectedIndex.value == 2,
-              selectedColor: Colors.blue,
-              leading: Icon(HugeIcons.strokeRoundedShoppingBag02),
-              title: const Text("My Order"),
-              onTap: () => drawerController.changeIndex(2),
-            ),
-          ),
-          Obx(
-            () => ListTile(
-              selected: drawerController.selectedIndex.value == 3,
-              selectedColor: Colors.blue,
-              leading: Icon(HugeIcons.strokeRoundedUser),
-              title: const Text("My Profile"),
-              onTap: () => drawerController.changeIndex(3),
-            ),
-          ),
-          ListTile(title: Text("Other")),
-          Obx(
-            () => ListTile(
-              selected: drawerController.selectedIndex.value == 4,
-              selectedColor: Colors.blue,
-              leading: Icon(HugeIcons.strokeRoundedSetting07),
-              title: const Text("Setting"),
-              onTap: () => drawerController.changeIndex(4),
-            ),
-          ),
-          Obx(
-            () => ListTile(
-              selected: drawerController.selectedIndex.value == 5,
-              selectedColor: Colors.blue,
-              leading: Icon(HugeIcons.strokeRoundedMail01),
-              title: const Text("Support"),
-              onTap: () => drawerController.changeIndex(5),
-            ),
-          ),
-          Obx(
-            () => ListTile(
-              selected: drawerController.selectedIndex.value == 6,
-              selectedColor: Colors.blue,
-              leading: Icon(HugeIcons.strokeRoundedInformationCircle),
-              title: const Text("Setting"),
-              onTap: () => drawerController.changeIndex(6),
-            ),
-          ),
-          Divider(),
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Obx(
-              () => SwitchListTile(
-                title: const Text("Dark Mode"),
-                value: appTheme.isDarkMode.value,
-                onChanged: (val) {
-                  appTheme.isDarkMode.value = val;
-                  Get.changeThemeMode(val ? ThemeMode.dark : ThemeMode.light);
-                },
-                secondary: const Icon(Icons.dark_mode),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              _drawerTile(
+                drawerController,
+                0,
+                HugeIcons.strokeRoundedHome01,
+                "Home",
               ),
-            ),
+              _drawerTile(
+                drawerController,
+                1,
+                HugeIcons.strokeRoundedSearch02,
+                "Discover",
+              ),
+              _drawerTile(
+                drawerController,
+                2,
+                HugeIcons.strokeRoundedShoppingBag02,
+                "My Order",
+              ),
+              _drawerTile(
+                drawerController,
+                3,
+                HugeIcons.strokeRoundedUser,
+                "My Profile",
+              ),
+              const ListTile(title: Text("Other")),
+              _drawerTile(
+                drawerController,
+                4,
+                HugeIcons.strokeRoundedSetting07,
+                "Setting",
+              ),
+              _drawerTile(
+                drawerController,
+                5,
+                HugeIcons.strokeRoundedMail01,
+                "Support",
+              ),
+              _drawerTile(
+                drawerController,
+                6,
+                HugeIcons.strokeRoundedInformationCircle,
+                "About",
+              ),
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Obx(
+                  () => SwitchListTile(
+                    title: const Text("Dark Mode"),
+                    value: appTheme.isDarkMode.value,
+                    onChanged: (val) {
+                      appTheme.isDarkMode.value = val;
+                      Get.changeThemeMode(
+                        val ? ThemeMode.dark : ThemeMode.light,
+                      );
+                    },
+                    secondary: const Icon(Icons.dark_mode),
+                  ),
+                ),
+              ),
+            ]),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _drawerTile(
+    DrawerControllerX drawerController,
+    int index,
+    IconData icon,
+    String title,
+  ) {
+    return Obx(
+      () => ListTile(
+        selected: drawerController.selectedIndex.value == index,
+        selectedColor: Colors.blue,
+        leading: Icon(icon),
+        title: Text(title),
+        onTap: () => drawerController.changeIndex(index),
       ),
     );
   }

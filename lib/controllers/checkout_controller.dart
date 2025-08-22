@@ -26,6 +26,12 @@ class CheckoutController extends GetxController {
           ),
         );
       }
+      cartController.cartList.clear();
+      cartController.totalPrice.value = 0.0;
+      cartController.selectedItems.clear();
+      cartController.selectedItems.refresh();
+      cartController.subTotal.value = 0.0;
+      Get.snackbar('Success', 'Your order has been confirmed!');
       Get.toNamed(AppRoutes.completedOrder);
     } else {
       Get.bottomSheet(

@@ -14,49 +14,88 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body: _buildBody(context),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.grey[100],
+        body: _buildBody(context),
+      ),
     );
   }
 
   _buildBody(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 25,
-          children: [
-            Column(
+    return CustomScrollView(
+      slivers: [
+       SliverAppBar(
+      floating: true,
+      backgroundColor: Colors.grey[100],
+      centerTitle: true,
+      automaticallyImplyLeading: false,
+      actions: [
+        IconButton(
+          onPressed: () => Get.toNamed(AppRoutes.myOrder),
+          icon: Icon(HugeIcons.strokeRoundedShoppingBag02),
+        ),
+      ],
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(HugeIcons.strokeRoundedPinLocation03, size: 14),
+              SizedBox(width: 8),
+              Text("Your location", style: TextStyle(fontSize: 12)),
+            ],
+          ),
+          Text(
+            "Phnom Penh",
+            style: TextStyle(fontSize: 14, fontFamily: "ProductSans"),
+          ),
+        ],
+      ),
+    ),
+
+        
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 25,
               children: [
-                Text("Welcome,", style: Theme.of(context).textTheme.titleLarge),
-                Text(
-                  "Our Fashions App,",
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleLarge?.copyWith(color: Colors.grey[700]),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Welcome,",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Text(
+                      "Our Fashions App,",
+                      style: Theme.of(
+                        context,
+                      ).textTheme.titleLarge?.copyWith(color: Colors.grey[700]),
+                    ),
+                  ],
                 ),
+
+                SearchCustom(homeController: homeController),
+
+                CategoriesSection(
+                  setectedCateIndex: homeController.setectedCateIndex,
+                ),
+
+                PromotionSection(),
+
+                NewArriveSection(),
+
+                PopularProducts(size: size),
               ],
             ),
-
-            SearchCustom(homeController: homeController),
-
-            CategoriesSection(
-              setectedCateIndex: homeController.setectedCateIndex,
-            ),
-
-            PromotionSection(),
-
-            NewArriveSection(),
-
-            PopularProducts(size: size),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -218,7 +257,7 @@ class SearchCustom extends StatelessWidget {
         Flexible(
           flex: 2,
           child: GestureDetector(
-            onTap:(){},// ✅ Call the method to toggle filter
+            onTap: () {}, // ✅ Call the method to toggle filter
             child: Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
