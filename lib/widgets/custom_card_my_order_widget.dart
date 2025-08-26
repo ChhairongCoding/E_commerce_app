@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce_app/controllers/checkout_controller.dart';
+import 'package:e_commerce_app/controllers/payment_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +10,7 @@ class CustomCardMyOrderWidget extends StatelessWidget {
     required this.index,
   });
 
-  final CheckoutController controller;
+  final PaymentController controller;
   final int index;
 
   @override

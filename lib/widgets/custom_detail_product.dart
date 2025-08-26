@@ -8,8 +8,14 @@ import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:e_commerce_app/models/cart_model.dart';
 
-class CustomDetailProduct extends StatelessWidget {
-  CustomDetailProduct({super.key});
+class CustomDetailProduct extends StatefulWidget {
+  const CustomDetailProduct({super.key});
+
+  @override
+  State<CustomDetailProduct> createState() => _CustomDetailProductState();
+}
+
+class _CustomDetailProductState extends State<CustomDetailProduct> {
   final ProductDetailController productDetailController =
       Get.find<ProductDetailController>();
 
@@ -56,6 +62,9 @@ class CustomDetailProduct extends StatelessWidget {
           pinned: true,
           flexibleSpace: FlexibleSpaceBar(
             background: ProductImageCarousel(
+              key: ValueKey(
+                homeController.tempSelectedProduct.value?.id ?? UniqueKey(),
+              ),
               images: homeController.tempSelectedProduct.value?.images ?? [],
             ),
           ),
@@ -77,8 +86,8 @@ class CustomDetailProduct extends StatelessWidget {
                     Text(
                       '\$${(homeController.tempSelectedProduct.value?.price ?? 0.0).toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Colors.deepOrange,
-                          ),
+                        color: Colors.deepOrange,
+                      ),
                     ),
                     Row(
                       children: const [
@@ -114,7 +123,11 @@ class CustomDetailProduct extends StatelessWidget {
                                 color: colors[index],
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: productDetailController.selectedColor.value == index
+                                  color:
+                                      productDetailController
+                                              .selectedColor
+                                              .value ==
+                                          index
                                       ? Colors.black
                                       : Colors.grey,
                                   width: 2,
@@ -151,12 +164,15 @@ class CustomDetailProduct extends StatelessWidget {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(3),
                           onTap: () =>
-                              productDetailController.selectedSize.value = index,
+                              productDetailController.selectedSize.value =
+                                  index,
                           child: Ink(
                             height: 40,
                             width: 40,
                             decoration: BoxDecoration(
-                              color: productDetailController.selectedSize.value == index
+                              color:
+                                  productDetailController.selectedSize.value ==
+                                      index
                                   ? const Color(0xFF667EEA)
                                   : const Color(0xFFF3F3F3),
                               borderRadius: BorderRadius.circular(3),
@@ -172,8 +188,13 @@ class CustomDetailProduct extends StatelessWidget {
                               alignment: Alignment.center,
                               child: Text(
                                 sizes[index],
-                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      color: productDetailController.selectedSize.value == index
+                                style: Theme.of(context).textTheme.titleMedium
+                                    ?.copyWith(
+                                      color:
+                                          productDetailController
+                                                  .selectedSize
+                                                  .value ==
+                                              index
                                           ? Colors.white
                                           : Colors.black87,
                                     ),
@@ -196,7 +217,12 @@ class CustomDetailProduct extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    (homeController.tempSelectedProduct.value?.description?.isNotEmpty ?? false)
+                    (homeController
+                                .tempSelectedProduct
+                                .value
+                                ?.description
+                                ?.isNotEmpty ??
+                            false)
                         ? homeController.tempSelectedProduct.value!.description!
                         : "No Description",
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -220,9 +246,8 @@ class CustomDetailProduct extends StatelessWidget {
                         children: [
                           Text(
                             "All comments(200+)",
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Colors.grey,
-                                ),
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: Colors.grey),
                           ),
                           const SizedBox(width: 4),
                           const Icon(
@@ -237,7 +262,13 @@ class CustomDetailProduct extends StatelessWidget {
                 ),
                 Column(
                   children: List.generate(
-                    (homeController.tempSelectedProduct.value?.reviews?.length ?? 0).clamp(0, 2),
+                    (homeController
+                                .tempSelectedProduct
+                                .value
+                                ?.reviews
+                                ?.length ??
+                            0)
+                        .clamp(0, 2),
                     (index) => reviewerCard(context, homeController, index),
                   ),
                 ),
@@ -252,7 +283,10 @@ class CustomDetailProduct extends StatelessWidget {
   }
 
   Positioned _buildButtonAddToCart(
-      HomeController homeController, CartController cartController, BuildContext context) {
+    HomeController homeController,
+    CartController cartController,
+    BuildContext context,
+  ) {
     return Positioned(
       left: 0,
       right: 0,
@@ -311,10 +345,10 @@ class CustomDetailProduct extends StatelessWidget {
               Text(
                 "Add To Cart",
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             ],
           ),
@@ -323,7 +357,11 @@ class CustomDetailProduct extends StatelessWidget {
     );
   }
 
-  Container reviewerCard(BuildContext context, HomeController homeController, int index) {
+  Container reviewerCard(
+    BuildContext context,
+    HomeController homeController,
+    int index,
+  ) {
     final review = homeController.tempSelectedProduct.value?.reviews?[index];
     return Container(
       padding: const EdgeInsets.all(10),
@@ -355,7 +393,9 @@ class CustomDetailProduct extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             review?.comment ?? "Review contents",
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
           ),
         ],
       ),
@@ -372,12 +412,17 @@ class ProductImageCarousel extends StatefulWidget {
 }
 
 class _ProductImageCarouselState extends State<ProductImageCarousel> {
-  final PageController _pageController = PageController();
+  late final PageController _pageController; // new controller per instance
   int currentPage = 0;
 
   @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
   void dispose() {
-    _pageController.dispose();
     super.dispose();
   }
 
@@ -393,13 +438,11 @@ class _ProductImageCarouselState extends State<ProductImageCarousel> {
               currentPage = index;
             });
           },
-          itemBuilder: (context, index) {
-            return CachedNetworkImage(
-              imageUrl: widget.images[index],
-              fit: BoxFit.cover,
-              width: double.infinity,
-            );
-          },
+          itemBuilder: (context, index) => CachedNetworkImage(
+            imageUrl: widget.images[index],
+            fit: BoxFit.cover,
+            width: double.infinity,
+          ),
         ),
         Positioned(
           bottom: 10,

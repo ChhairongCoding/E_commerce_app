@@ -353,7 +353,6 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     _promoTimer?.cancel(); // stop the timer
-    promoPageController.dispose(); // dispose controller
     super.onClose();
   }
 }
