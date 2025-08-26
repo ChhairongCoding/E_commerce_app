@@ -12,7 +12,7 @@ import 'package:e_commerce_app/controllers/signup_controller.dart';
 import 'package:e_commerce_app/theme/app_theme.dart';
 import 'package:e_commerce_app/views/main_views/main_controller.dart';
 import 'package:e_commerce_app/services/auth_service.dart';
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
 class InitBinding extends Bindings {

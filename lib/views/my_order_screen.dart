@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/controllers/checkout_controller.dart';
+import 'package:e_commerce_app/controllers/payment_controller.dart';
 import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:e_commerce_app/widgets/custom_card_my_order_widget.dart';
 import 'package:flutter/material.dart';
@@ -11,27 +11,24 @@ class MyOrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CheckoutController controller = Get.find<CheckoutController>();
     final tabs = ["Pending", "Delivered", "Cancelled"];
 
     return Scaffold(
       body: Obx(
         () => CustomScrollView(
-          slivers: [
-            _buildAppBar(context, tabs),
-            _buildBody(controller),
-          ],
+          slivers: [_buildAppBar(context, tabs), _buildBody()],
         ),
       ),
     );
   }
 
-   _buildAppBar(BuildContext context, List<String> tabs) {
+  _buildAppBar(BuildContext context, List<String> tabs) {
     return SliverAppBar(
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
-        onPressed: () => Get.toNamed(AppRoutes.mainScreenRoute),
+        onPressed: () => Get.offAllNamed(AppRoutes.mainScreenRoute),
       ),
+
       expandedHeight: 100,
       floating: false,
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -75,7 +72,9 @@ class MyOrderScreen extends StatelessWidget {
     );
   }
 
-   _buildBody(CheckoutController controller) {
+  _buildBody() {
+    final PaymentController paymentController = Get.find<PaymentController>();
+
     return SliverPadding(
       padding: const EdgeInsets.all(16),
       sliver: SliverList(
@@ -83,11 +82,11 @@ class MyOrderScreen extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: CustomCardMyOrderWidget(
-              controller: controller,
+              controller: paymentController,
               index: index,
             ),
           );
-        }, childCount: controller.orderList.length),
+        }, childCount: paymentController.orderList.length),
       ),
     );
   }

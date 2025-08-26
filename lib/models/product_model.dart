@@ -2,6 +2,7 @@ import 'package:e_commerce_app/models/review_model.dart';
 import 'package:flutter/material.dart';
 
 class Product {
+   final String? id;
   final String name;
   final double price;
   final String? category;
@@ -13,6 +14,7 @@ class Product {
   final List<Review>? reviews;
 
   Product({
+    this.id,
     required this.name,
     required this.price,
     this.category,
