@@ -2,6 +2,7 @@ import 'package:e_commerce_app/controllers/cart_controller.dart';
 import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:e_commerce_app/models/checkout_model.dart';
 import 'package:e_commerce_app/models/payment_method_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PaymentController extends GetxController {
@@ -51,7 +52,9 @@ class PaymentController extends GetxController {
       cartController.selectedItems.clear();
       cartController.selectedItems.refresh();
       cartController.subTotal.value = 0.0;
-      Get.snackbar('Success', 'Your order has been confirmed!');
+      Get.snackbar(
+        backgroundColor: Colors.white,
+        'Success', 'Your order has been confirmed!');
       Get.toNamed(AppRoutes.completedOrder);
     } else {
       Get.toNamed(AppRoutes.khqr);

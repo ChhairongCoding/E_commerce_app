@@ -27,48 +27,63 @@ class _CustomDetailProductState extends State<CustomDetailProduct> {
     return Scaffold(
       body: Stack(
         children: [
-          _buildBody(context),
+          _buildBody(context, homeController),
           _buildButtonAddToCart(homeController, cartController, context),
         ],
       ),
     );
   }
 
-  _buildBody(BuildContext context) {
-    final HomeController homeController = Get.find<HomeController>();
+  SliverAppBar _buildAppBar(
+    FavoriteController favoriteController,
+    HomeController homeController,
+  ) {
+    return SliverAppBar(
+      backgroundColor: Colors.amber,
+      actions: [
+        Obx(() {
+          final product = homeController.tempSelectedProduct.value;
+          final isFav =
+              product != null && favoriteController.isFavorite(product);
+
+          return IconButton(
+            onPressed: () {
+              if (product != null) {
+                favoriteController.toggleFavorite(product);
+              }
+            },
+            icon: Icon(
+              isFav ? Icons.favorite : Icons.favorite_border,
+              color: isFav ? Colors.red : Colors.white,
+            ),
+          );
+        }),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(HugeIcons.strokeRoundedShare01),
+        ),
+        const SizedBox(width: 16),
+      ],
+      expandedHeight: 300,
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        background: ProductImageCarousel(
+          key: ValueKey(
+            homeController.tempSelectedProduct.value?.id ?? UniqueKey(),
+          ),
+          images: homeController.tempSelectedProduct.value?.images ?? [],
+        ),
+      ),
+    );
+  }
+
+  _buildBody(BuildContext context, HomeController homeController) {
     final FavoriteController favoriteController =
         Get.find<FavoriteController>();
 
     return CustomScrollView(
       slivers: [
-        SliverAppBar(
-          backgroundColor: Colors.amber,
-          actions: [
-            Obx(
-              () => IconButton(
-                onPressed: () => favoriteController.addFav(),
-                icon: favoriteController.addFavorite.value
-                    ? const Icon(HugeIcons.strokeRoundedFavourite)
-                    : const Icon(Icons.favorite, color: Colors.red),
-              ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(HugeIcons.strokeRoundedShare01),
-            ),
-            const SizedBox(width: 16),
-          ],
-          expandedHeight: 300,
-          pinned: true,
-          flexibleSpace: FlexibleSpaceBar(
-            background: ProductImageCarousel(
-              key: ValueKey(
-                homeController.tempSelectedProduct.value?.id ?? UniqueKey(),
-              ),
-              images: homeController.tempSelectedProduct.value?.images ?? [],
-            ),
-          ),
-        ),
+        _buildAppBar(favoriteController, homeController),
         SliverToBoxAdapter(
           child: Container(
             padding: const EdgeInsets.only(top: 50, left: 16, right: 16),
@@ -97,56 +112,7 @@ class _CustomDetailProductState extends State<CustomDetailProduct> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
 
-                // Color Selection
-                Text("Color"),
-                const SizedBox(height: 8),
-                Obx(() {
-                  final product = homeController.tempSelectedProduct.value;
-                  final colors = product?.color ?? [];
-                  if (colors.isEmpty) return const Text("No colors available");
-
-                  return Row(
-                    children: List.generate(colors.length, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: GestureDetector(
-                          onTap: () {
-                            productDetailController.selectedColor.value = index;
-                          },
-                          child: Obx(
-                            () => Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: colors[index],
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color:
-                                      productDetailController
-                                              .selectedColor
-                                              .value ==
-                                          index
-                                      ? Colors.black
-                                      : Colors.grey,
-                                  width: 2,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.4),
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-                  );
-                }),
                 const SizedBox(height: 16),
 
                 // Size Selection
@@ -206,6 +172,57 @@ class _CustomDetailProductState extends State<CustomDetailProduct> {
                     ),
                   );
                 }),
+                const SizedBox(height: 16),
+
+                // Color Selection
+                Text("Color"),
+                const SizedBox(height: 8),
+                Obx(() {
+                  final product = homeController.tempSelectedProduct.value;
+                  final colors = product?.color ?? [];
+                  if (colors.isEmpty) return const Text("No colors available");
+
+                  return Row(
+                    children: List.generate(colors.length, (index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            productDetailController.selectedColor.value = index;
+                          },
+                          child: Obx(
+                            () => Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: colors[index],
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color:
+                                      productDetailController
+                                              .selectedColor
+                                              .value ==
+                                          index
+                                      ? Colors.black
+                                      : Colors.grey,
+                                  width: 2,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.4),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  );
+                }),
+
                 const SizedBox(height: 20),
                 const Divider(),
 

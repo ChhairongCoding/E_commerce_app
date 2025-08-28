@@ -18,9 +18,8 @@ class SearchWidget extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.transparent,
+          color: Colors.grey[200],
           borderRadius: BorderRadius.circular(26),
-          border: Border.all(color: Colors.grey),
         ),
         child: Row(
           spacing: 16,
@@ -30,7 +29,7 @@ class SearchWidget extends StatelessWidget {
               text,
               style: Theme.of(
                 context,
-              ).textTheme.bodySmall?.copyWith(color: Colors.grey),
+              ).textTheme.bodySmall?.copyWith(color: Colors.grey,fontSize: 16),
             ),
           ],
         ),

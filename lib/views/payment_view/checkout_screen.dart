@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/controllers/cart_controller.dart';
+import 'package:e_commerce_app/controllers/checkout_controller.dart';
 import 'package:e_commerce_app/widgets/custom_address_widget.dart';
 import 'package:e_commerce_app/widgets/custom_order_summary_widget.dart';
 import 'package:e_commerce_app/widgets/custom_payment_widget.dart';
@@ -36,7 +37,7 @@ class CheckoutScreen extends StatelessWidget {
   _buildAppBar(context) {
     return AppBar(
       backgroundColor: Colors.grey[100],
-      title: const Text("Check out"),
+      title: const Text("Checkout"),
     );
   }
 
@@ -164,7 +165,7 @@ class CheckoutScreen extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(context) {
-
+    final CheckoutController checkoutController = Get.find<CheckoutController>();
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -186,11 +187,7 @@ class CheckoutScreen extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          Get.bottomSheet(
-            
-            CustomPaymentWidget(),
-            
-            );
+          checkoutController.selectPaymentMethod();
         },
         child: Text(
           "Confirm Order",
