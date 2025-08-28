@@ -19,67 +19,69 @@ class KhqrScreen extends StatelessWidget {
   Widget _buildBody() {
   final CartController cartController = Get.find<CartController>(); 
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(height: 20),
-          const Text(
-            "Scan to Pay",
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            "Use your ABA or other KHQR-supported banking app to scan.",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey),
-          ),
-          const SizedBox(height: 30),
-
-          // 💰 Amount Section
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(12),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
+            const Text(
+              "Scan to Pay",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            child: Text(
-              "Amount: \$${cartController.subTotal}", 
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+            const SizedBox(height: 10),
+            const Text(
+              "Use your ABA or other KHQR-supported banking app to scan.",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey),
             ),
-          ),
-
-          const SizedBox(height: 30),
-
-          // QR Image
-          Center(
-            child: Container(
-              padding: const EdgeInsets.all(12),
+            const SizedBox(height: 30),
+      
+            // 💰 Amount Section
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 2),
+                color: Colors.black,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Image.asset(
-                "assets/images/khqr/chhinchhairong_khqr.jpg",
-                width: 250,
-                height: 350,
-                fit: BoxFit.cover,
+              child: Text(
+                "Amount: \$${cartController.subTotal}", 
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-
-          const SizedBox(height: 30),
-          const Text(
-            "After payment, please screenshot and send to us for confirmation.",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey),
-          ),
-        ],
+      
+            const SizedBox(height: 30),
+      
+            // QR Image
+            Center(
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Image.asset(
+                  "assets/images/khqr/chhinchhairong_khqr.jpg",
+                  width: 250,
+                  height: 350,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+      
+            const SizedBox(height: 30),
+            const Text(
+              "After payment, please screenshot and send to us for confirmation.",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        ),
       ),
     );
   }

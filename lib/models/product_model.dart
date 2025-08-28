@@ -2,15 +2,15 @@ import 'package:e_commerce_app/models/review_model.dart';
 import 'package:flutter/material.dart';
 
 class Product {
-   final String? id;
+  final String? id;
   final String name;
   final double price;
   final String? category;
   final String? description;
   final String? rate;
   final List<String> images;
-  final List<String> sizes;   
-  final List<Color> color;    
+  final List<String> sizes;
+  final List<Color> color;
   final List<Review>? reviews;
 
   Product({
@@ -23,7 +23,7 @@ class Product {
     required this.images,
     required this.sizes,
     required this.color,
-    this.reviews
+    this.reviews,
   });
 
   factory Product.fromMap(Map<String, dynamic> map) {
@@ -48,10 +48,11 @@ class Product {
     }
 
     return Product(
+      id: map['id']?.toString() ?? UniqueKey().toString(), // assign unique id
       name: map['name'] ?? '',
       price: map['price']?.toDouble() ?? 0.0,
       category: map['category'],
-      description: map['descrition'],
+      description: map['description'],
       rate: map['rate'],
       images: imageList,
       sizes: sizeList,

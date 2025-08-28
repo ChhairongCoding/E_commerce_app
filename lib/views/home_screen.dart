@@ -1,7 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/controllers/home_controller.dart';
+import 'package:e_commerce_app/controllers/payment_controller.dart';
 import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:e_commerce_app/widgets/custom_card_widget.dart';
-import 'package:e_commerce_app/widgets/custom_product_card_with_rating.dart';
 import 'package:e_commerce_app/widgets/custom_promotion_card.dart';
 import 'package:e_commerce_app/widgets/search_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey[100],
+        
+        // backgroundColor: Colors.grey[100],
         body: _buildBody(context),
       ),
     );
@@ -24,45 +26,47 @@ class HomeScreen extends StatelessWidget {
 
   _buildBody(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final PaymentController paymentController = Get.find<PaymentController>();
+
 
     return CustomScrollView(
       slivers: [
-       SliverAppBar(
-      floating: true,
-      backgroundColor: Colors.grey[100],
-      centerTitle: true,
-      automaticallyImplyLeading: false,
-      actions: [
-        IconButton(
-          onPressed: () => Get.toNamed(AppRoutes.myOrder),
-          icon: Icon(HugeIcons.strokeRoundedShoppingBag02),
-        ),
-      ],
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+        SliverAppBar(
+          floating: true,
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              onPressed: () => Get.toNamed(AppRoutes.myOrder),
+              icon: Badge(
+                label: Obx(() => Text("${paymentController.orderList.length}")),
+                child: Icon(HugeIcons.strokeRoundedShoppingBag02)),
+            ),
+          ],
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(HugeIcons.strokeRoundedPinLocation03, size: 14),
-              SizedBox(width: 8),
-              Text("Your location", style: TextStyle(fontSize: 12)),
+              Row(
+                children: [
+                  Icon(HugeIcons.strokeRoundedPinLocation03, size: 14),
+                  SizedBox(width: 8),
+                  Text("Your location", style: TextStyle(fontSize: 12)),
+                ],
+              ),
+              Text(
+                "Phnom Penh",
+                style: TextStyle(fontSize: 14, fontFamily: "ProductSans"),
+              ),
             ],
           ),
-          Text(
-            "Phnom Penh",
-            style: TextStyle(fontSize: 14, fontFamily: "ProductSans"),
-          ),
-        ],
-      ),
-    ),
+        ),
 
-        
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 25,
+              spacing: 16,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,13 +86,77 @@ class HomeScreen extends StatelessWidget {
 
                 SearchCustom(homeController: homeController),
 
-                CategoriesSection(
-                  setectedCateIndex: homeController.setectedCateIndex,
-                ),
+                CategoriesSection(),
 
                 PromotionSection(),
 
                 NewArriveSection(),
+
+                Column(
+                  spacing: 12,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Trending now",
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        GestureDetector(
+                          child: Text(
+                            "View All",
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: Colors.grey[900]),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 180,
+                      child: PageView.builder(
+                        controller: homeController.trendingPageController,
+                        itemCount: homeController.trendings.length,
+                        onPageChanged: (index) {
+                          homeController.currentTrendingPage.value = index;
+                        },
+                        itemBuilder: (context, index) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: CachedNetworkImage(
+                              imageUrl: homeController.trendings[index].image,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+                    // Dots Indicator
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        homeController.trendings.length,
+                        (index) => Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                          width: homeController.currentTrendingPage == index
+                              ? 12
+                              : 8,
+                          height: homeController.currentTrendingPage == index
+                              ? 12
+                              : 8,
+                          decoration: BoxDecoration(
+                            color: homeController.currentTrendingPage == index
+                                ? Colors.blue
+                                : Colors.grey,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
 
                 PopularProducts(size: size),
               ],
@@ -101,16 +169,17 @@ class HomeScreen extends StatelessWidget {
 }
 
 class PopularProducts extends StatelessWidget {
-  const PopularProducts({super.key, required this.size});
+  PopularProducts({super.key, required this.size});
+  final HomeController homeController = Get.find<HomeController>();
 
   final Size size;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 12,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Header row
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -123,21 +192,24 @@ class PopularProducts extends StatelessWidget {
                 "View All",
                 style: Theme.of(
                   context,
-                ).textTheme.bodyMedium?.copyWith(color: Colors.grey[700]),
+                ).textTheme.bodyMedium?.copyWith(color: Colors.grey[900]),
               ),
             ),
           ],
         ),
 
-        const SizedBox(height: 16),
-
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            return Column(children: [CustomProductCardWithRating(size: size)]);
-          },
+        Wrap(
+          spacing: 16,
+          runSpacing: 16,
+          children: homeController.productList
+              .take(4)
+              .map(
+                (product) => SizedBox(
+                  width: (MediaQuery.of(context).size.width - 48) / 2,
+                  child: CustomCardWidget(data: product),
+                ),
+              )
+              .toList(),
         ),
       ],
     );
@@ -151,7 +223,7 @@ class NewArriveSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: 16,
+      spacing: 12,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -163,7 +235,7 @@ class NewArriveSection extends StatelessWidget {
                 "View All",
                 style: Theme.of(
                   context,
-                ).textTheme.bodyMedium?.copyWith(color: Colors.grey[700]),
+                ).textTheme.bodyMedium?.copyWith(color: Colors.grey[900]),
               ),
             ),
           ],
@@ -253,34 +325,15 @@ class SearchCustom extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(flex: 9, child: SearchWidget(text: "Search in Store...")),
-        Flexible(
-          flex: 2,
-          child: GestureDetector(
-            onTap: () {}, // ✅ Call the method to toggle filter
-            child: Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                HugeIcons.strokeRoundedFilterHorizontal,
-                size: 25,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
+        Flexible(flex: 9, child: SearchWidget(text: "Search in Store...",)),
       ],
     );
   }
 }
 
 class CategoriesSection extends StatelessWidget {
-  CategoriesSection({super.key, required this.setectedCateIndex});
+  CategoriesSection({super.key});
 
-  final RxInt setectedCateIndex;
   final HomeController homeController = Get.find<HomeController>();
 
   @override
@@ -294,135 +347,76 @@ class CategoriesSection extends StatelessWidget {
           children: [
             Text("Categories", style: Theme.of(context).textTheme.titleLarge),
             GestureDetector(
-              onTap: () {
-                Get.toNamed(AppRoutes.category);
-              },
+              onTap: () => Get.toNamed(AppRoutes.category),
               child: Text(
                 "View All",
                 style: Theme.of(
                   context,
-                ).textTheme.bodyMedium?.copyWith(color: Colors.grey[700]),
+                ).textTheme.bodyMedium?.copyWith(color: Colors.grey[900]),
               ),
             ),
           ],
         ),
+
+        // Category Chips
         Obx(
           () => SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              spacing: 16,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    setectedCateIndex.value = 1;
-                  },
+              spacing: 12,
+              children: homeController.categories.map((cat) {
+                final isSelected = homeController.selectedCategory.value == cat;
+                return GestureDetector(
+                  onTap: () => homeController.setCategory(cat),
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(25),
-                      color: setectedCateIndex.value == 1
-                          ? Colors.black
-                          : Colors.transparent,
+                      color: isSelected ? Colors.black : Colors.transparent,
                     ),
                     child: Text(
-                      "Jersey",
+                      cat,
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: setectedCateIndex.value == 1
-                            ? Colors.white
-                            : Colors.black,
+                        color: isSelected ? Colors.white : Colors.black,
                       ),
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setectedCateIndex.value = 2;
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(25),
-                      color: setectedCateIndex.value == 2
-                          ? Colors.black
-                          : Colors.transparent,
-                    ),
-                    child: Text(
-                      "Boost",
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: setectedCateIndex.value == 2
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setectedCateIndex.value = 3;
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(25),
-                      color: setectedCateIndex.value == 3
-                          ? Colors.black
-                          : Colors.transparent,
-                    ),
-                    child: Text(
-                      "Collection",
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: setectedCateIndex.value == 3
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setectedCateIndex.value = 4;
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(25),
-                      color: setectedCateIndex.value == 4
-                          ? Colors.black
-                          : Colors.transparent,
-                    ),
-                    child: Text(
-                      "Accessories",
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: setectedCateIndex.value == 4
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                );
+              }).toList(),
             ),
           ),
         ),
-        Wrap(
-          spacing: 16,
-          runSpacing: 16,
-          children: homeController.productList
-              .take(4)
-              .map(
-                (product) => SizedBox(
-                  width:
-                      (MediaQuery.of(context).size.width - 48) /
-                      2, // Adjust for 2 items + spacing
-                  child: CustomCardWidget(data: product),
-                ),
-              )
-              .toList(),
-        ),
+
+        // Filtered Products
+        Obx(() {
+          final products = homeController.filteredProducts.take(4).toList();
+
+          if (products.isEmpty) {
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text("No products found in this category."),
+              ),
+            );
+          }
+
+          return Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: products
+                .map(
+                  (product) => SizedBox(
+                    width: (MediaQuery.of(context).size.width - 44) / 2,
+                    child: CustomCardWidget(data: product),
+                  ),
+                )
+                .toList(),
+          );
+        }),
       ],
     );
   }

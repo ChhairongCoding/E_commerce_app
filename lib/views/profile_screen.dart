@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_app/controllers/payment_controller.dart';
 import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,9 +10,10 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PaymentController paymentController = Get.find<PaymentController>();
     return SafeArea(
       child: Scaffold(
-      backgroundColor: Colors.grey[100],
+        backgroundColor: Colors.grey[100],
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -51,20 +53,28 @@ class ProfileScreen extends StatelessWidget {
                             .start, // ensures vertical alignment
                         children: [
                           buildOrderItem(
-                            HugeIcons.strokeRoundedPayment01,
-                            "Pending Payment",
-                          ),
-                          buildOrderItem(
                             HugeIcons.strokeRoundedDeliveryBox01,
                             "Awaiting Shipment",
+                            paymentController,
+                            AppRoutes.myOrder,
                           ),
                           buildOrderItem(
                             HugeIcons.strokeRoundedDeliveredSent,
                             "Awaiting Receipt",
+                            paymentController,
+                            null,
+                          ),
+                          buildOrderItem(
+                            HugeIcons.strokeRoundedSafeDelivery01,
+                            "Arrived",
+                            paymentController,
+                            null,
                           ),
                           buildOrderItem(
                             HugeIcons.strokeRoundedPayByCheck,
                             "Refund",
+                            paymentController,
+                            null,
                           ),
                         ],
                       ),
@@ -110,12 +120,6 @@ class ProfileScreen extends StatelessWidget {
                         title: "Shipping Address",
                         icon: HugeIcons.strokeRoundedPinLocation01,
                         appRoute: AppRoutes.shipping,
-                      ),
-
-                      CustomTextButton(
-                        title: "My Card",
-                        icon: HugeIcons.strokeRoundedCreditCard,
-                        appRoute: AppRoutes.paymentCard,
                       ),
                     ],
                   ),
@@ -301,23 +305,53 @@ class CustomTextButton extends StatelessWidget {
   }
 }
 
-Widget buildOrderItem(IconData icon, String label) {
+Widget buildOrderItem(
+  IconData icon,
+  String label,
+  PaymentController? paymentController,
+  String? route,
+) {
+  final isAwaitingShipment = label == "Awaiting Shipment";
+
   return Expanded(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Align(alignment: Alignment.center, child: Icon(icon, size: 25)),
-        const SizedBox(height: 8),
-        Text(
-          label,
-          style: const TextStyle(fontSize: 12),
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 2,
-        ),
-      ],
+    child: GestureDetector(
+      onTap: () => route != null ? Get.toNamed(route.toString()) : null,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: isAwaitingShipment
+                ? Obx(
+                    () => Badge(
+                      isLabelVisible: paymentController!.orderList.isNotEmpty,
+                      label: Text(
+                        paymentController.orderList.length.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
+                      ),
+                      child: Icon(icon, size: 25),
+                    ),
+                  )
+                : Icon(icon, size: 25),
+          ),
+          const SizedBox(height: 8),
+          SizedBox(
+            width: 60,
+            child: Text(
+              label,
+              style: const TextStyle(fontSize: 12),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+          ),
+        ],
+      ),
     ),
   );
 }

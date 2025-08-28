@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:e_commerce_app/models/product_model.dart';
 import 'package:e_commerce_app/models/review_model.dart';
+import 'package:e_commerce_app/models/trending_model.dart';
 import 'package:e_commerce_app/widgets/custom_detail_product.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,9 +13,18 @@ class HomeController extends GetxController {
   final RxInt setectedCateIndex = 1.obs;
   Rx<Product?> tempSelectedProduct = Rx<Product?>(null);
 
+final List<String> categories = [
+    "All",
+    "Kits",
+    "Tshirt",
+    "Shoes",
+    "Accessories",
+  ];
+
   RxMap<dynamic, dynamic> listDetail = {}.obs;
   List<Product> productList = [
     Product(
+       id: UniqueKey().toString(),
       name: "Tee retro Spotify Camp Nou",
       price: 29.99,
       images: [
@@ -37,7 +47,7 @@ class HomeController extends GetxController {
           comment: "Great fit and quality!",
           rating: 4.5,
         ),
-        
+
         Review(userName: "Maria", comment: "Love the retro look!", rating: 5.0),
         Review(
           userName: "Alex",
@@ -47,6 +57,7 @@ class HomeController extends GetxController {
       ],
     ),
     Product(
+       id: UniqueKey().toString(),
       name: "Blaugrana charity bracelet",
       price: 9.99,
       images: [
@@ -63,6 +74,7 @@ class HomeController extends GetxController {
       ],
     ),
     Product(
+       id: UniqueKey().toString(),
       name: "Hoodie Grey Panot Barça",
       price: 69.99,
       images: [
@@ -83,6 +95,7 @@ class HomeController extends GetxController {
       ],
     ),
     Product(
+       id: UniqueKey().toString(),
       name: "T-shirt Red Cruyff Barça",
       price: 39.99,
       images: [
@@ -99,6 +112,7 @@ class HomeController extends GetxController {
       ],
     ),
     Product(
+       id: UniqueKey().toString(),
       name: "1995-97 Home Kit",
       price: 129.99,
       category: "Kits",
@@ -116,6 +130,7 @@ class HomeController extends GetxController {
       ],
     ),
     Product(
+       id: UniqueKey().toString(),
       name: "1995-97 Away Kit",
       price: 12.99,
       category: "Kits",
@@ -135,6 +150,7 @@ class HomeController extends GetxController {
       ],
     ),
     Product(
+       id: UniqueKey().toString(),
       name: "Tshirt retro style",
       price: 12.99,
       category: "Tshirt",
@@ -150,6 +166,7 @@ class HomeController extends GetxController {
       ],
     ),
     Product(
+       id: UniqueKey().toString(),
       name: "Tshirt retro style",
       price: 12.99,
       category: "Tshirt",
@@ -169,6 +186,7 @@ class HomeController extends GetxController {
       ],
     ),
     Product(
+       id: UniqueKey().toString(),
       name: "F50 Elite Firm Ground Boots",
       price: 220.99,
       category: "Shoes",
@@ -310,18 +328,58 @@ class HomeController extends GetxController {
     },
   ];
 
+  final List<TrendingModel> trendings = [
+    TrendingModel(
+      image:
+          "https://assets.goal.com/images/v3/bltef7443e8e22fd5a5/Manchester%20United%20Arsenal%20third%20kit%20.jpg",
+    ),
+    TrendingModel(
+      image:
+          "https://brand.assets.adidas.com/video/upload/f_auto,q_auto/if_w_gt_1920,w_1920/global_aclubs_away_realmadrid_football_fw25_launch_PDP_Banner_Hero_1_d_ea0c7aff4f.jpg",
+    ),
+    TrendingModel(
+      image:
+          "https://assets.goal.com/images/v3/blt62e2a3be8d1f81d2/Arsenal%20away%20kit%20.jpg?auto=webp&format=pjpg&width=3840&quality=60",
+    ),
+  ];
+
   final currentPromoPage = 0.obs;
   late PageController promoPageController;
   Timer? _promoTimer;
+  final currentTrendingPage = 0.obs;
+  late PageController trendingPageController;
+  Timer? _trendingTimer;
 
   @override
   void onInit() {
     super.onInit();
     promoPageController = PageController(viewportFraction: 1.0);
+    trendingPageController = PageController(viewportFraction: 1.0);
 
     // Start timer after first frame
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _startPromoAutoScroll();
+      _startTrendingAutoScroll();
+    });
+  }
+
+  void _startTrendingAutoScroll() {
+    _trendingTimer?.cancel(); // cancel existing timer if any
+    _trendingTimer = Timer.periodic(const Duration(seconds: 3), (_) {
+      if (!trendingPageController.hasClients)
+        return; // only animate if controller is alive
+
+      int nextPage = currentTrendingPage.value + 1;
+      if (nextPage >= trendings.length) nextPage = 0;
+
+      currentTrendingPage.value = nextPage;
+
+      // Animate safely
+      trendingPageController.animateToPage(
+        nextPage,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
     });
   }
 

@@ -21,7 +21,6 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
       appBar: _buildAppBar(),
       body: Obx(
         () => cartController.cartList.isNotEmpty
@@ -33,7 +32,6 @@ class CartScreen extends StatelessWidget {
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.grey[100],
       automaticallyImplyLeading: false,
       title: Obx(
         () => Text("Total Products(${cartController.cartList.length})"),

@@ -4,6 +4,7 @@ import 'package:e_commerce_app/views/notification_screen.dart';
 import 'package:e_commerce_app/views/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class MainController extends GetxController {
   RxInt currentIndex = 0.obs;
@@ -15,6 +16,14 @@ class MainController extends GetxController {
     NotificationScreen(),
     ProfileScreen(),
   ];
+
+  final List<Map<String , dynamic>> listIcons = [
+    {'icon': HugeIcons.strokeRoundedHome01, 'name': 'Home'},
+    {'icon': HugeIcons.strokeRoundedShoppingCart01, 'name': 'Your Cart'},
+    {'icon': HugeIcons.strokeRoundedNotification01, 'name': 'Notification'},
+    {'icon': HugeIcons.strokeRoundedUser, 'name': 'Profile'},
+  ];
+  
 
   void toggleSwitch(int value) {
     currentIndex.value = value;
