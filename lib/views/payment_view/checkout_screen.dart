@@ -3,7 +3,6 @@ import 'package:e_commerce_app/controllers/cart_controller.dart';
 import 'package:e_commerce_app/controllers/checkout_controller.dart';
 import 'package:e_commerce_app/widgets/custom_address_widget.dart';
 import 'package:e_commerce_app/widgets/custom_order_summary_widget.dart';
-import 'package:e_commerce_app/widgets/custom_payment_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

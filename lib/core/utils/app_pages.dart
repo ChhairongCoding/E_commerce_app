@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/core/utils/app_routes.dart';
 import 'package:e_commerce_app/views/auth_view/login_screen.dart';
+import 'package:e_commerce_app/views/auth_view/profile_setting_screen.dart';
 import 'package:e_commerce_app/views/auth_view/sign_up_screen.dart';
 import 'package:e_commerce_app/views/cart_screen.dart';
 import 'package:e_commerce_app/views/completed_order_screen.dart';
@@ -41,6 +42,7 @@ List<GetPage<dynamic>> get appPages {
      GetPage(name: AppRoutes.favorite, page: () => FavoriteScreen()),
      GetPage(name: AppRoutes.createCreditCard, page: () => PaymentFormScreen()),
      GetPage(name: AppRoutes.completedOrder, page: () => CompletedOrderScreen()),
+     GetPage(name: AppRoutes.profileSetting, page: () => ProfileSettingScreen()),
      GetPage(name: AppRoutes.khqr, page: () => KhqrScreen()),
   ];
 }

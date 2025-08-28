@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/controllers/home_controller.dart';
 import 'package:e_commerce_app/controllers/payment_controller.dart';
 import 'package:e_commerce_app/core/utils/app_routes.dart';
+import 'package:e_commerce_app/views/all_product_screen.dart';
 import 'package:e_commerce_app/widgets/custom_card_widget.dart';
 import 'package:e_commerce_app/widgets/custom_promotion_card.dart';
 import 'package:e_commerce_app/widgets/search_widget.dart';
@@ -17,7 +18,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        
         // backgroundColor: Colors.grey[100],
         body: _buildBody(context),
       ),
@@ -27,7 +27,6 @@ class HomeScreen extends StatelessWidget {
   _buildBody(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final PaymentController paymentController = Get.find<PaymentController>();
-
 
     return CustomScrollView(
       slivers: [
@@ -40,7 +39,8 @@ class HomeScreen extends StatelessWidget {
               onPressed: () => Get.toNamed(AppRoutes.myOrder),
               icon: Badge(
                 label: Obx(() => Text("${paymentController.orderList.length}")),
-                child: Icon(HugeIcons.strokeRoundedShoppingBag02)),
+                child: Icon(HugeIcons.strokeRoundedShoppingBag02),
+              ),
             ),
           ],
           title: Column(
@@ -176,6 +176,14 @@ class PopularProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final populars = homeController.productList
+        .where(
+          (product) =>
+              product.status != null &&
+              product.status!.toLowerCase() == 'popular'.toLowerCase(),
+        )
+        .toList();
+
     return Column(
       spacing: 12,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,6 +196,12 @@ class PopularProducts extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             GestureDetector(
+              onTap: () => Get.to(
+                AllProductScreen(
+                  products: homeController.productList,
+                  title: "Popular",
+                ),
+              ),
               child: Text(
                 "View All",
                 style: Theme.of(
@@ -199,13 +213,13 @@ class PopularProducts extends StatelessWidget {
         ),
 
         Wrap(
-          spacing: 16,
-          runSpacing: 16,
-          children: homeController.productList
+          spacing: 2,
+          runSpacing: 2,
+          children: populars
               .take(4)
               .map(
                 (product) => SizedBox(
-                  width: (MediaQuery.of(context).size.width - 48) / 2,
+                  width: MediaQuery.of(context).size.width * 0.458,
                   child: CustomCardWidget(data: product),
                 ),
               )
@@ -222,15 +236,31 @@ class NewArriveSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Filter products with status "New Arrival"
+    final newArrivals = homeController.productList
+        .where(
+          (product) =>
+              product.status != null &&
+              product.status!.toLowerCase() == 'new arrival'.toLowerCase(),
+        )
+        .toList();
+
     return Column(
-      spacing: 12,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text("New Arrivals", style: Theme.of(context).textTheme.titleLarge),
             GestureDetector(
+              onTap: () {
+                Get.to(
+                  () => AllProductScreen(
+                    title: "New Arrival",
+                    products: homeController.productList,
+                  ),
+                );
+              },
               child: Text(
                 "View All",
                 style: Theme.of(
@@ -240,18 +270,16 @@ class NewArriveSection extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 12),
         Wrap(
-          spacing: 16,
-          runSpacing: 16,
-          children: homeController.productList
-              .take(4)
-              .map(
-                (product) => SizedBox(
-                  width: (MediaQuery.of(context).size.width - 48) / 2,
-                  child: CustomCardWidget(data: product),
-                ),
-              )
-              .toList(),
+          spacing: 2,
+          runSpacing: 2,
+          children: newArrivals.take(4).map((product) {
+            return SizedBox(
+              width: MediaQuery.of(context).size.width * 0.458,
+              child: CustomCardWidget(data: product),
+            );
+          }).toList(),
         ),
       ],
     );
@@ -325,7 +353,7 @@ class SearchCustom extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(flex: 9, child: SearchWidget(text: "Search in Store...",)),
+        Flexible(flex: 9, child: SearchWidget(text: "Search in Store...")),
       ],
     );
   }
@@ -405,12 +433,12 @@ class CategoriesSection extends StatelessWidget {
           }
 
           return Wrap(
-            spacing: 12,
-            runSpacing: 12,
+            spacing: 2,
+            runSpacing: 2,
             children: products
                 .map(
                   (product) => SizedBox(
-                    width: (MediaQuery.of(context).size.width - 44) / 2,
+                    width: MediaQuery.of(context).size.width * 0.458,
                     child: CustomCardWidget(data: product),
                   ),
                 )

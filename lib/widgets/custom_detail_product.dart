@@ -39,13 +39,12 @@ class _CustomDetailProductState extends State<CustomDetailProduct> {
     HomeController homeController,
   ) {
     return SliverAppBar(
-      backgroundColor: Colors.amber,
+      backgroundColor: Colors.orange,
       actions: [
         Obx(() {
           final product = homeController.tempSelectedProduct.value;
           final isFav =
               product != null && favoriteController.isFavorite(product);
-
           return IconButton(
             onPressed: () {
               if (product != null) {
@@ -60,10 +59,11 @@ class _CustomDetailProductState extends State<CustomDetailProduct> {
         }),
         IconButton(
           onPressed: () {},
-          icon: const Icon(HugeIcons.strokeRoundedShare01),
+          icon: const Icon(HugeIcons.strokeRoundedShare01, color: Colors.white),
         ),
         const SizedBox(width: 16),
       ],
+      leading: IconButton(onPressed: () => Get.back(), icon: const Icon(Icons.arrow_back, color: Colors.white)),
       expandedHeight: 300,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(

@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_app/controllers/auth_controller.dart';
 import 'package:e_commerce_app/controllers/payment_controller.dart';
 import 'package:e_commerce_app/core/utils/app_routes.dart';
+import 'package:e_commerce_app/widgets/edit_profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -103,7 +105,7 @@ class ProfileScreen extends StatelessWidget {
                       CustomTextButton(
                         title: "Personal Details",
                         icon: HugeIcons.strokeRoundedUser,
-                        appRoute: AppRoutes.shipping,
+                        appRoute: AppRoutes.profileSetting,
                       ),
                       CustomTextButton(
                         title: "My Order",
@@ -183,9 +185,13 @@ class ProfileScreen extends StatelessWidget {
 
 class ProfileUser extends StatelessWidget {
   const ProfileUser({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
+    AuthController authController = Get.find<AuthController>();
+   final user = authController.profile[0];
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
@@ -195,49 +201,50 @@ class ProfileUser extends StatelessWidget {
           BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3)),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            spacing: 16,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: SizedBox(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              spacing: 8,
+              children: [
+                SizedBox(
                   child: ClipOval(
                     child: CachedNetworkImage(
                       fit: BoxFit.cover,
                       width: 68,
                       imageUrl:
-                          "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/a84ab47d-4349-4943-ae58-dd3b4826c6ba/d5uxc1h-1ea4bf58-9207-4e1e-a370-6bba45b1d13f.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2E4NGFiNDdkLTQzNDktNDk0My1hZTU4LWRkM2I0ODI2YzZiYVwvZDV1eGMxaC0xZWE0YmY1OC05MjA3LTRlMWUtYTM3MC02YmJhNDViMWQxM2YucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.ttGhrLFDUjQgzpWxkE1xTqsJff-FTIPe94zJlCd3O1s",
+                        user['image'],
                     ),
                   ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Chhairong Chhin",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  Text(
-                    "chhairongchhin@gmail.com",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium?.copyWith(color: Colors.grey[700]),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Expanded(
-            child: IconButton(
-              icon: Icon(Icons.settings, color: Colors.black),
-              onPressed: () {},
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user['name'],
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    Text(
+                      user['email'],
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: Colors.grey[700]),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ),
-        ],
+            GestureDetector(
+              child: Icon(
+                HugeIcons.strokeRoundedSetting07,
+                color: Colors.black,
+              ),
+              onTap: () => Get.to(EditProfileWidget()),
+            ),
+          ],
+        ),
       ),
     );
   }

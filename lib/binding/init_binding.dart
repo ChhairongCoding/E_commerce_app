@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/controllers/auth_controller.dart';
 import 'package:e_commerce_app/controllers/cart_controller.dart';
 import 'package:e_commerce_app/controllers/checkout_controller.dart';
 import 'package:e_commerce_app/controllers/favorite_controller.dart';
@@ -20,6 +21,7 @@ class InitBinding extends Bindings {
   @override
   void dependencies() {
     //controller
+    Get.put(AuthController());
     Get.put(MainController());
     Get.put(LoginController());
     Get.put(SignupController());
