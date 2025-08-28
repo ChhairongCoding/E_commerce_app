@@ -12,6 +12,7 @@ class Product {
   final List<String> sizes;
   final List<Color> color;
   final List<Review>? reviews;
+  final String? status;
 
   Product({
     this.id,
@@ -24,6 +25,7 @@ class Product {
     required this.sizes,
     required this.color,
     this.reviews,
+    this.status,
   });
 
   factory Product.fromMap(Map<String, dynamic> map) {
@@ -57,6 +59,7 @@ class Product {
       images: imageList,
       sizes: sizeList,
       color: colorList,
+      status: map['status'] ?? '', 
     );
   }
 }

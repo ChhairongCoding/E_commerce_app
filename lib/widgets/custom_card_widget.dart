@@ -152,6 +152,7 @@ class CustomCardWidget extends StatelessWidget {
                         ),
                         onPressed: () {
                           homeController.tempProduct(data);
+                          Get.toNamed(AppRoutes.detail);
                         },
                         icon: const Icon(
                           HugeIcons.strokeRoundedAdd01,
